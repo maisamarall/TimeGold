@@ -10,7 +10,6 @@
                 <Button label="Acessar"
                     class="bg-gray-50 text-black pl-3 pr-3 rounded-lg hover:border hover:border-gray-50 hover:bg-transparent hover:text-gray-50"
                     @click="openPosition('topright')" severity="secondary" style="min-width: 10rem">Acessar</Button>
-
             </div>
         </div>
 
@@ -27,13 +26,14 @@
     </div>
 
     <ModalComponent ref="modalRef"></ModalComponent>
+    <FooterComponent />
 </template>
 
 <script setup>
 
 import { ref } from "vue";
 import ModalComponent from "../components/ModalComponent.vue";
-
+import FooterComponent from "../components/FooterComponent.vue";
 const modalRef = ref();
 
 function openPosition(pos) {
