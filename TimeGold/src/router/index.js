@@ -18,7 +18,7 @@ const router = createRouter({
       component: AdminView
     },
     {
-      path: '/cadastro',
+      path: '/CadastroUserView.vue',
       name: 'cadastroUser',
       component: CadastroUserView
     }
