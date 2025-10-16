@@ -1,5 +1,6 @@
 <template>
     <div>
+        <!-- navbar -->
         <header class="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-[#7021D8] to-[#5013A0] text-white shadow-lg">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-20">
                 <div class="flex items-center">
@@ -14,7 +15,7 @@
                     <div class="relative group">
                         <button @click="toggleDropdown"
                             class="flex items-center hover:text-purple-300 transition duration-150">
-                            Admin
+                             Admin
                             <svg class="ml-1 w-4 h-4 transform transition-transform duration-200"
                                 :class="{ 'rotate-180': isDropdownOpen }" fill="none" stroke="currentColor"
                                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -31,13 +32,14 @@
                             <a href="#" class="block px-4 py-2 hover:bg-gray-100">Sair</a>
                         </div>
                     </div>
-                    <button class="bg-gradient-to-r from-[#7021D5] to-[#5013A0] border border-purple-700 hover:bg-purple-600 px-4 py-2 rounded-lg transition duration-150">
+                    <button class="bg-gradient-to-from-[#7021D5] to-[#5013A0] border border-purple-700 hover:bg-purple-600 px-4 py-2 rounded-lg transition duration-150">
                         Meu plano
                     </button>
                 </nav>
             </div>
         </header>
 
+        <!-- conteudo da pagina -->
         <main class="mt-20">
             <section class="bg-gradient-to-r from-[#7021D8] to-[#5013A0] text-white py-12 px-4 mb-10 sm:px-6 lg:px-8">
                 <div class="container mx-auto">
@@ -73,8 +75,7 @@
                     <div class="flex items-center space-x-4 mb-4">
                         <svg class="w-10 h-10 text-purple-600" fill="currentColor" viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M19 4h-2V3a1 1 0 00-2 0v1H9V3a1 1 0 00-2 0v1H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V6a2 2 0 00-2-2zm-2 16H7V10h12zM9 8h6V6H9z" />
+                            <path d="M19 4h-2V3a1 1 0 00-2 0v1H9V3a1 1 0 00-2 0v1H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V6a2 2 0 00-2-2zm-2 16H7V10h12zM9 8h6V6H9z" />
                         </svg>
                         <p class="text-4xl font-bold">12</p>
                     </div>
@@ -97,8 +98,7 @@
                     <div class="flex items-center space-x-4 mb-4">
                         <svg class="w-10 h-10 text-purple-600" fill="currentColor" viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M16.5 12c-1.22 0-2.3.61-2.94 1.55-.42-.25-.7-.57-.7-.57C12.4 12.3 10.9 11 9 11c-2.76 0-5 2.24-5 5v3h14v-3c0-1.74-1.04-3.23-2.5-3.87zm-7.5-2c1.11 0 2-.89 2-2s-.89-2-2-2-2 .89-2 2 .89 2 2 2zM20 16c-.78 0-1.42.59-1.92 1.34C17.39 17.75 16.22 18 15 18s-2.39-.25-3.08-.66c-.5-.75-1.14-1.34-1.92-1.34-1.22 0-2.3.61-2.94 1.55-.42-.25-.7-.57-.7-.57C7.4 17.3 5.9 16 4 16c-2.76 0-5 2.24-5 5v3h22v-3c0-1.74-1.04-3.23-2.5-3.87zm-7.5-2c1.11 0 2-.89 2-2s-.89-2-2-2-2 .89-2 2 .89 2 2 2z" />
+                            <path d="M16.5 12c-1.22 0-2.3.61-2.94 1.55-.42-.25-.7-.57-.7-.57C12.4 12.3 10.9 11 9 11c-2.76 0-5 2.24-5 5v3h14v-3c0-1.74-1.04-3.23-2.5-3.87zm-7.5-2c1.11 0 2-.89 2-2s-.89-2-2-2-2 .89-2 2 .89 2 2 2zM20 16c-.78 0-1.42.59-1.92 1.34C17.39 17.75 16.22 18 15 18s-2.39-.25-3.08-.66c-.5-.75-1.14-1.34-1.92-1.34-1.22 0-2.3.61-2.94 1.55-.42-.25-.7-.57-.7-.57C7.4 17.3 5.9 16 4 16c-2.76 0-5 2.24-5 5v3h22v-3c0-1.74-1.04-3.23-2.5-3.87zm-7.5-2c1.11 0 2-.89 2-2s-.89-2-2-2-2 .89-2 2 .89 2 2 2z" />
                         </svg>
                         <p class="text-4xl font-bold">135</p>
                     </div>
@@ -133,7 +133,7 @@
                         <div class="flex items-center space-x-4">
                             <div class="relative">
                                 <input type="text" placeholder="Pesquisar..."
-                                    class="border border-gray-300 p-2 pl-4 pr-10 rounded-lg w-64 focus:ring-purple-500 focus:border-purple-500">
+                                    class="border border-gray-300 p-2 pl-4 pr-10 rounded-lg w-64 focus:ring-purple-500 focus:border-purple-500 bg-transparent">
                                 <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"
                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd"
@@ -151,18 +151,12 @@
                         <table class="min-w-full divide-y divide-gray-900">
                             <thead class="border-b border-gray-200">
                                 <tr>
-                                    <th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-gray-800">Nome
-                                        do Profissional</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-gray-800">
-                                        Email</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-gray-800">
-                                        Perfil</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-gray-800">
-                                        Especialidade/Função</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-gray-800">
-                                        Status</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-gray-800">
-                                        Ações</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-gray-800"> Nome do Profissional</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-gray-800"> Email</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-gray-800"> Perfil</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-gray-800"> Especialidade/Função</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-gray-800"> Status</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-gray-800"> Ações</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
@@ -238,10 +232,12 @@
             </section>
         </main>
     </div>
+
     <FooterComponent />
+
 </template>
 
-
+<!-- chamadas dos componentes e as importações -->
 <script>
 import FooterComponent from '../components/FooterComponent.vue'
 import PlanoComponent from '../components/PlanoComponent.vue';

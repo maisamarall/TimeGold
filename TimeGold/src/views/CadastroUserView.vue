@@ -9,30 +9,30 @@
         <!-- Nome -->   
         <div class="flex items-center border rounded-lg px-3 py-2">
           <i class="pi pi-user text-gray-500 mr-2"></i>
-          <input type="text" placeholder="Nome Completo" class="w-full outline-none text-gray-700"/>
+          <input type="text" placeholder="Nome Completo" class="w-full outline-none text-gray-700 bg-transparent"/>
         </div>
 
         <!-- E-mail -->
         <div class="flex items-center border rounded-lg px-3 py-2">
           <i class="pi pi-envelope text-gray-500 mr-2"></i>
-          <input type="email" placeholder="E-mail" class="w-full outline-none text-gray-700"/>
+          <input type="email" placeholder="E-mail" class="w-full outline-none text-gray-700 bg-transparent"/>
         </div>
 
         <!-- Telefone -->
         <div class="flex items-center border rounded-lg px-3 py-2">
           <i class="pi pi-phone text-gray-500 mr-2"></i>
-          <input type="tel" placeholder="Telefone" class="w-full outline-none text-gray-700"/>
+          <input type="tel" placeholder="Telefone" class="w-full outline-none text-gray-700 bg-transparent"/>
         </div>
 
         <!-- Perfil -->
-        <select class="w-full border rounded-lg px-3 py-2 text-gray-700">
+        <select class="w-full border rounded-lg px-3 py-2 text-gray-700 bg-transparent">
           <option>Perfil</option>
           <option>Administrador</option>
           <option>Usuário</option>
         </select>
 
         <!-- Especialidade -->
-        <select class="w-full border rounded-lg px-3 py-2 text-gray-700">
+        <select class="w-full border rounded-lg px-3 py-2 text-gray-700 bg-transparent">
           <option>Especialidade</option>
           <option>Odontologia</option>
           <option>Dermatologia</option>
@@ -41,7 +41,7 @@
 
         <!-- Senha -->
         <div class="flex items-center border rounded-lg px-3 py-2 justify-between">
-          <input type="password" placeholder="Senha" class="w-full outline-none text-gray-700" />
+          <input type="password" placeholder="Senha" class="w-full outline-none text-gray-700 bg-transparent" />
           <button type="button" class="text-sm text-purple-700 hover:text-purple-900 ml-2"> Gerar </button>
         </div>
 
