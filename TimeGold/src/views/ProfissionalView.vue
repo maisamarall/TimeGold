@@ -2,12 +2,15 @@
     <!-- Navbar -->
         <header class="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-[#7021D8] to-[#3B1172] text-white shadow-lg">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-20">
+
+                <!-- Logo -->
                 <div class="flex items-center">
-                    <img src="@/assets/logo.png" alt="Logo" class="h-20 w-30 mr-3">
+                    <img src="@/assets/logo.png" alt="Logo" class="h-16 sm:h-20 w-auto mr-3">
                 </div>
 
+                <!-- Navegação -->
                 <nav class="hidden md:flex items-center space-x-6">
-                   <img src="https://img.icons8.com/color/48/user-female-circle--v11.png" alt="Usuário" class="h-14 w-14 rounded-full">
+                   <img id="avatarButton" type="button" data-dropdown-toggle="userDropdown" data-dropdown-placement="bottom-start" class="w-10 h-10 rounded-full cursor-pointer" src="https://img.icons8.com/color/48/user-female-circle--v11.png" alt="Usuário">
                    <span class="text-semibold">Maisa Amaral</span>
                 </nav>
             </div>
@@ -84,7 +87,7 @@
                 <!-- Fim do Menu Lateral -->
 
                 <!-- Botão Gerenciar Assinatura -->
-                <div class="flex justify-end mb-6">
+                <div class="flex justify-end mb-6 mr-8">
                     <a href="#">
                     <button class="bg-[#7021D8] text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-[#3B1172] transition-colors">
                     Gerenciar Assinatura
@@ -94,36 +97,59 @@
 
                 <!-- Grupo de Cards -->
                  <div class="p-5 sm:ml-64">
-                    <div class="p-5 ">
-                       <div class="grid grid-cols-3 gap-6 mb-4">
-                        <div class="flex items-center justify-center h-36 rounded-sm bg-gray-50 border rounded-lg shadow-md">
-                            <p class="text-2xl text-gray-400">
-                                <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+                    <div class="p-5">
+                       <div class="grid grid-cols-3 md:grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-6 mb-4">
+                        <div class="flex flex-col items-center justify-center h-44 rounded-lg bg-gray-50 border shadow-md space-y-3">
+                            <div class="flex items-center justify-center space-x-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-calendar3 w-16 h-16 text-[#B074FF]" viewBox="0 0 16 16">
+                                    <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2M1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857z"/>
+                                    <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
                                 </svg>
-                            </p>
+                                <span class="ml-10 text-[32px] font-semibold">12</span>
+                            </div>
+                            <p class="text-gray-900 font-medium text-[20px] text-center p-2"> Atendimentos confirmados para hoje</p>
                         </div>
-                        <div class="flex items-center justify-center h-36 rounded-sm bg-gray-50 border rounded-lg shadow-md">
-                            <p class="text-2xl text-gray-400">
-                                 <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+
+                        <div class="flex flex-col items-center justify-center h-44 rounded-lg bg-gray-50 border shadow-md space-y-3">
+                            <div class="flex items-center justify-center space-x-4">
+                                <svg xmlns="http://www.w3.org/2000/svg"  fill="currentColor" class="bi bi-person-fill w-16 h-16 text-[#B074FF]" viewBox="0 0 16 16">
+                                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
                                 </svg>
-                            </p>
+                                <span class="ml-10 text-[32px] font-semibold">8</span>
+                            </div>
+                            <p class="text-gray-900 font-medium text-[20px] text-center p-2">Usúarios Ativos</p>
                         </div>
-                        <div class="flex items-center justify-center h-36 rounded-sm bg-gray-50 border rounded-lg shadow-md">
-                            <p class="text-2xl text-gray-400">
-                                <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+
+                        <div class="flex flex-col items-center justify-center h-44 rounded-lg bg-gray-50 border shadow-md space-y-3">
+                            <div class="flex items-center justify-center space-x-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-stopwatch w-16 h-16 text-[#B074FF]" viewBox="0 0 16 16">
+                                    <path d="M8.5 5.6a.5.5 0 1 0-1 0v2.9h-3a.5.5 0 0 0 0 1H8a.5.5 0 0 0 .5-.5z"/>
+                                    <path d="M6.5 1A.5.5 0 0 1 7 .5h2a.5.5 0 0 1 0 1v.57c1.36.196 2.594.78 3.584 1.64l.012-.013.354-.354-.354-.353a.5.5 0 0 1 .707-.708l1.414 1.415a.5.5 0 1 1-.707.707l-.353-.354-.354.354-.013.012A7 7 0 1 1 7 2.071V1.5a.5.5 0 0 1-.5-.5M8 3a6 6 0 1 0 .001 12A6 6 0 0 0 8 3"/>
                                 </svg>
-                            </p>
+                                <span class="ml-10 text-[32px] font-semibold">3</span>
+                                <p class="text-gray-900 font-medium text-[20px] text-center p-2">novos</p>
+                            </div>
+                            <p class="text-gray-900 font-medium text-[20px] text-center p-2">Agendamentos pendentes</p>
                         </div>
                     </div>
                 </div>
-            </div>
+
                 <!-- Fim do grupo de Cards -->
+
+                <!-- Calendário e agendamentos -->
+                  <div class="grid grid-cols-2  gap-4 mt-[100px]">
+                    <div class="flex items-center justify-center rounded-lg bg-gray-50 border shadow-md space-y-3 w-[450px] h-[300px] ml-5">
+                        
+                    </div>
+                    <!-- Fim do calendário -->
+                    
+                    <div class="flex items-center justify-center rounded-lg bg-gray-50 border shadow-md space-y-3 w-[500px] h-[250px] mt-6 ml-20 mr-10 mb-6">
+                        
+                    </div>
+                </div>
+                
+            </div>
+            
         </div>
      </main>
 </template>
-
-<script>
-</script>
