@@ -1,30 +1,35 @@
 
 <template>
     <div class="card">
-       
-        <Dialog v-model:visible="visible" :position="position" header="Edit Profile" :style="{ width: '25rem' }" :modal="true" :draggable="false">
-            <span class="text-surface-500 dark:text-surface-400 block mb-8">Insira seus dados</span>
+        <Dialog v-model:visible="visible"
+                :position="position"
+                header="Acessar"
+                :style="{ width: '25rem', backgroundColor: '#fff', color:'#7021D8'}" :modal="true" :draggable="false" >
+            <span class="text-surface-500 dark:text-surface-400 block mb-8 text-violet-800 font-medium">Insira seus dados</span>
             <div class="flex flex-col gap-2">
                 <FloatLabel variant="on">
-                    <InputText id="on_label" v-model="value3" />
-                    <label for="on_label">E-mail</label>
+                    <InputText id="on_label" v-model="value3" :style="{backgroundColor: '#fff', border:'2px solid #7021D8', borderBottom:'2px solid #7021D8', borderRadius:'10', boxShadow:'none',  transition:'all 0.2s ease-in-out'}"/>
+                    <label for="on_label" :style="{backgroundColor: '#fff', color:'#7021D8'}">E-mail</label>
                 </FloatLabel>
             </div>
             <div class="flex flex-col gap-2 mt-5">
                 <FloatLabel variant="on">
-                    <InputText id="on_label" v-model="value3" />
-                    <label for="on_label">Senha</label>
+                    <InputText id="on_label" v-model="value3" :style="{backgroundColor: '#fff', border:'2px solid #7021D8', borderBottom:'2px solid #7021D8', borderRadius:'10', boxShadow:'none',  transition:'all 0.2s ease-in-out'}" />
+                    <label for="on_label" :style="{backgroundColor: '#fff', color:'#7021D8'}">Senha</label>
                 </FloatLabel>
             </div>
 
 
             <div class="flex justify-end gap-2">
-                <Button type="button" label="Fechar" severity="secondary" @click="visible = false"></Button>
-                <Button type="button" label="Entrar"></Button>
+                <Button type="button" label="Fechar" severity="secondary" @click="visible = false" :style="{marginTop:'50px', backgroundColor:'#7021D8', border:'none', color:'#fff'}"></Button>
+                <Button type="button" label="Entrar" :style="{marginTop:'50px', backgroundColor:'#7021D8', border:'none', color:'#fff'}"></Button>
             </div>
         </Dialog>
     </div>
+
+
 </template>
+
 
 <script setup>
 import { ref } from "vue";
