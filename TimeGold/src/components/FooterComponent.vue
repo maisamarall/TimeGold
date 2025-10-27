@@ -1,8 +1,8 @@
 <template>
     <footer class="bg-gradient-to-r from-[#7021D8] to-[#5013A0] text-white relative">
         <div class="flex justify-center -mt-6 z-10">
-            <button class="bg-purple-900 hover:bg-purple-700 transition duration-300 text-white py-2 px-6 rounded-full shadow-lg text-sm font-semibold -mt-4">
-                <a href=""></a>Voltar ao início
+            <button class="bg-purple-800 hover:bg-purple-700 transition duration-300 text-white py-2 px-6 -mt-4 rounded-full shadow-lg text-sm font-semibold">
+                <a href="#">Voltar ao início</a>
             </button>
         </div>
 
