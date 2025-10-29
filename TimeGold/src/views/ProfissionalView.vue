@@ -1,20 +1,13 @@
 <template>
-  <!-- Navbar -->
-  <header
-    class="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-[#7021D8] to-[#3B1172] text-white shadow-lg"
-  >
-    <div
-      class="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-20"
-    >
+  <div>
+     <!-- Navbar -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-[#7021D8] to-[#3B1172] text-white shadow-lg" >
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-20">
+
       <!-- Logo -->
       <div class="flex items-center">
-        <a href="#">
-          <img
-            src="@/assets/logo.png"
-            alt="Logo"
-            class="h-16 sm:h-20 w-auto mr-3"
-          />
-        </a>
+         <img src="@/assets/logo.png" alt="Logo" class="h-12 sm:h-12 w-auto mr-4 ml-3" />
+        <a href="/" class="text-2xl font-bold">TimeGold</a>
       </div>
 
       <!-- Navegação -->
@@ -23,7 +16,7 @@
           <!-- Botão -->
           <img
             @click.stop="dropdownOpen = !dropdownOpen"
-            class="user-dropdown w-14 h-14 rounded-full cursor-pointer"
+            class="user-dropdown w-12 h-12 rounded-full ring-2 ring-purple-300 cursor-pointer"
             src="https://img.icons8.com/color/48/user-female-circle--v11.png"
             alt="Usuário"
           />
@@ -40,27 +33,17 @@
               </div>
               <ul class="py-2 text-sm text-gray-700">
                 <li>
-                  <a href="#" class="block px-4 py-2 hover:bg-gray-100"
-                    >Dashboard</a
-                  >
+                  <a href="#" class="block px-4 py-2 hover:bg-gray-100">Dashboard</a>
                 </li>
                 <li>
-                  <a href="#" class="block px-4 py-2 hover:bg-gray-100"
-                    >Perfil</a
-                  >
+                  <a href="#" class="block px-4 py-2 hover:bg-gray-100">Perfil</a>
                 </li>
                 <li>
-                  <a href="#" class="block px-4 py-2 hover:bg-gray-100"
-                    >Configurações</a
-                  >
+                  <a href="#" class="block px-4 py-2 hover:bg-gray-100">Configurações</a>
                 </li>
               </ul>
               <div class="py-1">
-                <a
-                  href="#"
-                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  >Sair</a
-                >
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sair</a>
               </div>
             </div>
           </transition>
@@ -111,13 +94,14 @@
           >
             ✕
           </button>
+          
           <ul class="space-y-2 font-medium mt-10 sm:mt-0">
             <li>
-              <a
-                href="#"
-                class="flex items-center p-4 text-black rounded-lg hover:bg-[#7021D8] hover:text-white"
-              >
-                <svg
+            <button
+              @click="openModal('dashboard')"
+              class="flex w-full items-center p-4 text-black rounded-lg hover:bg-[#7021D8] hover:text-white"
+            >
+              <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="currentColor"
                   class="bi bi-speedometer2 w-6 h-6 font-semibold ml-3"
@@ -132,14 +116,14 @@
                   />
                 </svg>
                 <span class="ms-3 font-semibold">Dashboard</span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                class="flex items-center p-4 text-black rounded-lg hover:bg-[#7021D8] hover:text-white"
-              >
-                <svg
+            </button>
+          </li>
+          <li>
+            <button
+              @click="openModal('usuários')"
+              class="flex w-full items-center p-4 text-black rounded-lg hover:bg-[#7021D8] hover:text-white"
+            >
+              <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="currentColor"
                   class="bi bi-person-circle w-6 h-6 font-semibold ml-3"
@@ -152,14 +136,14 @@
                   />
                 </svg>
                 <span class="ml-3 font-semibold">Usúarios</span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                class="flex items-center p-4 text-black rounded-lg hover:bg-[#7021D8] hover:text-white"
-              >
-                <svg
+            </button>
+          </li>
+          <li>
+            <button
+              @click="openModal('agendamentos')"
+              class="flex w-full items-center p-4 text-black rounded-lg hover:bg-[#7021D8] hover:text-white"
+            >
+              <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="currentColor"
                   class="bi bi-calendar3 w-6 h-6 font-semibold ml-3"
@@ -172,15 +156,15 @@
                     d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2"
                   />
                 </svg>
-                <span class="ml-3 font-semibold">Agendamento</span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                class="flex items-center p-4 text-black rounded-lg hover:bg-[#7021D8] hover:text-white"
-              >
-                <svg
+                <span class="ml-3 font-semibold">Agendamentos</span>
+            </button>
+          </li>
+          <li>
+            <button
+              @click="openModal('planos')"
+              class="flex w-full items-center p-4 text-black rounded-lg hover:bg-[#7021D8] hover:text-white"
+            >
+             <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="currentColor"
                   class="bi bi-file-earmark-text-fill w-6 h-6 font-semibold ml-3"
@@ -191,14 +175,14 @@
                   />
                 </svg>
                 <span class="ml-3 font-semibold">Planos & Assinaturas</span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                class="flex items-center p-4 text-black rounded-lg hover:bg-[#7021D8] hover:text-white"
-              >
-                <svg
+            </button>
+          </li>
+          <li>
+            <button
+              @click="openModal('relatorios')"
+              class="flex w-full items-center p-4 text-black rounded-lg hover:bg-[#7021D8] hover:text-white"
+            >
+              <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="currentColor"
                   class="bi bi-file-earmark-bar-graph-fill w-6 h-6 font-semibold ml-3"
@@ -209,14 +193,14 @@
                   />
                 </svg>
                 <span class="ml-3 font-semibold">Relatórios</span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                class="flex items-center p-4 text-black rounded-lg hover:bg-[#7021D8] hover:text-white"
-              >
-                <svg
+            </button>
+          </li>
+           <li>
+            <button
+              @click="openModal('configurações')"
+              class="flex w-full items-center p-4 text-black rounded-lg hover:bg-[#7021D8] hover:text-white"
+            >
+              <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="currentColor"
                   class="bi bi-gear-wide-connected w-6 h-6 font-semibold ml-3"
@@ -227,8 +211,8 @@
                   />
                 </svg>
                 <span class="ml-3 font-semibold">Configurações</span>
-              </a>
-            </li>
+            </button>
+          </li>
           </ul>
         </div>
       </aside>
@@ -241,317 +225,65 @@
       ></div>
       <!-- Fim do Menu Lateral -->
 
-      <!-- Botão Gerenciar Assinatura -->
-      <div class="flex justify-end mb-6 mr-8">
-        <a href="#">
-          <button
-            class="bg-[#7021D8] text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-[#3B1172] transition-colors"
-          >
-            Gerenciar Assinatura
-          </button>
-        </a>
-      </div>
-
-      <!-- Grupo de Cards de indicadores-->
-      <div class="p-5 sm:ml-64">
-        <div class="p-5">
-          <div
-            class="grid grid-cols-1 mt-20 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-          >
-            <div
-              class="bg-white p-6 rounded-lg shadow-md text-gray-800 flex flex-col justify-between items-start"
-            >
-              <div class="flex items-center space-x-4 mb-4">
-                <svg
-                  class="w-10 h-10 text-purple-600"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M19 4h-2V3a1 1 0 00-2 0v1H9V3a1 1 0 00-2 0v1H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V6a2 2 0 00-2-2zm-2 16H7V10h12zM9 8h6V6H9z"
-                  />
-                </svg>
-                <p class="text-4xl font-bold">12</p>
-              </div>
-              <h4 class="text-lg font-semibold text-gray-700">
-                Atendimentos confirmados hoje
-              </h4>
-            </div>
-
-            <div
-              class="bg-white p-6 rounded-lg shadow-md text-gray-800 flex flex-col justify-between items-start"
-            >
-              <div class="flex items-center space-x-4 mb-4">
-                <svg
-                  class="w-10 h-10 text-purple-600"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
-                  />
-                </svg>
-                <p class="text-4xl font-bold">8</p>
-              </div>
-              <h4 class="text-lg font-semibold text-gray-700">
-                Usuários Ativos
-              </h4>
-            </div>
-
-            <div
-              class="bg-white p-6 rounded-lg shadow-md text-gray-800 flex flex-col justify-between items-start"
-            >
-              <div class="flex items-center space-x-4 mb-4">
-                <svg
-                  class="w-10 h-10 text-purple-600"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"
-                  />
-                </svg>
-                <div class="flex items-baseline">
-                  <p class="text-4xl font-bold">3</p>
-                  <span class="ml-2 text-xl font-medium text-gray-500"
-                    >novos</span
-                  >
+      <div class="p-4 sm:ml-64">
+        <div class="p-4">
+          <!-- Grupo de Cards de indicadores-->
+          <div class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-8 mt-20 px-4 place-items-center">
+                <div
+                    class="flex flex-col items-center justify-center bg-white p-8 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 text-center w-full max-w-xs">
+                    <div class="flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-gradient-to-r from-[#7021D8] to-[#5013A0] text-white">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19 4h-2V3a1 1 0 00-2 0v1H9V3a1 1 0 00-2 0v1H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V6a2 2 0 00-2-2zm-2 16H7V10h12zM9 8h6V6H9z" />
+                        </svg>
+                    </div>
+                    <p class="text-4xl font-extrabold text-gray-800 mb-2">12</p>
+                    <h4 class="text-lg font-medium text-gray-600">Atendimentos confirmados hoje</h4>
                 </div>
-              </div>
-              <h4 class="text-lg font-semibold text-gray-700">
-                Agendamentos pendentes
-              </h4>
+
+                <div class="flex flex-col items-center justify-center bg-white p-8 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 text-center w-full max-w-xs">
+                    <div class="flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-gradient-to-r from-green-400 to-green-600 text-white">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                        </svg>
+                    </div>
+                    <p class="text-4xl font-extrabold text-gray-800 mb-2">8</p>
+                    <h4 class="text-lg font-medium text-gray-600">Usuários Ativos</h4>
+                </div>
+
+                <div class="flex flex-col items-center justify-center bg-white p-8 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 text-center w-full max-w-xs">
+                    <div class="flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-gradient-to-r from-blue-500 to-blue-700 text-white">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z" />
+                        </svg>
+                    </div>
+                    <div class="flex items-baseline justify-center">
+                        <p class="text-4xl font-extrabold text-gray-800">3</p>
+                        <span class="ml-2 text-xl font-medium text-gray-500">novos</span>
+                    </div>
+                    <h4 class="text-lg font-medium text-gray-600 mt-2">
+                        Agendamentos pendentes
+                    </h4>
+                </div>
             </div>
-          </div>
         </div>
       </div>
       <!-- Fim do grupo de Cards -->
 
-      <div class="p-5 sm:ml-64">
-        <div class="p-5">
-          <div class="grid grid-cols-1 mt-20 sm:grid-cols-1 lg:grid-cols-2 gap-10">
-
-            <!-- Calendario de agendamentos -->
-            <div class="bg-white p-6 rounded-lg shadow-md text-gray-800 flex flex-col justify-between items-start" >
-              <div class="flex items-center mb-4 w-full">
-                <table class="w-full text-sm text-left border-separate" style="border-spacing: 0 10px;">
-                  <thead class="text-xs uppercase text-[15px] font-semibold text-black">
-                    <tr>
-                      <!-- Seta esquerda -->
-                      <th class="w-6 text-left">
-                        <svg
-                          class="w-4 h-4 text-gray-500"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 8 14"
-                        >
-                          <path
-                            stroke="currentColor"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M7 1 1.3 6.326a.91.91 0 0 0 0 1.348L7 13"
-                          />
-                        </svg>
-                      </th>
-
-                      <!-- Mês central -->
-                      <th class="text-center" colspan="5">Setembro 2025</th>
-
-                      <!-- Seta esquerda -->
-                      <th class="w-6 text-right">
-                        <svg
-                          class="w-4 h-4 text-gray-500"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 8 14"
-                        >
-                          <path
-                            stroke="currentColor"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M7 1 1.3 6.326a.91.91 0 0 0 0 1.348L7 13"
-                          />
-                        </svg>
-                      </th>
-
-                      <!-- Seta direita -->
-                      <th class="w-6 text-right">
-                        <svg
-                          class="w-4 h-4 text-gray-500"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 8 14"
-                        >
-                          <path
-                            stroke="currentColor"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="m1 13 5.7-5.326a.909.909 0 0 0 0-1.348L1 1"
-                          />
-                        </svg>
-                      </th>
-                    </tr>
-                  </thead>
-
-                  <tbody class="text-center">
-                    <tr class="h-0">
-                        <td colspan="10" class="bg-gray-300"></td>
-                    </tr>
-                    <tr>
-                      <th>D</th>
-                      <th>S</th>
-                      <th>T</th>
-                      <th>Q</th>
-                      <th>Q</th>
-                      <th>S</th>
-                      <th>S</th>
-                    </tr>
-                    
-                    <tr>
-                      <td class="text-gray-500">31</td>
-                      <td>1</td>
-                      <td>2</td>
-                      <td>3</td>
-                      <td>4</td>
-                      <td>5</td>
-                      <td>6</td>
-                    </tr>
-
-                    <tr>
-                      <td>7</td>
-                      <td>8</td>
-                      <td>9</td>
-                      <td>10</td>
-                      <td>11</td>
-                      <td>12</td>
-                      <td>13</td>
-                    </tr>
-
-                    <tr>
-                      <td>14</td>
-                      <td>15</td>
-                      <td>16</td>
-                      <td>17</td>
-                      <td>18</td>
-                      <td>19</td>
-                      <td>20</td>
-                    </tr>
-
-                    <tr>
-                      <td>21</td>
-                      <td class="bg-purple-300 rounded-full w-8 h-8 flex items-center justify-center mx-auto">22</td>
-                      <td>23</td>
-                      <td>24</td>
-                      <td>25</td>
-                      <td>26</td>
-                      <td>27</td>
-                    </tr>
-
-                    <tr>
-                      <td>28</td>
-                      <td>29</td>
-                      <td>30</td>
-                      <td class="text-gray-500">1</td>
-                      <td class="text-gray-500">2</td>
-                      <td class="text-gray-500">3</td>
-                      <td class="text-gray-500">4</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <!-- Fim do calendario -->
-
-            <!-- Tabela de agendamentos -->
-             <div class="bg-white p-6 rounded-lg shadow-md text-gray-800 relative overflow-x-auto">
-                <table class="w-full text-sm text-left rtl:text-right text-gray-500">
-                    <thead class="text-xs text-gray-700">
-                        <tr>
-                            <th scope="col" class="py-3 text-[15px] text-semibold">
-                                Agendamentos de hoje
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        
-                        <tr class="bg-white border-b border-gray-200 font-medium text-gray-600">
-                            <th scope="row" class="px-6 py-4 whitespace-nowrap">
-                                10:00
-                            </th>
-                            <td class="px-6 py-4">
-                                Tom Holland
-                            </td>
-                            <td class="px-6 py-4">
-                                Dr. Jênie
-                            </td>
-                            <td class="px-6 py-4 bg-purple-300 rounded-full h-8 flex items-center justify-center mt-2 text-purple-800">
-                                Disponível
-                            </td>
-                        </tr>
-
-                        <tr class="bg-white border-b border-gray-200 font-medium text-gray-600">
-                            <th scope="row" class="px-6 py-4 whitespace-nowrap">
-                                8:30
-                            </th>
-                            <td class="px-6 py-4">
-                                João Almeida 
-                            </td>
-                            <td class="px-6 py-4">
-                                Dr. Simone
-                            </td>
-                            <td class="px-6 py-4 bg-purple-300 rounded-full h-8 flex items-center justify-center mt-2 text-purple-800">
-                                Pendente
-                            </td>
-                        </tr>
-
-                        <tr class="bg-white border-b border-gray-200 font-medium text-gray-600">
-                            <th scope="row" class="px-6 py-4 whitespace-nowrap">
-                                11:00
-                            </th>
-                            <td class="px-6 py-4">
-                                Yuri Alberto
-                            </td>
-                            <td class="px-6 py-4">
-                                Dr. Jênie
-                            </td>
-                            <td class="px-6 py-4 bg-purple-300 rounded-full h-8 flex items-center justify-center mt-2 text-purple-800">
-                                Disponível
-                            </td>
-                        </tr>
-
-                        <tr class="bg-white border-b border-gray-200 font-medium text-gray-600">
-                            <th scope="row" class="px-6 py-4 whitespace-nowrap">
-                                11:30
-                            </th>
-                            <td class="px-6 py-4">
-                                Maria Silva
-                            </td>
-                            <td class="px-6 py-4">
-                                Dr. Simone
-                            </td>
-                            <td class="px-6 py-4 bg-purple-300 rounded-full h-8 flex items-center justify-center mt-2 text-purple-800">
-                                Disponível
-                            </td>
-                        </tr>
-
-                    </tbody>
-                </table>
-            </div>
-            <!-- Fim da tabela de agendamentos -->
-
-          </div>
-        </div>
-      </div>
+      
     </div>
   </main>
+  <!-- Fim do conteúdo da página -->
+
+   <!-- Rodapé -->
+   <div  class="sm:ml-64">
+    <FooterComponent />
+   </div>
+  <!-- Fim do Rodapé -->
+  </div>
 </template>
+
 <script setup>
+import FooterComponent from '../components/FooterComponent.vue'
 import { ref, onMounted, onBeforeUnmount } from "vue";
 
 // Estados separados
