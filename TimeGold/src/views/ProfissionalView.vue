@@ -98,9 +98,9 @@
           <ul class="space-y-2 font-medium mt-10 sm:mt-0">
             <li>
             <button
-              @click="openModal('dashboard')"
-              class="flex w-full items-center p-4 text-black rounded-lg hover:bg-[#7021D8] hover:text-white"
-            >
+               @click="openModal('dashboard')"
+               class="flex w-full items-center p-4 text-black rounded-lg hover:bg-[#7021D8] hover:text-white"
+               >
               <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="currentColor"
@@ -162,8 +162,8 @@
           <li>
             <button
               @click="openModal('planos')"
-              class="flex w-full items-center p-4 text-black rounded-lg hover:bg-[#7021D8] hover:text-white"
-            >
+               class="flex w-full items-center p-4 text-black rounded-lg hover:bg-[#7021D8] hover:text-white"
+               >
              <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="currentColor"
@@ -225,51 +225,11 @@
       ></div>
       <!-- Fim do Menu Lateral -->
 
-      <div class="p-4 sm:ml-64">
-        <div class="p-4">
-          <!-- Grupo de Cards de indicadores-->
-          <div class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-8 mt-20 px-4 place-items-center">
-                <div
-                    class="flex flex-col items-center justify-center bg-white p-8 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 text-center w-full max-w-xs">
-                    <div class="flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-gradient-to-r from-[#7021D8] to-[#5013A0] text-white">
-                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M19 4h-2V3a1 1 0 00-2 0v1H9V3a1 1 0 00-2 0v1H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V6a2 2 0 00-2-2zm-2 16H7V10h12zM9 8h6V6H9z" />
-                        </svg>
-                    </div>
-                    <p class="text-4xl font-extrabold text-gray-800 mb-2">12</p>
-                    <h4 class="text-lg font-medium text-gray-600">Atendimentos confirmados hoje</h4>
-                </div>
-
-                <div class="flex flex-col items-center justify-center bg-white p-8 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 text-center w-full max-w-xs">
-                    <div class="flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-gradient-to-r from-green-400 to-green-600 text-white">
-                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                        </svg>
-                    </div>
-                    <p class="text-4xl font-extrabold text-gray-800 mb-2">8</p>
-                    <h4 class="text-lg font-medium text-gray-600">Usuários Ativos</h4>
-                </div>
-
-                <div class="flex flex-col items-center justify-center bg-white p-8 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 text-center w-full max-w-xs">
-                    <div class="flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-gradient-to-r from-blue-500 to-blue-700 text-white">
-                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z" />
-                        </svg>
-                    </div>
-                    <div class="flex items-baseline justify-center">
-                        <p class="text-4xl font-extrabold text-gray-800">3</p>
-                        <span class="ml-2 text-xl font-medium text-gray-500">novos</span>
-                    </div>
-                    <h4 class="text-lg font-medium text-gray-600 mt-2">
-                        Agendamentos pendentes
-                    </h4>
-                </div>
-            </div>
-        </div>
+       <div class="top-0 sm:ml-64">
+          <template v-if="currentModal">
+          <component :is="currentModal" @close="closeModal" />
+        </template>
       </div>
-      <!-- Fim do grupo de Cards -->
-
-      
     </div>
   </main>
   <!-- Fim do conteúdo da página -->
@@ -279,11 +239,14 @@
     <FooterComponent />
    </div>
   <!-- Fim do Rodapé -->
+     
   </div>
 </template>
 
 <script setup>
 import FooterComponent from '../components/FooterComponent.vue'
+import DashboardComponent from '../components/DashboardComponent.vue';
+import PlanoComponent from '../components/PlanoComponent.vue';
 import { ref, onMounted, onBeforeUnmount } from "vue";
 
 // Estados separados
@@ -299,4 +262,19 @@ onMounted(() => document.addEventListener("click", closeDropdownOutside));
 onBeforeUnmount(() =>
   document.removeEventListener("click", closeDropdownOutside)
 );
+
+const currentModal = ref(null);
+
+function openModal(name) {
+  if (name === 'dashboard') {
+    currentModal.value = DashboardComponent;
+  }
+  if (name === 'planos') {
+    currentModal.value = PlanoComponent;
+  }
+}
+
+function closeModal() {
+  currentModal.value = null;
+}
 </script>
