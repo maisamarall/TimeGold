@@ -23,22 +23,22 @@ Desenvolvida com foco em eficiência, design intuitivo e integração entre prof
 
 - PrimeVue (componentes interativos e visuais)
 
-JavaScript / HTML / CSS
+- JavaScript / HTML / CSS
 
-Font Awesome / Bootstrap Icons
+- Font Awesome / Bootstrap Icons
 
 # 🚀 Como Executar o Projeto
 
-# Clone o repositório
+- Clone o repositório
 git clone https://github.com/seuusuario/timegold.git
 
-# Acesse a pasta do projeto
+- Acesse a pasta do projeto
 cd timegold
 
-# Instale as dependências
+- Instale as dependências
 npm install
 
-# Rode o projeto localmente
+- Rode o projeto localmente
 npm run dev
 
 # 📞 Contato
