@@ -1,5 +1,5 @@
 <template>
-    
+
     <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 px-4 sm:px-6">
         <transition name="fade-scale">
             <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl p-8 relative animate-fade-in">
@@ -7,7 +7,8 @@
                     <h2 class="text-2xl font-semibold text-gray-700">
                         🧾 Cadastrar Usuário
                     </h2>
-                    <button @click="$emit('fechar')" class="text-gray-400 hover:text-gray-600 text-2xl leading-none" aria-label="Fechar"> &times; </button>
+                    <button @click="$emit('fechar')" class="text-gray-400 hover:text-gray-600 text-2xl leading-none"
+                        aria-label="Fechar"> &times; </button>
                 </div>
 
                 <form @submit.prevent="emitirSalvar" class="space-y-4">
@@ -59,11 +60,13 @@
                     </div>
 
                     <div class="flex justify-end gap-4 pt-4">
-                        <button type="button" @click="$emit('fechar')" class="px-5 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 border border-gray-300">
+                        <button type="button" @click="$emit('fechar')"
+                            class="px-5 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 border border-gray-300">
                             Cancelar
                         </button>
 
-                        <button type="submit" class="px-5 py-2 rounded-lg text-sm font-medium text-white bg-gradient-to-r from-[#7021D8] to-[#5013A0] hover:opacity-90">
+                        <button type="submit"
+                            class="px-5 py-2 rounded-lg text-sm font-medium text-white bg-gradient-to-r from-[#7021D8] to-[#5013A0] hover:opacity-90">
                             Salvar
                         </button>
                     </div>
