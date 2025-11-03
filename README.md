@@ -46,6 +46,7 @@ npm run dev
 📧 timegoldsuporte@gmail.com
 
 📱 (14) 99677-2006
+
 🌐 Instagram - @timegoldoficial
 
 # 🧾 Licença
