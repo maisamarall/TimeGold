@@ -30,7 +30,7 @@ Desenvolvida com foco em eficiência, design intuitivo e integração entre prof
 # 🚀 Como Executar o Projeto
 
 - Clone o repositório
-git clone https://github.com/seuusuario/timegold.git
+git clone https://github.com/maisamarall/TimeGold.git
 
 - Acesse a pasta do projeto
 cd timegold
