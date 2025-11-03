@@ -1,6 +1,5 @@
 <template>
     <div>
-        <!-- navbar -->
         <header
             class="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-[#7021D8] to-[#5013A0] text-white shadow-lg">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-20">
@@ -11,7 +10,7 @@
 
                 <nav class="hidden md:flex items-center space-x-6">
                     <a href="#" class="hover:text-purple-300 transition duration-150">Agenda</a>
-                    <a href="#" class="hover:text-purple-300 transition duration-150">Equipe</a>
+                    <a href="#equipe" class="hover:text-purple-300 transition duration-150">Equipe</a>
 
                     <div class="relative group">
                         <button @click="toggleDropdown"
@@ -40,7 +39,6 @@
             </div>
         </header>
 
-        <!-- conteudo da pagina -->
         <main class="mt-20">
             <section class="bg-gradient-to-r from-[#7021D8] to-[#5013A0] text-white py-12 px-4 mb-10 sm:px-6 lg:px-8">
                 <div class="container mx-auto">
@@ -120,23 +118,24 @@
             <!-- Sessão de planos -->
             <PlanoComponent />
 
-            <!-- Gerenciar usuarios -->
-            <section class="bg-white py-16 px-4 sm:px-6 lg:px-8">
+            <section id="equipe" class="bg-white py-16 px-4 sm:px-6 lg:px-8">
                 <div class="container mx-auto p-8 rounded-xl bg-gray-50 border border-gray-200 shadow-xl">
+
                     <div class="flex justify-between items-center mb-10">
-                        <h2 class="text-3xl font-bold text-gray-600">Gerenciar Equipe</h2>
+                        <h2 class="text-3xl font-bold text-gray-700">Gerenciar Equipe</h2>
 
                         <div class="flex items-center space-x-4">
                             <div class="relative">
-                                <input type="text" placeholder="Pesquisar..."
-                                    class="border border-gray-300 p-2 pl-4 pr-10 rounded-lg w-64 focus:ring-purple-500 focus:border-purple-500 bg-transparent">
-                                <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"
+                                <input type="text" placeholder="Pesquisar por nome..." v-model="termoBusca"
+                                    class="border border-purple-500 text-gray-800 placeholder-gray-500 bg-white/80 rounded-lg w-64 p-2 pl-4 pr-10 focus:ring-2 focus:ring-purple-400 focus:border-purple-500 transition-all duration-200" />
+                                <svg class="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-purple-600"
                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd"
                                         d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
                                         clip-rule="evenodd" />
                                 </svg>
                             </div>
+
                             <button @click="abrirModal"
                                 class="bg-gradient-to-r from-[#7021D8] to-[#5013A0] text-white py-2 px-4 rounded-lg hover:bg-purple-700 transition duration-150 flex items-center space-x-2">
                                 <span>Cadastrar profissional</span>
@@ -149,23 +148,19 @@
                         <table class="min-w-full divide-y divide-gray-900">
                             <thead class="border-b border-gray-200">
                                 <tr>
-                                    <th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-gray-800">
-                                        Nome do Profissional</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-gray-800">
-                                        Email</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-gray-800">
-                                        Perfil</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-gray-800">
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-800">Nome do
+                                        Profissional</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-800">Email</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-800">Perfil</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-800">
                                         Especialidade/Função</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-gray-800">
-                                        Status</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-sm font-semibold text-gray-800">
-                                        Ações</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-800">Status</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-800">Ações</th>
                                 </tr>
                             </thead>
 
                             <tbody class="bg-white divide-y divide-gray-200">
-                                <tr v-for="(usuario, index) in usuarios" :key="index">
+                                <tr v-for="(usuario, index) in usuariosFiltrados" :key="index">
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ usuario.nome }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ usuario.email }}
@@ -177,15 +172,16 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm">
                                         <span
                                             :class="['px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full', usuario.status === 'Ativo' ? 'bg-purple-200 text-purple-800' : 'bg-gray-200 text-gray-700']">
-                                            {{ usuario.status }} </span>
+                                            {{ usuario.status }}
+                                        </span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-purple-600">
                                         <button type="button"
                                             class="text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
                                             Editar
                                         </button>
-                                        <button type="button"
-                                            class="text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                                        <button @click="abrirModalExcluir(usuario)" type="button"
+                                            class="text-red-600 hover:text-white border border-red-600 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
                                             Excluir
                                         </button>
                                     </td>
@@ -194,22 +190,59 @@
                         </table>
                     </div>
 
-                    <br>
-                    <!-- <div class="mt-8 text-right">
-                        <button class="bg-gradient-to-r from-[#7021D8] to-[#5013A0] text-white py-3 px-8 rounded-lg hover:bg-purple-700 transition duration-150 flex items-center space-x-2 ml-auto">
-                            Gerenciar horários
-                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"> </path>
-                            </svg>
-                        </button>
-                    </div> -->
-
+                    <transition name="fade">
+                        <div v-if="mostrarModalExcluir"
+                            class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                            <div class="bg-white rounded-xl shadow-xl p-8 max-w-sm w-full text-center">
+                                <h3 class="text-xl font-semibold text-gray-800 mb-4">Excluir profissional</h3>
+                                <p class="text-gray-600 mb-6">
+                                    Tem certeza de que deseja excluir <strong>{{ usuarioSelecionado?.nome }}</strong>?
+                                </p>
+                                <div class="flex justify-center gap-4">
+                                    <button @click="confirmarExclusao"
+                                        class="bg-red-600 hover:bg-red-700 text-white font-semibold px-5 py-2 rounded-lg">
+                                        Excluir
+                                    </button>
+                                    <button @click="cancelarExclusao"
+                                        class="border border-gray-400 text-gray-700 hover:bg-gray-100 font-semibold px-5 py-2 rounded-lg">
+                                        Cancelar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </transition>
                 </div>
             </section>
+
         </main>
     </div>
 
     <UserFormModal v-if="mostrarModal" @fechar="fecharModal" @salvar="salvarUsuario" />
+
+    <div v-if="usuarioParaExcluir" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+        <div class="bg-white rounded-xl shadow-xl w-full max-w-sm p-6 text-center relative">
+            <h3 class="text-xl font-semibold text-purple-800 mb-3">
+                Confirmar exclusão
+            </h3>
+            <p class="text-gray-600 mb-6">
+                Tem certeza que deseja excluir <br />
+                <strong>{{ usuarioParaExcluir.nome }}</strong>?
+            </p>
+            <div class="flex justify-center gap-3">
+                <button @click="usuarioParaExcluir = null"
+                    class="px-4 py-2 rounded-lg border border-purple-700 text-purple-700 hover:bg-purple-100 font-medium transition-colors duration-200">
+                    Cancelar
+                </button>
+
+                <button @click="confirmarExclusao"
+                    class="px-4 py-2 rounded-lg bg-red-600 text-white font-semibold hover:bg-red-700">
+                    Excluir
+                </button>
+
+            </div>
+        </div>
+    </div>
+
     <FooterComponent />
 
 </template>
@@ -217,8 +250,8 @@
 <!-- chamadas dos componentes e as importações -->
 <script>
 import FooterComponent from '../components/FooterComponent.vue'
-import PlanoComponent from '../components/PlanoComponent.vue';
-import UserFormModal from '../components/UserFormModal.vue';
+import PlanoComponent from '../components/PlanoComponent.vue'
+import UserFormModal from '../components/UserFormModal.vue'
 
 export default {
     name: 'AdminDashboard',
@@ -231,50 +264,78 @@ export default {
         return {
             adminName: 'Admin',
             isDropdownOpen: false,
+
             mostrarModal: false,
+
+            mostrarModalExcluir: false,
+            usuarioSelecionado: null,
+
+            termoBusca: '',
+
             usuarios: [
                 {
                     nome: 'Maisa Amaral',
                     email: 'maisa@gmail.com',
                     perfil: 'Profissional',
                     especialidade: 'Administradora',
-                    status: 'Ativo'
+                    status: 'Ativo',
                 },
                 {
                     nome: 'Jênie Danielle',
                     email: 'jenie@gmail.com',
                     perfil: 'Profissional',
                     especialidade: 'Dentista Geral',
-                    status: 'Ativo'
+                    status: 'Ativo',
                 },
-            ]
-        };
+            ],
+        }
+    },
+
+    computed: {
+        usuariosFiltrados() {
+            return this.usuarios.filter((usuario) =>
+                usuario.nome.toLowerCase().includes(this.termoBusca.toLowerCase())
+            )
+        },
     },
 
     methods: {
         toggleDropdown() {
-            this.isDropdownOpen = !this.isDropdownOpen;
+            this.isDropdownOpen = !this.isDropdownOpen
         },
 
         abrirModal() {
             this.mostrarModal = true
         },
-
         fecharModal() {
             this.mostrarModal = false
         },
 
         salvarUsuario(usuario) {
-            console.log('Usuário salvo:', usuario)
             this.usuarios.push({
                 nome: usuario.nome,
                 email: usuario.email,
                 perfil: usuario.perfil,
                 especialidade: usuario.especialidade,
-                status: usuario.status === 'ativo' ? 'Ativo' : 'Inativo'
+                status: usuario.status === 'ativo' ? 'Ativo' : 'Inativo',
             })
             this.mostrarModal = false
-        }
+        },
+
+        abrirModalExcluir(usuario) {
+            this.usuarioSelecionado = usuario
+            this.mostrarModalExcluir = true
+        },
+        cancelarExclusao() {
+            this.mostrarModalExcluir = false
+            this.usuarioSelecionado = null
+        },
+        confirmarExclusao() {
+            this.usuarios = this.usuarios.filter(
+                (u) => u !== this.usuarioSelecionado
+            )
+            this.cancelarExclusao()
+        },
     },
-};
+}
 </script>

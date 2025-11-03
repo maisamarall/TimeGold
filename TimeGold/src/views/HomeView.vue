@@ -108,11 +108,7 @@
         <i class="fab fa-whatsapp text-3xl"></i>
     </a>
 
-
-
-    <section id="planos">
-        <PlanoComponent />
-    </section>
+    <section id="planos"> <PlanoComponent /> </section>
     <br>
     <br>
     <FooterComponent />
