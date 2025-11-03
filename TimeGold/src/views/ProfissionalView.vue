@@ -1,99 +1,114 @@
 <template>
-  <div>
-     <!-- Navbar -->
-  <header class="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-[#7021D8] to-[#3B1172] text-white shadow-lg" >
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-20">
-
-      <!-- Logo -->
-      <div class="flex items-center">
-         <img src="@/assets/logo.png" alt="Logo" class="h-12 sm:h-12 w-auto mr-4 ml-3" />
-        <a href="/" class="text-2xl font-bold">TimeGold</a>
-      </div>
-
-      <!-- Navegação -->
-      <nav class="flex items-center space-x-6">
-        <div class="relative inline-block">
-          <!-- Botão -->
-          <img
-            @click.stop="dropdownOpen = !dropdownOpen"
-            class="user-dropdown w-12 h-12 rounded-full ring-2 ring-purple-300 cursor-pointer"
-            src="https://img.icons8.com/color/48/user-female-circle--v11.png"
-            alt="Usuário"
-          />
-
-          <!-- Dropdown -->
-          <transition name="fade">
-            <div
-              v-if="dropdownOpen"
-              class="absolute right-0 z-10 mt-2 w-44 bg-white divide-y divide-gray-100 rounded-lg shadow-sm"
-            >
-              <div class="px-4 py-3 text-md text-gray-900">
-                <div>Maisa Amaral</div>
-                <div class="font-medium truncate">maisa@gmail.com</div>
-              </div>
-              <ul class="py-2 text-sm text-gray-700">
-                <li>
-                  <a href="#" class="block px-4 py-2 hover:bg-gray-100">Dashboard</a>
-                </li>
-                <li>
-                  <a href="#" class="block px-4 py-2 hover:bg-gray-100">Perfil</a>
-                </li>
-                <li>
-                  <a href="#" class="block px-4 py-2 hover:bg-gray-100">Configurações</a>
-                </li>
-              </ul>
-              <div class="py-1">
-                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sair</a>
-              </div>
-            </div>
-          </transition>
-        </div>
-      </nav>
-    </div>
-  </header>
-
-  <!-- Conteúdo da página-->
-  <main class="mt-24 p-6 min-h-screen">
-    <div class="container mx-auto items-center justify-center">
-      <!-- Menu Lateral -->
-      <!-- Botão para abrir no mobile -->
-      <button
-        @click="sidebarOpen = !sidebarOpen"
-        type="button"
-        class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+  <div class="flex flex-col min-h-screen">
+    <!-- Navbar -->
+    <header
+      class="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-[#7021D8] to-[#3B1172] text-white shadow-lg"
+    >
+      <div
+        class="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-20"
       >
-        <span class="sr-only">Abrir menu lateral</span>
-        <svg
-          class="w-6 h-6"
-          aria-hidden="true"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            clip-rule="evenodd"
-            fill-rule="evenodd"
-            d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
-          ></path>
-        </svg>
-      </button>
-
-      <aside
-        :class="[
-          'fixed top-20 left-0 z-40 w-64 h-screen bg-gray-50 transition-transform transform',
-          sidebarOpen ? 'translate-x-0' : '-translate-x-full',
-          'sm:translate-x-0',
-        ]"
-        aria-label="Sidebar"
-      >
-        <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 relative">
-          <!-- Botão "X" para fechar no mobile -->
+        <!-- Logo -->
+        <div class="flex items-center space-x-3">
+          <!-- Botão Mobile -->
           <button
-            @click="sidebarOpen = false"
-            class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 sm:hidden"
+            @click="sidebarOpen = !sidebarOpen"
+            class="sm:hidden focus:outline-none"
           >
-            ✕
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-7 w-7"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
           </button>
+          <a href="/" class="text-2xl font-bold">TimeGold</a>
+        </div>
+
+        <!-- Navegação / Usuário -->
+        <nav class="flex items-center space-x-6">
+          <div class="relative group">
+            <button
+              @click.stop="dropdownOpen = !dropdownOpen"
+              class="user-dropdown flex items-center font-bold hover:text-purple-300 transition duration-150"
+            >
+              Maisa Amaral
+            </button>
+
+            <transition name="fade">
+              <div
+                v-if="dropdownOpen"
+                class="absolute right-0 mt-2 w-50 bg-white text-gray-800 rounded-md shadow-xl z-50"
+              >
+                <div class="px-4 py-3 text-md text-gray-900">
+                  <div class="font-semibold truncate">maisaamaral206@gmail.com</div>
+                </div>
+                <hr />
+                <ul class="py-2 text-md text-gray-800 font-medium">
+                  <li>
+                    <a
+                      @click="openModal('dashboard')"
+                      class="block px-4 py-2 hover:bg-gray-100"
+                      >Dashboard</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      @click="openModal('agendamentos')"
+                      class="block px-4 py-2 hover:bg-gray-100"
+                      >Perfil</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      @click="openModal('perfil')"
+                      class="block px-4 py-2 hover:bg-gray-100"
+                      >Agendamentos</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      @click="openModal('configurações')"
+                      class="block px-4 py-2 hover:bg-gray-100"
+                      >Configurações</a
+                    >
+                  </li>
+                </ul>
+                <hr />
+                <div class="py-1">
+                  <a
+                    href="/"
+                    class="block px-4 py-2 text-md text-gray-800 font-medium hover:bg-gray-100"
+                    >Sair</a
+                  >
+                </div>
+              </div>
+            </transition>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Estrutura principal -->
+    <div class="flex flex-1 pt-20">
+      <!-- Sidebar -->
+      <transition name="slide">
+          <aside
+          :class="[
+            'bg-purple-100 rounded-lg p-4 lg:mb-6 lg:ml-5 overflow-y-auto fixed inset-y-0 top-20 left-0 z-40 w-64 transform transition-transform',
+            sidebarOpen ? 'translate-x-0' : '-translate-x-full',
+            'lg:static lg:translate-x-0 lg:block'
+          ]"
+          aria-label="Sidebar"
+          >
+           <div class="h-full px-3 py-4 overflow-y-auto relative">
           
           <ul class="space-y-2 font-medium mt-10 sm:mt-0">
             <li>
@@ -120,7 +135,7 @@
           </li>
           <li>
             <button
-              @click="openModal('usuários')"
+              @click="openModal('perfil')"
               class="flex w-full items-center p-4 text-black rounded-lg hover:bg-[#7021D8] hover:text-white"
             >
               <svg
@@ -135,7 +150,7 @@
                     d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
                   />
                 </svg>
-                <span class="ml-3 font-semibold">Usúarios</span>
+                <span class="ml-3 font-semibold">Perfil</span>
             </button>
           </li>
           <li>
@@ -157,24 +172,6 @@
                   />
                 </svg>
                 <span class="ml-3 font-semibold">Agendamentos</span>
-            </button>
-          </li>
-          <li>
-            <button
-              @click="openModal('planos')"
-               class="flex w-full items-center p-4 text-black rounded-lg hover:bg-[#7021D8] hover:text-white"
-               >
-             <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="currentColor"
-                  class="bi bi-file-earmark-text-fill w-6 h-6 font-semibold ml-3"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M4.5 9a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1zM4 10.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m.5 2.5a.5.5 0 0 1 0-1h4a.5.5 0 0 1 0 1z"
-                  />
-                </svg>
-                <span class="ml-3 font-semibold">Planos & Assinaturas</span>
             </button>
           </li>
           <li>
@@ -215,62 +212,56 @@
           </li>
           </ul>
         </div>
-      </aside>
+        </aside>
+      </transition>
 
-      <!-- Overlay (fecha ao clicar fora no mobile) -->
+      <!-- Fundo escuro ao abrir sidebar no mobile -->
       <div
         v-if="sidebarOpen"
-        class="fixed inset-0 bg-black bg-opacity-40 z-30 sm:hidden"
         @click="sidebarOpen = false"
+        class="fixed inset-0 bg-black bg-opacity-40 sm:hidden z-30"
       ></div>
-      <!-- Fim do Menu Lateral -->
 
-       <div class="top-0 sm:ml-64">
-          <template v-if="currentModal">
-          <component :is="currentModal" @close="closeModal" />
-        </template>
-      </div>
+      <!-- Conteúdo principal -->
+      <main class="flex-1 p-6 overflow-auto bg-gray-50">
+        <component :is="currentModal" v-if="currentModal" />
+      </main>
     </div>
-  </main>
-  <!-- Fim do conteúdo da página -->
 
-   <!-- Rodapé -->
-   <div  class="sm:ml-64">
-    <FooterComponent />
-   </div>
-  <!-- Fim do Rodapé -->
-     
+    <!-- Footer -->
+    <footer class="bg-white border-t text-center">
+      <FooterComponent />
+    </footer>
   </div>
 </template>
 
 <script setup>
-import FooterComponent from '../components/FooterComponent.vue'
-import DashboardComponent from '../components/DashboardComponent.vue';
-import PlanoComponent from '../components/PlanoComponent.vue';
 import { ref, onMounted, onBeforeUnmount } from "vue";
+import FooterComponent from "../components/FooterComponent.vue";
+import DashboardComponent from "../components/DashboardComponent.vue";
+import AgendamentosComponent from "../components/AgendamentosComponent.vue";
 
-// Estados separados
+// Estados
 const sidebarOpen = ref(false);
 const dropdownOpen = ref(false);
+const currentModal = ref(DashboardComponent); 
 
-// Fecha o dropdown ao clicar fora
+// Fecha dropdown ao clicar fora
 const closeDropdownOutside = (e) => {
   if (!e.target.closest(".user-dropdown")) dropdownOpen.value = false;
 };
-
 onMounted(() => document.addEventListener("click", closeDropdownOutside));
 onBeforeUnmount(() =>
   document.removeEventListener("click", closeDropdownOutside)
 );
 
-const currentModal = ref(null);
-
 function openModal(name) {
-  if (name === 'dashboard') {
+  if (name === "dashboard") {
     currentModal.value = DashboardComponent;
-  }
-  if (name === 'planos') {
-    currentModal.value = PlanoComponent;
+  } else if (name === "agendamentos") {
+    currentModal.value = AgendamentosComponent;
+  } else {
+    currentModal.value = null; 
   }
 }
 
@@ -278,3 +269,25 @@ function closeModal() {
   currentModal.value = null;
 }
 </script>
+
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+.slide-enter-active,
+.slide-leave-active {
+  transition: transform 0.3s ease;
+}
+.slide-enter-from {
+  transform: translateX(-100%);
+}
+.slide-leave-to {
+  transform: translateX(-100%);
+}
+</style>

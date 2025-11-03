@@ -17,7 +17,7 @@
   
       <div class="flex items-center gap-3">
         <p class="text-gray-700 font-semibold">Hoje é {{ dataAtual }}</p>
-        <img class="w-10 h-10 rounded-full ring-4 ring-purple-300 cursor-pointer ml-3 mr-3" src="https://img.icons8.com/color/48/user-female-circle--v11.png" alt="Usuário"/> </div>
+      </div>
     </header>
 
     <main>
@@ -112,76 +112,37 @@
         </tbody>
       </table>
     </div>
-  </section>
 
-      <div class="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-1 gap-4 mt-10 mb-10">
-         <!-- Próximos Agendamentos -->
-        <div class="bg-white rounded-xl shadow p-4">
-          <div class="flex items-center gap-2 mb-3">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M7 10h10v2H7v-2zm0 4h7v2H7v-2zm10-8h-2V3h-2v3H11V3H9v3H7a2 2 0 00-2 2v12a2 
-              2 0 002 2h10a2 2 0 002-2V8a2 2 0 00-2-2zm0 14H7V8h10v12z" />
-            </svg>
-            <h3 class="text-lg font-semibold text-gray-800">Próximos agendamentos</h3>
-          </div>
-          <ul class="divide-y divide-gray-200 max-h-56 overflow-y-auto">
-            <li v-for="(pac, i) in proximosPacientes" :key="i" class="py-2">
-              <p class="text-sm text-gray-700 font-medium">{{ pac.nome }}</p>
-              <p class="text-xs text-gray-500">{{ pac.hora }} — {{ pac.procedimento }}</p>
-            </li>
-          </ul>
-        </div>
-
-         <!-- Notas pessoais -->
-        <div class="bg-white rounded-xl shadow p-4">
-          <div class="flex items-center gap-2 mb-3">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M4 19h16V5H4v14zm0-16h16a2 2 0 012 2v14a2 2 0 01-2 2H4a2 
-              2 0 01-2-2V5a2 2 0 012-2z" />
-            </svg>
-            <h3 class="text-lg font-semibold text-gray-800">Notas pessoais</h3>
-          </div>
-          <ul class="list-disc list-inside space-y-2 text-sm text-gray-700">
-            <li v-for="(nota, i) in notasPessoais" :key="i">{{ nota }}</li>
-          </ul>
-        </div>
-
-         <!-- Alertas -->
-        <div class="bg-white rounded-xl shadow p-4 border-l-4 border-red-400">
-          <div class="flex items-center gap-2 mb-3">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 
-              10 10 10 10-4.48 10-10S17.52 2 12 2zm1 
-              15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-            </svg>
-            <h3 class="text-lg font-semibold text-gray-800">Alertas / Pendências</h3>
-          </div>
-          <ul class="space-y-2 text-sm text-gray-700">
-            <li v-for="(alerta, i) in alertasPendentes" :key="i" class="flex items-center gap-2">
-              <span class="w-2 h-2 bg-red-400 rounded-full"></span>
-              {{ alerta }}
-            </li>
-          </ul>
-        </div>
-      </div>
-
-       <!-- Área de Gráficos -->
-    <div class="bg-white p-4 rounded-xl shadow text-center text-gray-700">
-      <div class="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 gap-4">
-         <div class="flex items-center justify-center rounded-sm bg-gray-50 h-28 ">
-            
-         </div>
-         <div class="flex items-center justify-center rounded-sm bg-gray-50 h-28 ">
-            
-         </div>
-         <div class="flex items-center justify-center rounded-sm bg-gray-50 h-28 ">
-            
-         </div>
-         <div class="flex items-center justify-center rounded-sm bg-gray-50 h-28 ">
-            
-         </div>
-      </div>
+    <!-- Próximos Agendamentos -->
+  <div class="bg-white rounded-xl p-4 mt-20 w-full shadow-sm border-t">
+    <div class="flex items-center gap-2 mb-3">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-5 h-5 text-blue-500"
+        fill="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M7 10h10v2H7v-2zm0 4h7v2H7v-2zm10-8h-2V3h-2v3H11V3H9v3H7a2 2 0 00-2 2v12a2 
+          2 0 002 2h10a2 2 0 002-2V8a2 2 0 00-2-2zm0 14H7V8h10v12z"
+        />
+      </svg>
+      <h3 class="text-lg font-bold text-purple-800">Próximos agendamentos</h3>
     </div>
+    <ul class="divide-y divide-gray-200 max-h-56">
+      <li
+        v-for="(pac, i) in proximosPacientes"
+        :key="i"
+        class="py-2 hover:bg-gray-50 rounded-lg px-2 transition"
+      >
+        <p class="text-md text-gray-700 font-semibold">{{ pac.nome }}</p>
+        <p class="text-xs text-gray-500">
+          {{ pac.data }} — {{ pac.hora }} — {{ pac.procedimento }}
+        </p>
+      </li>
+    </ul>
+  </div>
+  </section>
 
    </div>
     </main>
@@ -211,25 +172,12 @@ const agendamentoDoDia = ref([
 const tabelaScroll = ref(null)
 
 const proximosPacientes = ref([
-  { nome: 'Laura Mendes', hora: '12:00', procedimento: 'Avaliação ortodôntica' },
-  { nome: 'Bruno Lima', hora: '12:30', procedimento: 'Limpeza dental' },
-  { nome: 'Ana Souza', hora: '13:00', procedimento: 'Restauração' },
-  { nome: 'Carlos Ribeiro', hora: '14:00', procedimento: 'Extração simples' }
+  { nome: 'Laura Mendes', data:'03/11/2025', hora: '12:00', procedimento: 'Avaliação ortodôntica' },
+  { nome: 'Bruno Lima', data:'03/11/2025', hora: '12:30', procedimento: 'Limpeza dental' },
+  { nome: 'Ana Souza', data:'03/11/2025', hora: '13:00', procedimento: 'Restauração' },
+  { nome: 'Carlos Ribeiro', data:'03/11/2025', hora: '14:00', procedimento: 'Extração simples' }
 ])
 
-const notasPessoais = ref([
-  'Ligar para o laboratório sobre os moldes.',
-  'Revisar prontuário da paciente Ana.',
-  'Enviar relatório mensal até sexta-feira.'
-])
-
-const alertasPendentes = ref([
-  'Reagendar paciente João (cancelado)',
-  'Verificar pagamento pendente de Maria',
-  'Confirmação de consulta às 17h'
-])
-
-// Lógica para arrastar com o mouse
 onMounted(() => {
   const el = tabelaScroll.value
   if (!el) return
