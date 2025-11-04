@@ -12,7 +12,7 @@
     <!-- Cabeçalho -->
     <header class="flex justify-between items-center bg-white p-4 rounded-xl shadow mt-10 mb-10">
       <div>
-        <h1 class="text-2xl font-bold text-gray-800">Olá, Dra. Maisa Amaral 👋</h1>
+        <h1 class="text-2xl font-bold text-gray-800">Olá, Dra. Jênie Danielle 👋</h1>
       </div>
   
       <div class="flex items-center gap-3">

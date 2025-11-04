@@ -37,46 +37,39 @@
           <div class="relative group">
             <button
               @click.stop="dropdownOpen = !dropdownOpen"
-              class="user-dropdown flex items-center font-bold hover:text-purple-300 transition duration-150"
+              class="user-dropdown flex items-center font-bold text-lg hover:text-purple-300 transition duration-150"
             >
-              Maisa Amaral
+              Jênie Danielle
             </button>
 
             <transition name="fade">
               <div
                 v-if="dropdownOpen"
-                class="absolute right-0 mt-2 w-50 bg-white text-gray-800 rounded-md shadow-xl z-50"
+                class="absolute right-0 mt-2 w-60 bg-white text-center text-gray-800 rounded-md shadow-xl z-50"
               >
                 <div class="px-4 py-3 text-md text-gray-900">
-                  <div class="font-semibold truncate">maisaamaral206@gmail.com</div>
+                  <div class="font-semibold truncate">jenie@gmail.com</div>
                 </div>
                 <hr />
                 <ul class="py-2 text-md text-gray-800 font-medium">
                   <li>
                     <a
                       @click="openModal('dashboard')"
-                      class="block px-4 py-2 hover:bg-gray-100"
+                      class="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
                       >Dashboard</a
                     >
                   </li>
                   <li>
                     <a
-                      @click="openModal('agendamentos')"
-                      class="block px-4 py-2 hover:bg-gray-100"
+                      @click="openModal('perfil')"
+                      class="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
                       >Perfil</a
                     >
                   </li>
                   <li>
                     <a
-                      @click="openModal('perfil')"
-                      class="block px-4 py-2 hover:bg-gray-100"
-                      >Agendamentos</a
-                    >
-                  </li>
-                  <li>
-                    <a
                       @click="openModal('configurações')"
-                      class="block px-4 py-2 hover:bg-gray-100"
+                      class="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
                       >Configurações</a
                     >
                   </li>
@@ -85,7 +78,7 @@
                 <div class="py-1">
                   <a
                     href="/"
-                    class="block px-4 py-2 text-md text-gray-800 font-medium hover:bg-gray-100"
+                    class="block px-4 py-2 text-md text-gray-800 font-medium hover:bg-gray-100 cursor-pointer"
                     >Sair</a
                   >
                 </div>
@@ -102,7 +95,7 @@
       <transition name="slide">
           <aside
           :class="[
-            'bg-purple-100 rounded-lg p-4 lg:mb-6 lg:ml-5 overflow-y-auto fixed inset-y-0 top-20 left-0 z-40 w-64 transform transition-transform',
+            'bg-[#f8f9fa] rounded-lg p-4 lg:mb-6  overflow-y-auto fixed inset-y-0 top-20 left-0 z-40 w-76 transform transition-transform shadow-lg',
             sidebarOpen ? 'translate-x-0' : '-translate-x-full',
             'lg:static lg:translate-x-0 lg:block'
           ]"
@@ -240,6 +233,7 @@ import { ref, onMounted, onBeforeUnmount } from "vue";
 import FooterComponent from "../components/FooterComponent.vue";
 import DashboardComponent from "../components/DashboardComponent.vue";
 import AgendamentosComponent from "../components/AgendamentosComponent.vue";
+import PerfilProfissionalComponent from "../components/PerfilProfissionalComponent.vue";
 
 // Estados
 const sidebarOpen = ref(false);
@@ -260,6 +254,8 @@ function openModal(name) {
     currentModal.value = DashboardComponent;
   } else if (name === "agendamentos") {
     currentModal.value = AgendamentosComponent;
+  } else if (name === "perfil") {
+    currentModal.value = PerfilProfissionalComponent;
   } else {
     currentModal.value = null; 
   }
