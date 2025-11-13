@@ -222,9 +222,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class="bg-white border-t text-center">
       <FooterComponent />
-    </footer>
   </div>
 </template>
 
@@ -232,8 +230,8 @@
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import FooterComponent from "../components/FooterComponent.vue";
 import DashboardComponent from "../components/DashboardComponent.vue";
-import AgendamentosComponent from "../components/AgendamentosComponent.vue";
 import PerfilProfissionalComponent from "../components/PerfilProfissionalComponent.vue";
+import AgendamentosComponent from "../components/AgendamentosComponent.vue";
 
 // Estados
 const sidebarOpen = ref(false);
