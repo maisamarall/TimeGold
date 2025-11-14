@@ -72,7 +72,7 @@
             </div>
         </section>
 
-        <section class="bg-purple-700 text-white py-16 px-4 sm:px-6 lg:px-8">
+        <section class="bg-gradient-to-r from-[#7021D8] to-[#5013A0] text-white py-16 px-4 sm:px-6 lg:px-8">
             <div class="container mx-auto text-center max-w-3xl">
                 <h3 class="text-3xl font-bold mb-6">Tem alguma dúvida?</h3>
                 <p class="text-lg mb-8">Fale com a nossa equipe agora pelo WhatsApp e tire todas as suas dúvidas.</p>
