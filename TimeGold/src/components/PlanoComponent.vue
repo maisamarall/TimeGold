@@ -73,7 +73,7 @@
                             class="bg-white text-purple-700 font-bold active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg py-3 px-6 rounded-lg w-full">
                             Assinar
                         </button>
-                        <button type="button"
+                        <button type="button" @click="$router.push('/saibamais')"
                             class="bg-white text-purple-700 font-bold py-3 px-6 rounded-lg w-full active:scale-95 transition-transform duration-200 hover:shadow-md">
                             Saiba mais
                         </button>
@@ -129,10 +129,11 @@
                             class="bg-gradient-to-r from-[#7021D8] to-[#5013A0] text-white font-bold py-3 px-6 rounded-lg w-full transition-all duration-200 hover:brightness-110 active:scale-95">
                             Assinar
                         </button>
-                        <button type="button"
+                        <button type="button" @click="$router.push('/saibamais')"
                             class="bg-gradient-to-r from-[#7021D8] to-[#5013A0] text-white font-bold py-3 px-6 rounded-lg w-full transition-all duration-200 hover:brightness-110 active:scale-95">
                             Saiba mais
                         </button>
+
                     </div>
                 </div>
 
@@ -197,7 +198,7 @@
                             class="bg-white text-purple-700 font-bold active:scale-95 transition-all duration-200 shadow-md hover:shadow-lg py-3 px-6 rounded-lg w-full">
                             Assinar
                         </button>
-                        <button type="button"
+                        <button type="button" @click="$router.push('/saibamais')"
                             class="bg-white text-purple-700 font-bold py-3 px-6 rounded-lg w-full active:scale-95 transition-transform duration-200 hover:shadow-md">
                             Saiba mais
                         </button>

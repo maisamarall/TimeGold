@@ -84,22 +84,7 @@
                             </template>
                             <template v-else>{{ profile.yearsExperience }} anos</template>
                         </li>
-                        <li>
-                            <span class="font-semibold">Idiomas:</span>
-                            <template v-if="editar">
-                                <input v-model="profile.languages"
-                                    class="w-full bg-transparent border border-gray-300 rounded px-2 py-1 text-gray-800 focus:outline-none focus:ring-1 focus:ring-purple-500" />
-                            </template>
-                            <template v-else>{{ profile.languages }}</template>
-                        </li>
-                        <li>
-                            <span class="font-semibold">Convênios:</span>
-                            <template v-if="editar">
-                                <input v-model="profile.insurances"
-                                    class="w-full bg-transparent border border-gray-300 rounded px-2 py-1 text-gray-800 focus:outline-none focus:ring-1 focus:ring-purple-500" />
-                            </template>
-                            <template v-else>{{ profile.insurances }}</template>
-                        </li>
+                        
                     </ul>
                 </div>
             </div>

@@ -4,13 +4,15 @@
             <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl p-8 relative animate-fade-in">
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="text-2xl font-semibold text-gray-700">
-                        🧾 Cadastrar Usuário
+                        🧾 Editar Usuário
                     </h2>
                     <button @click="$emit('fechar')" class="text-gray-400 hover:text-gray-600 text-2xl leading-none"
-                        aria-label="Fechar"> &times; </button>
+                        aria-label="Fechar">
+                        &times;
+                    </button>
                 </div>
 
-                <form @submit.prevent="emitirSalvar" class="space-y-4">
+                <form @submit.prevent="handleSubmit" class="space-y-4">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                             <label class="label">Nome <span class="text-red-500">*</span></label>
@@ -33,7 +35,7 @@
                             <label class="label">Perfil</label>
                             <select v-model="form.perfil" class="input">
                                 <option value="Profissional">Profissional</option>
-                                <option value="Admin">Admin</option>
+                                <option value="Administrador">Administrador</option>
                             </select>
                         </div>
                     </div>
@@ -47,15 +49,10 @@
                         <div>
                             <label class="label">Status</label>
                             <select v-model="form.status" class="input">
-                                <option value="ativo">Ativo</option>
-                                <option value="inativo">Inativo</option>
+                                <option value="Ativo">Ativo</option>
+                                <option value="Inativo">Inativo</option>
                             </select>
                         </div>
-                    </div>
-
-                    <div>
-                        <label class="label">Senha <span class="text-red-500">*</span></label>
-                        <input v-model="form.senha" type="password" required class="input" />
                     </div>
 
                     <div class="flex justify-end gap-4 pt-4">
@@ -76,46 +73,39 @@
 </template>
 
 <script>
-import Swal from 'sweetalert2'
-
 export default {
-    name: 'UserFormModal',
+    name: 'EditUserModal',
+    props: {
+        usuario: {
+            type: Object,
+            required: true
+        }
+    },
     data() {
         return {
             form: {
-                nome: '',
-                email: '',
-                telefone: '',
-                perfil: 'Profissional',
-                especialidade: '',
-                status: 'ativo',
-                senha: ''
+                nome: this.usuario?.nome || '',
+                email: this.usuario?.email || '',
+                telefone: this.usuario?.telefone || '',
+                perfil: this.usuario?.perfil || 'Profissional',
+                especialidade: this.usuario?.especialidade || '',
+                status: this.usuario?.status || 'Ativo',
+                senha: '' // opcional, caso queira alterar senha
             }
         }
     },
     methods: {
-        emitirSalvar() {
+        handleSubmit() {
             this.$emit('salvar', { ...this.form })
 
             Swal.fire({
-                title: '✅ Sucesso!',
-                text: 'Usuário cadastrado com sucesso!',
-                icon: 'success',
-                confirmButtonColor: '#7021D8'
+                title: "Sucesso!",
+                text: "Usuário atualizado com sucesso!",
+                icon: "success",
+                confirmButtonColor: "#7021D8"
             })
 
-            this.resetarForm()
-        },
-        resetarForm() {
-            this.form = {
-                nome: '',
-                email: '',
-                telefone: '',
-                perfil: 'Profissional',
-                especialidade: '',
-                status: 'ativo',
-                senha: ''
-            }
+            this.$emit('fechar')
         }
     }
 }

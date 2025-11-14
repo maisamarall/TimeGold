@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import AdminView from '../views/AdminView.vue'
 import PerfilView from '../views/PerfilView.vue'
 import ProfissionalView from '../views/ProfissionalView.vue'
+import SaibaMaisView from '../views/SaibaMaisView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -27,6 +28,11 @@ const router = createRouter({
       path: '/profissional',
       name: 'profissional',
       component: ProfissionalView
+    },
+    {
+      path: '/saibamais',
+      name: 'saibamais',
+      component: SaibaMaisView
     }
   ],
 })
