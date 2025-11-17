@@ -1,17 +1,18 @@
 <template>
-
     <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 px-4 sm:px-6">
         <transition name="fade-scale">
             <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl p-8 relative animate-fade-in">
-                <div class="flex justify-center items-center mb-6">
+                <div class="flex justify-between items-center mb-6">
                     <h2 class="text-2xl font-semibold text-gray-700">
-                        📆 Cadastrar Agendamento
+                        📆 Editar Agendamento
                     </h2>
-                    <button @click="$emit('fechar')" class="text-gray-400 hover:text-gray-600 text-2xl leading-none justify-end absolute top-4 right-4"
-                        aria-label="Fechar"> &times; </button>
+                    <button @click="$emit('fechar')" class="text-gray-400 hover:text-gray-600 text-2xl leading-none"
+                        aria-label="Fechar">
+                        &times;
+                    </button>
                 </div>
 
-                <form @submit.prevent="emitirSalvar" class="space-y-4">
+                <form @submit.prevent="handleSubmit" class="space-y-4">
                     <div class="grid grid-cols-1 gap-4">
                         <div>
                             <label class="label">Paciente:</label>
@@ -49,12 +50,12 @@
 
                     <div class="flex justify-end gap-4 pt-4">
                         <button type="button" @click="$emit('fechar')"
-                            class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400 transition duration-150">
+                            class="px-5 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 border border-gray-300">
                             Cancelar
                         </button>
 
                         <button type="submit"
-                            class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition duration-150">
+                            class="px-5 py-2 rounded-lg text-sm font-medium text-white bg-gradient-to-r from-[#7021D8] to-[#5013A0] hover:opacity-90">
                             Salvar
                         </button>
                     </div>
@@ -66,32 +67,27 @@
 
 <script>
 export default {
-    name: 'AgendamentoFormModal',
+    name: 'EditAgendamentoModalComponent',
+    props: {
+        agendamento: {
+            type: Object,
+            required: true
+        }
+    },
     data() {
         return {
             form: {
-                paciente: '',
-                data: '',
-                hora: '',
-                procedimento: '',
-                status: 'Pendente'
+                paciente: this.agendamento.paciente || '',
+                data: this.agendamento.data || '',
+                hora: this.agendamento.hora || '',
+                procedimento: this.agendamento.procedimento || '',
+                status: this.agendamento.status || 'Pendente'
             }
         }
     },
     methods: {
-       emitirSalvar() {
-            this.$emit('salvar', { ...this.form })
-
-            this.resetarForm()
-        },
-        resetarForm() {
-            this.form = {
-                paciente: '',
-                data: '',
-                hora: '',
-                procedimento: '',
-                status: 'Pendente'
-            }
+        handleSubmit() {
+            this.$emit('salvar', { ...this.form, id: this.agendamento.id })
         }
     }
 }
@@ -123,7 +119,6 @@ export default {
     margin-bottom: 0.25rem;
 }
 
-/* Animação */
 .fade-scale-enter-active,
 .fade-scale-leave-active {
     transition: all 0.2s ease-out;

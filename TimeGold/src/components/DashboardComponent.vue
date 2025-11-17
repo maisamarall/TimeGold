@@ -72,7 +72,7 @@
 
     <!-- Agendamentos -->
      <section class="bg-white p-4 rounded-xl shadow mt-10 mb-10">
-    <h2 class="text-xl font-bold text-purple-900 mt-3 mb-3">Agendamentos de hoje</h2>
+    <h2 class="text-xl font-bold text-purple-900 mt-3 mb-3">Agendamentos do dia</h2>
 
     <div
       ref="tabelaScroll"
@@ -85,64 +85,64 @@
             <th class="px-4">Paciente</th>
             <th class="px-4">Procedimento</th>
             <th class="px-4">Status</th>
+            <th class="px-4 ml-15">Ações</th>
           </tr>
         </thead>
         <tbody>
           <tr
-            v-for="(consulta, index) in agendamentoDoDia"
+            v-for="(agendamento, index) in agendamentoDoDia"
             :key="index"
             class="border-t text-gray-700 hover:bg-gray-50 mt-5 mb-5"
           >
-            <td class="py-3 px-4 whitespace-nowrap">{{ consulta.hora }}</td>
-            <td class="py-3 px-4 whitespace-nowrap">{{ consulta.paciente }}</td>
-            <td class="py-3 px-4 whitespace-nowrap">{{ consulta.procedimento }}</td>
-            <td>
+            <td class="py-3 px-4 font-medium">{{ agendamento.hora }}</td>
+            <td class="px-4">{{ agendamento.paciente }}</td>
+            <td class="px-4">{{ agendamento.procedimento }}</td>
+            <td class="px-4">
               <span
-                class="px-2 py-1 text-sm rounded-full"
                 :class="{
-                  'bg-green-100 text-green-700 font-bold': consulta.status === 'Concluído',
-                  'bg-yellow-100 text-yellow-700 font-bold': consulta.status === 'Em andamento',
-                  'bg-red-100 text-red-700 font-bold': consulta.status === 'Pendente'
+                  'px-3 py-1 rounded-full text-sm font-semibold':
+                    true,
+                  'bg-red-100 text-red-700':
+                    agendamento.status === 'Pendente',
+                  'bg-yellow-100 text-yellow-700':
+                    agendamento.status === 'Em andamento',
+                  'bg-green-100 text-green-700':
+                    agendamento.status === 'Concluído'
                 }"
               >
-                {{ consulta.status }}
+                {{ agendamento.status }}
               </span>
+            </td>
+            <td>
+              <div class="flex items-center gap-4">
+                <button
+                  @click="abrirModalEditar(agendamento)"
+                  class="px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 font-semibold"
+                >
+                  Editar
+                </button>
+                <button
+                  @click="confirmarExclusao(agendamento)"
+                  class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 font-semibold"
+                >
+                  Excluir
+                </button>
+              </div>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-
-    <!-- Próximos Agendamentos -->
-  <div class="bg-white rounded-xl p-4 mt-20 w-full shadow-sm border-t">
-    <div class="flex items-center gap-2 mb-3">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="w-5 h-5 text-blue-500"
-        fill="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          d="M7 10h10v2H7v-2zm0 4h7v2H7v-2zm10-8h-2V3h-2v3H11V3H9v3H7a2 2 0 00-2 2v12a2 
-          2 0 002 2h10a2 2 0 002-2V8a2 2 0 00-2-2zm0 14H7V8h10v12z"
-        />
-      </svg>
-      <h3 class="text-lg font-bold text-purple-800">Próximos agendamentos</h3>
-    </div>
-    <ul class="divide-y divide-gray-200 max-h-56">
-      <li
-        v-for="(pac, i) in proximosPacientes"
-        :key="i"
-        class="py-2 hover:bg-gray-50 rounded-lg px-2 transition"
-      >
-        <p class="text-md text-gray-700 font-semibold">{{ pac.nome }}</p>
-        <p class="text-xs text-gray-500">
-          {{ pac.data }} — {{ pac.hora }} — {{ pac.procedimento }}
-        </p>
-      </li>
-    </ul>
-  </div>
   </section>
+
+    <!-- Modal de edição de agendamento -->
+    <EditAgendamentoModalComponent
+      v-if="modalEditarAberto"
+      :agendamento="agendamentoSelecionado"
+      @fechar="modalEditarAberto = false"
+      @salvar="atualizarAgendamento"
+    />
+
 
    </div>
     </main>
@@ -152,67 +152,100 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
+import EditAgendamentoModalComponent from './EditAgendamentoModalComponent.vue'
 
 // Data formatada
 const dataAtual = new Date().toLocaleDateString('pt-BR', {
   weekday: 'long',
-  day: '2-digit',
+  year: 'numeric',
   month: 'long',
-  year: 'numeric'
+  day: 'numeric'
 })
 
-// Dados das consultas
-const agendamentoDoDia = ref([
-  { hora: '10:00', paciente: 'Tom Holland', procedimento: 'Limpeza', status: 'Concluído' },
-  { hora: '10:30', paciente: 'João Almeida ', procedimento: 'Restauração', status: 'Em andamento' },
-  { hora: '11:30', paciente: 'Yuri Alberto', procedimento: 'Avaliação', status: 'Pendente' },
-  { hora: '11:30', paciente: 'Maria Silva', procedimento: 'Manutenção', status: 'Pendente' }
-])
-
+// Estado do componente
 const tabelaScroll = ref(null)
+let isDragging = false
+let startX = 0
+let scrollLeft = 0
+const modalEditarAberto = ref(false)
+const agendamentoSelecionado = ref(null)
 
-const proximosPacientes = ref([
-  { nome: 'Laura Mendes', data:'03/11/2025', hora: '12:00', procedimento: 'Avaliação ortodôntica' },
-  { nome: 'Bruno Lima', data:'03/11/2025', hora: '12:30', procedimento: 'Limpeza dental' },
-  { nome: 'Ana Souza', data:'03/11/2025', hora: '13:00', procedimento: 'Restauração' },
-  { nome: 'Carlos Ribeiro', data:'03/11/2025', hora: '14:00', procedimento: 'Extração simples' }
+// Agendamentos do dia 
+const agendamentoDoDia = ref([
+  {
+    hora: '09:00',
+    paciente: 'Ana Silva',
+    procedimento: 'Consulta Geral',
+    status: 'Pendente'
+  },
+  {
+    hora: '10:30',
+    paciente: 'Bruno Souza',
+    procedimento: 'Limpeza Dental',
+    status: 'Em andamento'
+  },
+  {
+    hora: '13:00',
+    paciente: 'Carla Mendes',
+    procedimento: 'Extração de Dente',
+    status: 'Concluído'
+  }
 ])
 
+// Funções para arrastar a tabela
+function iniciarArrasto(event) {
+  isDragging = true
+  startX = event.pageX - tabelaScroll.value.offsetLeft
+  scrollLeft = tabelaScroll.value.scrollLeft
+}
+function pararArrasto() {
+  isDragging = false
+}
+function arrastarTabela(event) {
+  if (!isDragging) return
+  event.preventDefault()
+  const x = event.pageX - tabelaScroll.value.offsetLeft
+  const walk = (x - startX) * 2
+  tabelaScroll.value.scrollLeft = scrollLeft - walk
+}
 onMounted(() => {
-  const el = tabelaScroll.value
-  if (!el) return
-
-  let isDown = false
-  let startX
-  let scrollLeft
-
-  el.addEventListener('mousedown', (e) => {
-    isDown = true
-    el.classList.add('active')
-    startX = e.pageX - el.offsetLeft
-    scrollLeft = el.scrollLeft
-  })
-
-  el.addEventListener('mouseleave', () => {
-    isDown = false
-    el.classList.remove('active')
-  })
-
-  el.addEventListener('mouseup', () => {
-    isDown = false
-    el.classList.remove('active')
-  })
-
-  el.addEventListener('mousemove', (e) => {
-    if (!isDown) return
-    e.preventDefault()
-    const x = e.pageX - el.offsetLeft
-    const walk = (x - startX) * 1.2
-    el.scrollLeft = scrollLeft - walk
-  })
+  tabelaScroll.value.addEventListener('mousedown', iniciarArrasto)
+  tabelaScroll.value.addEventListener('mouseleave', pararArrasto)
+  tabelaScroll.value.addEventListener('mouseup', pararArrasto)
+  tabelaScroll.value.addEventListener('mousemove', arrastarTabela)
 })
 onBeforeUnmount(() => {
-  const el = tabelaScroll.value
-  if (el) el.replaceWith(el.cloneNode(true))
+  tabelaScroll.value.removeEventListener('mousedown', iniciarArrasto)
+  tabelaScroll.value.removeEventListener('mouseleave', pararArrasto)
+  tabelaScroll.value.removeEventListener('mouseup', pararArrasto)
+  tabelaScroll.value.removeEventListener('mousemove', arrastarTabela)
 })
+
+// Funções para editar agendamento
+function abrirModalEditar(agendamento) {
+  agendamentoSelecionado.value = { ...agendamento }
+  modalEditarAberto.value = true
+}
+function atualizarAgendamento(agendamentoAtualizado) {
+  const index = agendamentoDoDia.value.findIndex(
+    (agendamento) => agendamento.hora === agendamentoAtualizado.hora
+  )
+  if (index !== -1) {
+    agendamentoDoDia.value[index] = { ...agendamentoAtualizado }
+  }
+  modalEditarAberto.value = false
+}
+
+// Função para confirmar exclusão
+function confirmarExclusao(agendamento) {
+  const confirmacao = confirm(
+    `Tem certeza que deseja excluir o agendamento de ${agendamento.paciente} às ${agendamento.hora}?`
+  )
+  if (confirmacao) {
+    agendamentoDoDia.value = agendamentoDoDia.value.filter(
+      (a) => a.hora !== agendamento.hora
+    )
+    alert('Agendamento excluído com sucesso!')
+  }
+}
 </script>

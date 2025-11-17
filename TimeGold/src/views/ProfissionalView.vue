@@ -68,7 +68,6 @@
                   </li>
                   <li>
                     <a
-                      @click="openModal('configurações')"
                       class="block px-4 py-2 hover:bg-gray-100 cursor-pointer"
                       >Configurações</a
                     >
@@ -169,7 +168,6 @@
           </li>
           <li>
             <button
-              @click="openModal('relatorios')"
               class="flex w-full items-center p-4 text-black rounded-lg hover:bg-[#7021D8] hover:text-white"
             >
               <svg
@@ -187,7 +185,6 @@
           </li>
            <li>
             <button
-              @click="openModal('configurações')"
               class="flex w-full items-center p-4 text-black rounded-lg hover:bg-[#7021D8] hover:text-white"
             >
               <svg
@@ -257,10 +254,6 @@ function openModal(name) {
   } else {
     currentModal.value = null; 
   }
-}
-
-function closeModal() {
-  currentModal.value = null;
 }
 </script>
 
