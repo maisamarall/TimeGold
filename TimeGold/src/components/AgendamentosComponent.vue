@@ -9,31 +9,16 @@
         Voltar
       </a>
 
-      <div class="text-center mb-8 sm:mb-10">
-        <h1 class="text-2xl sm:text-3xl font-bold text-purple-800">
-          Calendário de Agendamentos
-        </h1>
-      </div>
-
       <section class="lg:flex lg:h-full lg:flex-col">
         <header class="bg-purple-100 border border-purple-300 px-4 py-4 rounded-lg">
           <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 w-full">
 
-            <div class="data relative w-full lg:w-1/3 border border-purple-500 rounded-lg font-semibold text-purple-900 sm:justify-start md:justify-start lg:justify-start">
-              <input
-                type="date"
-                v-model="selectedDateInput"
-                @change="onDateChange"
-                class="bg-gray-50 border border-purple-300 rounded-lg text-purple-900 text-md font-semibold focus:ring-purple-500 focus:border-purple-500 w-full ps-10 p-2.5"
-              />
-            </div>
-
-            <div class="flex justify-center sm:justify-start md:justify-center lg:justify-center items-center gap-2 w-full lg:w-1/3">
+            <div class="flex justify-start sm:justify-center lg:justify-start items-center gap-2 w-full lg:w-1/3 ml-4">
               <select
                 id="visao"
                 v-model="viewMode"
                 @change="onViewModeChange"
-                class="bg-white border border-purple-500 text-gray-900 text-md rounded-lg focus:ring-purple-900 focus:border-purple-900 p-2.5 w-full sm:w-auto"
+                class="bg-white border border-purple-500 text-gray-900 text-md py-2 px-4 rounded-lg focus:ring-purple-900 focus:border-purple-900 p-5 w-full sm:w-auto"
               >
                 <option value="day">Dia</option>
                 <option value="week">Semana</option>
@@ -41,6 +26,12 @@
               </select>
             </div>
 
+            <div class="flex justify-center sm:justify-center lg:justify-center items-center gap-2 w-full lg:w-1/3">
+              <h1 class="text-lg font-[30px] sm:text-md font-bold text-purple-800">
+                Calendário de Agendamentos
+              </h1>
+            </div>
+      
             <div class="flex justify-end sm:justify-center lg:justify-end items-center gap-2 w-full lg:w-1/3 mr-4">
               <button @click="abrirModal"
               class="bg-gradient-to-r from-[#7021D8] to-[#5013A0] text-white py-2 px-4 rounded-lg hover:bg-purple-700 transition duration-150 flex items-center space-x-2">
