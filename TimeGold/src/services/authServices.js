@@ -9,7 +9,7 @@ class AuthService {
                 id: data.id,
                 name: data.name,
                 email: data.email,
-                role: data.role
+                type: data.type
             };
 
             localStorage.setItem('user', JSON.stringify(user));

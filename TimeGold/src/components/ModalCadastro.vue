@@ -23,15 +23,14 @@
                         </div>
                         <div class="grid grid-cols-1">
                             <label class="text-base text-gray-600 mb-2 font-semibold">Cnpj</label>
-                            <input v-model="form.cnpj" type="text" placeholder="XX.XXX.XXX/XXXX-XX" class="p-2 bg-transparent rounded-md text-gray-500 text-[14px] font-semibold pl-2 border border-gray-400 focus:outline-none focus:border-2 focus:border-violet-400" required>
+                            <input v-model="form.cnpj" type="text" class="p-2 bg-transparent rounded-md text-gray-500 text-[14px] font-semibold pl-2 border border-gray-400 focus:outline-none focus:border-2 focus:border-violet-400" required>
                         </div>
 
                         <div class="grid grid-cols-1">
                             <label class="text-base text-gray-600 mb-2 font-semibold">Escolha um plano</label>
-                            <select v-model="form.status" class="bg-transparent text-gray-600 border border-gray-400 p-2 rounded-md focus:outline-none">
-                                <option value="1">Plano Básico</option>
-                                <option value="2">Plano Profissional</option>
-                                <option value="3">Plano Personalizado</option>
+                            <select v-model="form.plano" class="bg-transparent text-gray-600 border border-gray-400 p-2 rounded-md focus:outline-none">
+                                <option disabled value="">Selecione um plano</option>
+                                <option v-for="plano in planos" :key="plano.id" :value="plano.id">{{ (plano.nomePlano) }}</option>
                             </select>
                         </div>
                     </div>
@@ -71,6 +70,8 @@
 </template>
 
 <script>
+import planServices from "../services/planServices";
+
 export default {
     name: 'CadastroModal',
     props: {
@@ -88,14 +89,44 @@ export default {
                 city: '',
                 state: '',
                 country: '',
-            }
+            },
+            planos: []
         }
     },
 
+    async mounted() {
+        const response = await planServices.listarPlanos();
+        console.log('Planos recebidos:', response.planos);
+        
+        this.planos = response.planos.map(plano => {
+            let nome = "";
+
+            if (plano.level === 1) nome = "Plano Básico";
+            else if (plano.level === 2) nome = "Plano Profissional";
+            else if (plano.level === 3) nome = "Plano Intermediário";
+            else nome = "Plano Desconhecido";
+
+            return {
+                ...plano,
+                nomePlano: nome
+            };
+        });
+    },
+
     methods: {
+        async buscarPlanos() {
+            const { success, planos, message } = await planServices.listarPlanos();
+
+            if (!success) {
+                console.error(message);
+                return;
+            }
+
+            this.planos = planos;
+        },
+
         emitirSalvar() {
             this.$emit('salvar', { ...this.form })
-            alert('Usuário cadastrado com sucesso!')
             this.resetarForm()
         },
         resetarForm() {

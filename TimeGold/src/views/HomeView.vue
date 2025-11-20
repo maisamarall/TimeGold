@@ -105,6 +105,8 @@
     <ModalCadastro
         :visible="mostrarCadastro"
         @fechar="fecharCadastro"
+        @salvar="cadastrarEmpresa"
+        :planos="planos"
     />
     <!-- <FooterComponent /> -->
 </template>
@@ -116,8 +118,10 @@ import PlanoComponent from '../components/PlanoComponent.vue';
 import ModalComponent from "../components/ModalComponent.vue";
 import FooterComponent from "../components/FooterComponent.vue";
 import authServices from "../services/authServices";
-import {useRouter} from "vue-router";
+import cadastroEnterpriseService from "../services/cadastroEnterpriseService";
+import Swal from "sweetalert2";
 import ModalCadastro from "../components/ModalCadastro.vue";
+import { getPlanosRequest } from "../request/planRequest";
 
 export default {
     name: 'Home',
@@ -132,8 +136,19 @@ export default {
         return {
             mostrarModal: false,
             mostrarCadastro: false,
-            mensagemError: ''
+            mensagemError: '',
+            planos: []
         }
+    },
+
+    async mounted() {
+        const response = await getPlanosRequest();
+        this.planos = response.data;
+        console.log("Planos recebidos na home", this.planos);
+    },
+
+    created() {
+        this.router = this.$router;
     },
 
     methods: {
@@ -159,7 +174,6 @@ export default {
         },
         
         async fazerLogin({ email, senha}) {
-            const router = useRouter();
             this.errorMessage = '';
 
             const { success, user, message } = await authServices.login(email, senha);
@@ -169,15 +183,52 @@ export default {
                 return
             }
 
-            if (user.role === 'Admin') {
-                router.push('/admin');
-            } else if (user.role === 'Professional') {
-                router.push('/profissional');
+            if (user.type === 1) {
+                this.$router.push('/admin');
+            } else if (user.type === 2) {
+                this.$router.push('/profissional');
             } else {
-                router.push('/cliente')
+                this.$router.push('/cliente')
             }
 
             this.mostrarModal = false;
+        },
+
+        async cadastrarEmpresa(dadosForm) {
+            const empresaDTO = {
+                name: dadosForm.name,
+                cnpj: dadosForm.cnpj,
+                planId: dadosForm.plano,
+                address: {
+                    street: dadosForm.street,
+                    number: dadosForm.number,
+                    city: dadosForm.city,
+                    state: dadosForm.state,
+                    country: dadosForm.country
+                }
+            };
+
+            const { success, message } = await cadastroEnterpriseService.cadastrarEmpresa(empresaDTO);
+
+            if (!success) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erro ao cadastrar empresa',
+                    text: message,
+                    confirmButtonText: 'OK'
+                });
+                return;
+            }
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Empresa cadastrada com sucesso!',
+                showConfirmButton: false,
+                timer: 1500
+            });
+
+            this.mostrarCadastro = false;
+            this.$router.push('/admin');
         }
     }
 
