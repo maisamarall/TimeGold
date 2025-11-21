@@ -1,5 +1,6 @@
 <template>
     <div>
+        <!-- HEADER -->
         <header
             class="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-[#7021D8] to-[#5013A0] text-white shadow-lg">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-20">
@@ -8,7 +9,7 @@
                 </div>
 
                 <nav class="hidden md:flex items-center space-x-6">
-                    <a href="#" class="hover:text-purple-300">Agenda</a>
+                    <a href="profissional" class="hover:text-purple-300">Agenda</a>
                     <a href="#equipe" class="hover:text-purple-300">Equipe</a>
 
                     <div class="relative">
@@ -36,6 +37,7 @@
 
         <main class="mt-20">
 
+            <!-- HERO -->
             <section class="bg-gradient-to-r from-[#7021D8] to-[#5013A0] text-white py-12 px-4 mb-10 sm:px-6 lg:px-8">
                 <div class="container mx-auto">
                     <div class="flex flex-col lg:flex-row lg:justify-between lg:items-start pt-8 mb-12">
@@ -62,13 +64,16 @@
                 </div>
             </section>
 
+            <!-- WIDGETS -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-20 px-4 place-items-center">
                 <div
                     class="flex flex-col items-center justify-center bg-white p-8 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 text-center w-full max-w-xs">
                     <div
                         class="flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-gradient-to-r from-[#7021D8] to-[#5013A0] text-white">
-                        <svg class="w-8 h-8" fill="currentColor"><path
-                                d="M19 4h-2V3a1 1 0 00-2 0v1H9V3a1 1 0 00-2 0v1H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V6a2 2 0 00-2-2zm-2 16H7V10h12zM9 8h6V6H9z" /></svg>
+                        <svg class="w-8 h-8" fill="currentColor">
+                            <path
+                                d="M19 4h-2V3a1 1 0 00-2 0v1H9V3a1 1 0 00-2 0v1H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V6a2 2 0 00-2-2zm-2 16H7V10h12zM9 8h6V6H9z" />
+                        </svg>
                     </div>
                     <p class="text-4xl font-extrabold text-gray-800 mb-2">12</p>
                     <h4 class="text-lg font-medium text-gray-600"> Atendimentos confirmados hoje </h4>
@@ -77,8 +82,10 @@
                 <div
                     class="flex flex-col items-center justify-center bg-white p-8 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 text-center w-full max-w-xs">
                     <div class="flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-green-500 text-white">
-                        <svg class="w-8 h-8" fill="currentColor"><path
-                                d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" /></svg>
+                        <svg class="w-8 h-8" fill="currentColor">
+                            <path
+                                d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                        </svg>
                     </div>
                     <p class="text-4xl font-extrabold text-gray-800 mb-2">8</p>
                     <h4 class="text-lg font-medium text-gray-600">Usuários Ativos</h4>
@@ -87,8 +94,10 @@
                 <div
                     class="flex flex-col items-center justify-center bg-white p-8 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 text-center w-full max-w-xs">
                     <div class="flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-blue-600 text-white">
-                        <svg class="w-8 h-8" fill="currentColor"><path
-                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z" /></svg>
+                        <svg class="w-8 h-8" fill="currentColor">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z" />
+                        </svg>
                     </div>
                     <p class="text-4xl font-extrabold text-gray-800">3</p>
                     <span class="ml-2 text-xl text-gray-500">novos</span>
@@ -98,6 +107,7 @@
 
             <PlanoComponent />
 
+            <!-- EQUIPE -->
             <section id="equipe" class="bg-white py-16 px-4 sm:px-6 lg:px-8 mt-20">
                 <div class="container mx-auto p-8 rounded-xl bg-gray-50 border border-gray-200 shadow-xl">
 
@@ -105,14 +115,8 @@
                         <h2 class="text-3xl font-bold text-gray-700">Gerenciar Equipe</h2>
 
                         <div class="flex items-center space-x-4">
-                            <div class="relative">
-                                <input 
-                                    type="text" 
-                                    placeholder="Pesquisar por nome..." 
-                                    v-model="termoBusca"
-                                    class="border border-purple-500 text-gray-800 placeholder-gray-500 bg-white/80 rounded-lg w-64 p-2 pl-4 pr-10 focus:ring-2 focus:ring-purple-400 focus:border-purple-500"
-                                />
-                            </div>
+                            <input type="text" placeholder="Pesquisar por nome..." v-model="termoBusca"
+                                class="border border-purple-500 text-gray-800 placeholder-gray-500 bg-white/80 rounded-lg w-64 p-2 pl-4" />
 
                             <button @click="abrirModalCadastro"
                                 class="bg-gradient-to-r from-[#7021D8] to-[#5013A0] text-white py-2 px-4 rounded-lg hover:opacity-90">
@@ -121,6 +125,7 @@
                         </div>
                     </div>
 
+                    <!-- TABELA -->
                     <div class="overflow-x-auto bg-white rounded-lg">
                         <table class="min-w-full divide-y divide-gray-300">
                             <thead class="border-b border-gray-200">
@@ -128,7 +133,8 @@
                                     <th class="px-6 py-3 text-left text-sm font-semibold text-gray-800">Nome</th>
                                     <th class="px-6 py-3 text-left text-sm font-semibold text-gray-800">Email</th>
                                     <th class="px-6 py-3 text-left text-sm font-semibold text-gray-800">Perfil</th>
-                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-800">Especialidade</th>
+                                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-800">Especialidade
+                                    </th>
                                     <th class="px-6 py-3 text-left text-sm font-semibold text-gray-800">Status</th>
                                     <th class="px-6 py-3 text-left text-sm font-semibold text-gray-800">Ações</th>
                                 </tr>
@@ -136,58 +142,47 @@
 
                             <tbody class="bg-white divide-y divide-gray-200">
                                 <tr v-for="(usuario, index) in usuariosFiltrados" :key="index">
-                                    <td class="px-6 py-4 text-sm text-gray-900">{{ usuario.nome }}</td>
+                                    <td class="px-6 py-4 text-sm text-gray-900">{{ usuario.name }}</td>
                                     <td class="px-6 py-4 text-sm text-gray-500">{{ usuario.email }}</td>
-                                    <td class="px-6 py-4 text-sm text-gray-500">{{ usuario.perfil }}</td>
-                                    <td class="px-6 py-4 text-sm text-gray-500">{{ usuario.especialidade }}</td>
-
+                                    <td class="px-6 py-4 text-sm text-gray-500">{{ usuario.type === 1 ? 'Admin' : 'Profissional' }}</td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">{{ usuario.function }}</td>
                                     <td class="px-6 py-4 text-sm text-gray-500">
                                         <span :class="[
                                             'px-3 py-1 rounded-full text-xs font-semibold',
-                                            usuario.status === 'Ativo'
+                                            usuario.active
                                                 ? 'bg-purple-200 text-purple-800'
-                                                : 'bg-gray-200 text-gray-700'
+                                                : 'bg-gray-200 text-gray-600'
                                         ]">
-                                            {{ usuario.status }}
+                                            {{ usuario.active ? 'Ativo' : 'Inativo' }}
                                         </span>
                                     </td>
 
                                     <td class="px-6 py-4 text-sm flex gap-2">
-                                        <button 
-                                            @click="abrirModalEditar(usuario)"
+                                        <button @click="abrirModalEditar(usuario)"
                                             class="px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600">
                                             Editar
                                         </button>
 
-                                        <button 
-                                            @click="confirmarExclusao(usuario)"
+                                        <button @click="confirmarExclusao(usuario)"
                                             class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600">
                                             Excluir
                                         </button>
                                     </td>
                                 </tr>
                             </tbody>
+
                         </table>
                     </div>
-
                 </div>
             </section>
 
         </main>
 
         <!-- MODAIS -->
-        <UserFormModal
-            v-if="modalCadastroAberto"
-            @fechar="modalCadastroAberto = false"
-            @salvar="salvarUsuario"
-        />
+        <UserFormModal v-if="modalCadastroAberto" @close="modalCadastroAberto = false" @save="salvarUsuario" />
 
-        <EditUserModalComponent
-            v-if="modalEditarAberto"
-            :usuario="usuarioSelecionado"
-            @fechar="modalEditarAberto = false"
-            @salvar="atualizarUsuario"
-        />
+        <EditUserModalComponent v-if="modalEditarAberto" :usuario="usuarioSelecionado"
+            @fechar="modalEditarAberto = false" @salvar="atualizarUsuario" />
 
         <FooterComponent />
     </div>
@@ -198,11 +193,11 @@ import FooterComponent from '../components/FooterComponent.vue'
 import PlanoComponent from '../components/PlanoComponent.vue'
 import UserFormModal from '../components/UserFormModal.vue'
 import EditUserModalComponent from '../components/EditUserModalComponent.vue'
+import equipeService from '@/services/equipeService'
 import Swal from 'sweetalert2'
 
 export default {
     name: 'AdminDashboard',
-
     components: {
         FooterComponent,
         PlanoComponent,
@@ -221,36 +216,34 @@ export default {
             usuarioSelecionado: null,
             termoBusca: '',
 
-            usuarios: [
-                {
-                    nome: 'Maisa Amaral',
-                    email: 'maisa@gmail.com',
-                    perfil: 'Profissional',
-                    especialidade: 'Administradora',
-                    status: 'Ativo',
-                },
-                {
-                    nome: 'Jênie Danielle',
-                    email: 'jenie@gmail.com',
-                    perfil: 'Profissional',
-                    especialidade: 'Dentista Geral',
-                    status: 'Ativo',
-                }
-            ]
+            usuarios: []
         }
     },
 
     computed: {
         usuariosFiltrados() {
             return this.usuarios.filter(usuario =>
-                usuario.nome.toLowerCase().includes(this.termoBusca.toLowerCase())
+                usuario.name.toLowerCase().includes(this.termoBusca.toLowerCase())
             )
         }
+    },
+
+    async mounted() {
+        this.carregarEquipe()
     },
 
     methods: {
         toggleDropdown() {
             this.isDropdownOpen = !this.isDropdownOpen
+        },
+
+        async carregarEquipe() {
+            try {
+                const response = await equipeService.listar()
+                this.usuarios = response.data
+            } catch (error) {
+                console.error('Erro ao carregar usuários:', error)
+            }
         },
 
         abrirModalCadastro() {
@@ -262,34 +255,50 @@ export default {
             this.modalEditarAberto = true
         },
 
-        salvarUsuario(usuario) {
-            this.usuarios.push({
-                ...usuario,
-                status: usuario.status === 'ativo' ? 'Ativo' : 'Inativo',
-            })
-            this.modalCadastroAberto = false
+        async salvarUsuario(usuario) {
+            try {
+                console.log("fjewefjkwfjwjlk")
+                await equipeService.criar(usuario)
+
+                Swal.fire('Sucesso!', 'Profissional cadastrado!', 'success')
+
+                this.modalCadastroAberto = false
+                this.carregarEquipe()
+
+            } catch (error) {
+                Swal.fire('Erro', 'Não foi possível cadastrar.', 'error')
+            }
         },
 
-        atualizarUsuario(usuarioEditado) {
-            const index = this.usuarios.findIndex(u => u.email === usuarioEditado.email)
-            if (index !== -1) this.usuarios[index] = usuarioEditado
-            this.modalEditarAberto = false
+        async atualizarUsuario(usuarioEditado) {
+            try {
+                await equipeService.update(usuarioEditado.id, usuarioEditado)
+
+                Swal.fire('Sucesso!', 'Profissional atualizado!', 'success')
+
+                this.modalEditarAberto = false
+                this.carregarEquipe()
+
+            } catch (error) {
+                Swal.fire('Erro', 'Falha ao atualizar.', 'error')
+            }
         },
 
         confirmarExclusao(usuario) {
             Swal.fire({
                 title: 'Tem certeza?',
-                text: `Deseja excluir ${usuario.nome}?`,
+                text: `Deseja excluir ${usuario.name}?`,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#7021D8',
                 cancelButtonColor: '#aaa',
                 confirmButtonText: 'Sim, excluir!',
                 cancelButtonText: 'Cancelar'
-            }).then(result => {
+            }).then(async (result) => {
                 if (result.isConfirmed) {
-                    this.usuarios = this.usuarios.filter(u => u !== usuario)
-                    Swal.fire('Excluído!', `${usuario.nome} foi removido.`, 'success')
+                    await equipeService.delete(usuario.id)
+                    this.carregarEquipe()
+                    Swal.fire('Excluído!', `${usuario.name} foi removido.`, 'success')
                 }
             })
         }

@@ -1,124 +1,108 @@
 <template>
-    <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 px-4 sm:px-6">
-        <transition name="fade-scale">
-            <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl p-8 relative animate-fade-in">
-                <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-2xl font-semibold text-gray-700">
-                        🧾 Cadastrar Usuário
-                    </h2>
-                    <button @click="$emit('fechar')" class="text-gray-400 hover:text-gray-600 text-2xl leading-none"
-                        aria-label="Fechar"> &times; </button>
-                </div>
+    <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-3xl p-8 animate-fade-in">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-semibold text-gray-700">🧾 Cadastrar Profissional</h2>
+                <button @click="$emit('close')" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+            </div>
 
-                <form @submit.prevent="emitirSalvar" class="space-y-4">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label class="label">Nome <span class="text-red-500">*</span></label>
-                            <input v-model="form.nome" type="text" required class="input" />
-                        </div>
-
-                        <div>
-                            <label class="label">Email <span class="text-red-500">*</span></label>
-                            <input v-model="form.email" type="email" required class="input" />
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label class="label">Telefone <span class="text-red-500">*</span></label>
-                            <input v-model="form.telefone" type="text" required class="input" />
-                        </div>
-
-                        <div>
-                            <label class="label">Perfil</label>
-                            <select v-model="form.perfil" class="input">
-                                <option value="Profissional">Profissional</option>
-                                <option value="Admin">Admin</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label class="label">Especialidade/Função</label>
-                            <input v-model="form.especialidade" type="text" class="input" />
-                        </div>
-
-                        <div>
-                            <label class="label">Status</label>
-                            <select v-model="form.status" class="input">
-                                <option value="ativo">Ativo</option>
-                                <option value="inativo">Inativo</option>
-                            </select>
-                        </div>
+            <form @submit.prevent="salvar" class="space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="label">Nome *</label>
+                        <input v-model="form.name" class="input" type="text" required />
                     </div>
 
                     <div>
-                        <label class="label">Senha <span class="text-red-500">*</span></label>
-                        <input v-model="form.senha" type="password" required class="input" />
+                        <label class="label">Email *</label>
+                        <input v-model="form.email" class="input" type="email" required />
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="label">Telefone *</label>
+                        <input v-model="form.phone" class="input" type="text" required />
                     </div>
 
-                    <div class="flex justify-end gap-4 pt-4">
-                        <button type="button" @click="$emit('fechar')"
-                            class="px-5 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 border border-gray-300">
-                            Cancelar
-                        </button>
-
-                        <button type="submit"
-                            class="px-5 py-2 rounded-lg text-sm font-medium text-white bg-gradient-to-r from-[#7021D8] to-[#5013A0] hover:opacity-90">
-                            Salvar
-                        </button>
+                    <div>
+                        <label class="label">Perfil *</label>
+                        <select v-model="form.type" class="input">
+                            <option value="0">Profissional</option>
+                            <option value="1">Admin</option>
+                        </select>
                     </div>
-                </form>
-            </div>
-        </transition>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="label">Especialidade / Função *</label>
+                        <input v-model="form.function" class="input" type="text" required />
+                    </div>
+
+                    <div>
+                        <label class="label">CRO *</label>
+                        <input v-model="form.cro" class="input" type="text" required />
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="label">Tempo de atuação *</label>
+                        <input v-model="form.actuationTime" class="input" type="text" required />
+                    </div>
+
+                    <div>
+                        <label class="label">CPF *</label>
+                        <input v-model="form.cpf" class="input" type="text" required />
+                    </div>
+                </div>
+
+                <div>
+                    <label class="label">Sobre *</label>
+                    <textarea v-model="form.about" class="input h-24"></textarea>
+                </div>
+
+                <div>
+                    <label class="label">Senha *</label>
+                    <input v-model="form.password" class="input" type="password" required />
+                </div>
+
+                <div class="flex justify-end gap-4 pt-4">
+                    <button type="button" @click="$emit('close')" class="btn-cancel">Cancelar</button>
+                    <button type="submit" class="btn-save">Salvar</button>
+                </div>
+            </form>
+        </div>
     </div>
 </template>
 
 <script>
-import Swal from 'sweetalert2'
-
 export default {
-    name: 'UserFormModal',
+    name: "CompleteProfessionalModal",
     data() {
         return {
             form: {
-                nome: '',
-                email: '',
-                telefone: '',
-                perfil: 'Profissional',
-                especialidade: '',
-                status: 'ativo',
-                senha: ''
-            }
-        }
+                name: "",
+                email: "",
+                phone: "",
+                type: 0,
+                function: "",
+                cro: "",
+                actuationTime: "",
+                cpf: "",
+                about: "",
+                password: "",
+                enterpriseId: 1,
+            },
+        };
     },
     methods: {
-        emitirSalvar() {
-            this.$emit('salvar', { ...this.form })
-
-            Swal.fire({
-                title: '✅ Sucesso!',
-                text: 'Usuário cadastrado com sucesso!',
-                icon: 'success',
-                confirmButtonColor: '#7021D8'
-            })
-
-            this.resetarForm()
+        criar(form) {
+            this.$emit("save", this.form);
         },
-        resetarForm() {
-            this.form = {
-                nome: '',
-                email: '',
-                telefone: '',
-                perfil: 'Profissional',
-                especialidade: '',
-                status: 'ativo',
-                senha: ''
-            }
-        }
-    }
-}
+    },
+};
 </script>
 
 <style scoped>
@@ -129,32 +113,35 @@ export default {
     border-radius: 0.5rem;
     font-size: 0.875rem;
     color: #374151;
-    background-color: #fff;
+    background-color: white;
     outline: none;
-    transition: border-color 0.2s;
+    transition: border 0.2s;
 }
 
 .input:focus {
-    border-color: #7021D8;
+    border-color: #7021d8;
     box-shadow: 0 0 0 2px rgba(112, 33, 216, 0.2);
 }
 
 .label {
-    display: block;
     font-weight: 500;
     font-size: 0.875rem;
-    color: #4b5563;
     margin-bottom: 0.25rem;
+    display: block;
+    color: #4b5563;
 }
 
-.fade-scale-enter-active,
-.fade-scale-leave-active {
-    transition: all 0.2s ease-out;
+.btn-save {
+    padding: 0.6rem 1.5rem;
+    border-radius: 0.5rem;
+    color: white;
+    background: linear-gradient(to right, #7021d8, #5013a0);
 }
 
-.fade-scale-enter-from,
-.fade-scale-leave-to {
-    opacity: 0;
-    transform: scale(0.95);
+.btn-cancel {
+    padding: 0.6rem 1.5rem;
+    border-radius: 0.5rem;
+    border: 1px solid #ccc;
+    color: #555;
 }
 </style>
