@@ -4,7 +4,7 @@
             <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl p-8 relative animate-fade-in">
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="text-2xl font-semibold text-gray-700">
-                        🧾 Editar Usuário
+                        🧾 Editar Profissional
                     </h2>
                     <button @click="$emit('fechar')" class="text-gray-400 hover:text-gray-600 text-2xl leading-none"
                         aria-label="Fechar">

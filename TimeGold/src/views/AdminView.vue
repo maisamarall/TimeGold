@@ -1,6 +1,5 @@
 <template>
     <div>
-        <!-- HEADER -->
         <header
             class="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-[#7021D8] to-[#5013A0] text-white shadow-lg">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-20">
@@ -37,14 +36,13 @@
 
         <main class="mt-20">
 
-            <!-- HERO -->
             <section class="bg-gradient-to-r from-[#7021D8] to-[#5013A0] text-white py-12 px-4 mb-10 sm:px-6 lg:px-8">
                 <div class="container mx-auto">
                     <div class="flex flex-col lg:flex-row lg:justify-between lg:items-start pt-8 mb-12">
                         <div class="mb-10 lg:mb-0">
                             <p class="text-xl mb-4">Olá, {{ adminName }}!</p>
                             <div class="flex items-start space-x-8">
-                                <span class="text-9xl font-light leading-none">20</span>
+                                <span class="text-9xl font-light leading-none">12</span>
                                 <div class="text-3xl font-light pt-3 leading-snug">
                                     atendimentos<br>confirmados para hoje!
                                 </div>
@@ -144,7 +142,8 @@
                                 <tr v-for="(usuario, index) in usuariosFiltrados" :key="index">
                                     <td class="px-6 py-4 text-sm text-gray-900">{{ usuario.name }}</td>
                                     <td class="px-6 py-4 text-sm text-gray-500">{{ usuario.email }}</td>
-                                    <td class="px-6 py-4 text-sm text-gray-500">{{ usuario.type === 1 ? 'Admin' : 'Profissional' }}</td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">{{ usuario.type === 1 ? 'Admin' :usuario.type === 2 ? 'Profissional' :'Desconhecido' }}
+                                    </td>
                                     <td class="px-6 py-4 text-sm text-gray-500">{{ usuario.function }}</td>
                                     <td class="px-6 py-4 text-sm text-gray-500">
                                         <span :class="[
@@ -193,7 +192,7 @@ import FooterComponent from '../components/FooterComponent.vue'
 import PlanoComponent from '../components/PlanoComponent.vue'
 import UserFormModal from '../components/UserFormModal.vue'
 import EditUserModalComponent from '../components/EditUserModalComponent.vue'
-import equipeService from '@/services/equipeService'
+import { equipeService } from '../services/equipeService';
 import Swal from 'sweetalert2'
 
 export default {

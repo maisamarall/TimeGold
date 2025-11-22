@@ -1,19 +1,20 @@
-import api from './api' // se você usa axios configurado
+    import {
+        getAtendimentosHojeRequest,
+        getUsuariosAtivosRequest,
+        getAgendamentosPendentesRequest
+    } from '../request/dashboardRequest';
 
-async function getAtendimentosHoje() {
-    return api.get('/Dashboard/atendimentos-hoje')
-}
+    export const dashboardService = {
 
-async function getUsuariosAtivos() {
-    return api.get('/Dashboard/usuarios-ativos')
-}
+        getAtendimentosHoje() {
+            return getAtendimentosHojeRequest();
+        },
 
-async function getAgendamentosPendentes() {
-    return api.get('/Dashboard/agendamentos-pendentes')
-}
+        getUsuariosAtivos() {
+            return getUsuariosAtivosRequest();
+        },
 
-export default {
-    getAtendimentosHoje,
-    getUsuariosAtivos,
-    getAgendamentosPendentes
-}
+        getAgendamentosPendentes() {
+            return getAgendamentosPendentesRequest();
+        }
+    };

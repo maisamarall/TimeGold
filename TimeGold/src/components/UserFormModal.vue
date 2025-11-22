@@ -28,8 +28,8 @@
                     <div>
                         <label class="label">Perfil *</label>
                         <select v-model="form.type" class="input">
-                            <option value="0">Profissional</option>
                             <option value="1">Admin</option>
+                            <option value="2">Profissional</option>
                         </select>
                     </div>
                 </div>
@@ -98,7 +98,7 @@ export default {
         };
     },
     methods: {
-        criar(form) {
+        salvar() {
             this.$emit("save", this.form);
         },
     },

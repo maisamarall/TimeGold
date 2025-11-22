@@ -1,27 +1,30 @@
-import api from './api'
+import {
+    listarEquipeRequest,
+    buscarEquipePorIdRequest,
+    criarEquipeRequest,
+    atualizarEquipeRequest,
+    deletarEquipeRequest
+} from '../request/equipeRequest';
 
-export default {
+export const equipeService = {
 
     listar(page = 1, size = 12, q = '') {
-        return api.get('/Professional', {
-            params: { page, size, q }
-        })
+        return listarEquipeRequest(page, size, q);
     },
 
     buscarPorId(id) {
-        return api.get(`/Professional/${id}`)
+        return buscarEquipePorIdRequest(id);
     },
 
     criar(data) {
-        return api.post('/Professional', data)
+        return criarEquipeRequest(data);
     },
 
     atualizar(data) {
-        return api.put(`/Professional/${data.id}`, data)
+        return atualizarEquipeRequest(data);
     },
 
-
-  deletar(id) {
-        return api.delete(`/Professional/${id}`)
+    deletar(id) {
+        return deletarEquipeRequest(id);
     }
-}
+};
