@@ -29,7 +29,7 @@
               />
             </svg>
           </button>
-          <a href="/" class="text-2xl font-bold">TimeGold</a>
+          <a href="/" class="text-2xl font-bold">TimeGold </a>
         </div>
 
         <!-- Navegação / Usuário -->
