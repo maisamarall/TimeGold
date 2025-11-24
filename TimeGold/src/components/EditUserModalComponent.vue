@@ -34,8 +34,8 @@
                         <div>
                             <label class="label">Perfil</label>
                             <select v-model="form.perfil" class="input">
-                                <option value="Profissional">Profissional</option>
-                                <option value="Administrador">Administrador</option>
+                                <option value="1">Admin</option>
+                                <option value="2">Profissional</option>
                             </select>
                         </div>
                     </div>
@@ -81,35 +81,40 @@ export default {
             required: true
         }
     },
+
     data() {
         return {
             form: {
-                nome: this.usuario?.nome || '',
-                email: this.usuario?.email || '',
-                telefone: this.usuario?.telefone || '',
-                perfil: this.usuario?.perfil || 'Profissional',
-                especialidade: this.usuario?.especialidade || '',
-                status: this.usuario?.status || 'Ativo',
-                senha: '' // opcional, caso queira alterar senha
+                id: this.usuario.id,
+                nome: this.usuario.name || '',
+                email: this.usuario.email || '',
+                telefone: this.usuario.phone || '',
+                perfil: this.usuario.type || 2,
+                especialidade: this.usuario.function || '',
+                status: this.usuario.active ? 'Ativo' : 'Inativo'
             }
         }
     },
+
     methods: {
         handleSubmit() {
-            this.$emit('salvar', { ...this.form })
+            const payload = {
+                id: this.form.id,
+                name: this.form.nome,
+                email: this.form.email,
+                phone: this.form.telefone,
+                type: Number(this.form.perfil),
+                function: this.form.especialidade,
+                active: this.form.status === 'Ativo'
+            }
 
-            Swal.fire({
-                title: "Sucesso!",
-                text: "Usuário atualizado com sucesso!",
-                icon: "success",
-                confirmButtonColor: "#7021D8"
-            })
-
-            this.$emit('fechar')
+            this.$emit('salvar', payload)
         }
+
     }
 }
 </script>
+
 
 <style scoped>
 .input {

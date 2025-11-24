@@ -54,8 +54,7 @@
                             </h3>
                             <ul class="space-y-2">
                                 <li>• Profissional 1 - 6 atendimentos</li>
-                                <li>• Profissional 2 - 5 atendimentos</li>
-                                <li>• Profissional 3 - 4 atendimentos</li>
+                                <li>• Profissional 2 - 6 atendimentos</li>
                             </ul>
                         </div>
                     </div>
@@ -98,7 +97,7 @@
                         </svg>
                     </div>
                     <p class="text-4xl font-extrabold text-gray-800">3</p>
-                    <span class="ml-2 text-xl text-gray-500">novos</span>
+                    <!-- <span class="ml-2 text-xl text-gray-500">novos</span> -->
                     <h4 class="text-lg font-medium text-gray-600 mt-2">Agendamentos pendentes</h4>
                 </div>
             </div>
@@ -139,10 +138,11 @@
                             </thead>
 
                             <tbody class="bg-white divide-y divide-gray-200">
-                                <tr v-for="(usuario, index) in usuariosFiltrados" :key="index">
+                                <tr v-for="usuario in usuariosFiltrados" :key="usuario.id">
                                     <td class="px-6 py-4 text-sm text-gray-900">{{ usuario.name }}</td>
                                     <td class="px-6 py-4 text-sm text-gray-500">{{ usuario.email }}</td>
-                                    <td class="px-6 py-4 text-sm text-gray-500">{{ usuario.type === 1 ? 'Admin' :usuario.type === 2 ? 'Profissional' :'Desconhecido' }}
+                                    <td class="px-6 py-4 text-sm text-gray-500">{{ usuario.type === 1 ? 'Admin'
+                                        : usuario.type === 2 ? 'Profissional' : 'Desconhecido' }}
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500">{{ usuario.function }}</td>
                                     <td class="px-6 py-4 text-sm text-gray-500">
@@ -157,15 +157,22 @@
                                     </td>
 
                                     <td class="px-6 py-4 text-sm flex gap-2">
-                                        <button @click="abrirModalEditar(usuario)"
-                                            class="px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600">
-                                            Editar
+                                        <button class="text-blue-600 hover:text-blue-800"
+                                            @click="abrirModalEditar(usuario)" title="Editar">
+                                            <i class="fas fa-pencil-alt"></i>
                                         </button>
 
-                                        <button @click="confirmarExclusao(usuario)"
+
+                                        <!-- <button @click="confirmarExclusao(usuario)"
                                             class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600">
                                             Excluir
+                                        </button> -->
+
+                                        <button @click="confirmarExclusao(usuario)"
+                                            class="text-red-500 hover:text-red-700">
+                                            🗑️
                                         </button>
+
                                     </td>
                                 </tr>
                             </tbody>
@@ -177,7 +184,6 @@
 
         </main>
 
-        <!-- MODAIS -->
         <UserFormModal v-if="modalCadastroAberto" @close="modalCadastroAberto = false" @save="salvarUsuario" />
 
         <EditUserModalComponent v-if="modalEditarAberto" :usuario="usuarioSelecionado"
@@ -213,6 +219,7 @@ export default {
             modalEditarAberto: false,
 
             usuarioSelecionado: null,
+            modalEditarAberto: false,
             termoBusca: '',
 
             usuarios: []
@@ -271,11 +278,12 @@ export default {
 
         async atualizarUsuario(usuarioEditado) {
             try {
-                await equipeService.update(usuarioEditado.id, usuarioEditado)
+                await equipeService.atualzar(usuarioEditado)
 
                 Swal.fire('Sucesso!', 'Profissional atualizado!', 'success')
 
                 this.modalEditarAberto = false
+                
                 this.carregarEquipe()
 
             } catch (error) {
