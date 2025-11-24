@@ -24,7 +24,7 @@ export const equipeService = {
         return atualizarEquipeRequest(data);
     },
 
-    deletar(id) {
+    delete(id) {
         return deletarEquipeRequest(id);
     }
 };

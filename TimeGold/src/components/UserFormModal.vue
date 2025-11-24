@@ -1,6 +1,8 @@
 <template>
+
     <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
-        <div class="bg-white rounded-xl shadow-2xl w-full max-w-3xl p-8 animate-fade-in">
+        <div class=" max-h-[80vh] overflow-y-auto bg-white rounded-xl shadow-2xl w-full max-w-3xl p-8 animate-fade-in">
+
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-2xl font-semibold text-gray-700">🧾 Cadastrar Profissional</h2>
                 <button @click="$emit('close')" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
@@ -46,17 +48,26 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                        <label class="label">Tempo de atuação *</label>
-                        <input v-model="form.actuationTime" class="input" type="text" required />
-                    </div>
+                <div>
+                    <label class="label">Tempo de atuação *</label>
+                    <input v-model="form.actuationTime" class="input" type="text" required />
+                </div>
 
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="label">CPF *</label>
                         <input v-model="form.cpf" class="input" type="text" required />
                     </div>
+
+                    <div>
+                        <label class="label">Status *</label>
+                        <select v-model="form.active" class="input">
+                            <option :value="true">Ativo</option>
+                            <option :value="false">Inativo</option>
+                        </select>
+                    </div>
                 </div>
+
 
                 <div>
                     <label class="label">Sobre *</label>
@@ -94,6 +105,7 @@ export default {
                 about: "",
                 password: "",
                 enterpriseId: 1,
+                active: true,
             },
         };
     },
