@@ -10,38 +10,75 @@
                         aria-label="Fechar"> &times; </button>
                 </div>
 
-                <form @submit.prevent="emitirSalvar" class="space-y-4">
+                <form @submit.prevent="salvarAgendamento" class="space-y-4">
+                    <div v-if="apiErrors.length" class="p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+                        <p class="font-bold">Erro(s) de Validação:</p>
+                        <ul class="list-disc list-inside mt-1">
+                            <li v-for="(error, index) in apiErrors" :key="index">
+                                **{{ error.field || 'Sistema' }}**: {{ error.message }}
+                            </li>
+                        </ul>
+                    </div>
                     <div class="grid grid-cols-1 gap-4">
                         <div>
                             <label class="label">Paciente:</label>
-                            <input v-model="form.paciente" type="text" class="input" required />
+                            <input v-model="form.paciente" type="text" class="input" required placeholder="Nome Completo do Paciente" />
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="label">Data:</label>
-                            <input v-model="form.data" type="date" class="input" required />
+                            <label class="label">Profissional (ID):</label>
+                            <input v-model.number="form.professionalId" type="number" class="input" required min="1" placeholder="Ex: 1" />
                         </div>
-
                         <div>
-                            <label class="label">Horário:</label>
-                            <input v-model="form.hora" type="time" class="input" required />
+                            <label class="label">Empresa (ID):</label>
+                            <input v-model.number="form.enterpriseId" type="number" class="input" required min="1" placeholder="Ex: 1" />
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-4">
+                        <div>
+                            <label class="label">Data e Horário:</label>
+                            <input v-model="form.scheduledDate" type="datetime-local" class="input" required />
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label class="label">Procedimento:</label>
-                            <input v-model="form.procedimento" type="text" class="input" required />
-                        </div>
+                         <div>
+                        <label class="label mb-2 flex justify-between items-center">
+                            Procedimento:
+                            <button type="button" 
+                                @click="mostrarModalCadastroProcedimento = true"
+                                class="text-xs text-purple-600 hover:text-purple-800 font-semibold flex items-center gap-1 p-1 rounded-md transition duration-150 border border-purple-200 hover:bg-purple-50">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                                Novo Cadastro
+                            </button>
+                        </label>
+                        
+                        <select 
+                            v-model.number="form.schedulingTypeId" 
+                            class="input" 
+                            required 
+                            :disabled="procedimentos.length === 0"
+                        >
+                            <option :value="null" disabled>
+                                {{ procedimentos.length === 0 ? 'Carregando ou nenhum procedimento cadastrado...' : 'Selecione o Procedimento' }}
+                            </option>
+                            <option 
+                                v-for="proc in procedimentos" 
+                                :key="proc.id" 
+                                :value="proc.id"
+                            >
+                                {{ proc.name }} (R$ {{ proc.value.toFixed(2) }})
+                            </option>
+                        </select>
+                    </div>
 
                         <div>
                             <label class="label">Status:</label>
-                            <select v-model="form.status" class="input">
-                                <option value="Pendente" class="bg-red-100 text-red-700 font-bold">Pendente</option>
-                                <option value="Em andamento" class="bg-yellow-100 text-yellow-700 font-bold">Em andamento</option>
-                                <option value="Concluído" class="bg-green-100 text-green-700 font-bold">Concluído</option>
+                            <select v-model="form.status" class="input" disabled>
+                                <option :value="1" class="bg-blue-100 text-blue-700 font-bold">Pendente</option>
                             </select>
                         </div>
                     </div>
@@ -53,43 +90,133 @@
                         </button>
 
                         <button type="submit"
-                            class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition duration-150">
-                            Salvar
+                            class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition duration-150"
+                            :disabled="isLoading">
+                            {{ isLoading ? 'Salvando...' : 'Salvar' }}
                         </button>
                     </div>
                 </form>
             </div>
         </transition>
     </div>
+
+    <SchedulingTypeFormModal
+        v-if="mostrarModalCadastroProcedimento"
+        :enterpriseId="enterpriseId"
+        @fechar="mostrarModalCadastroProcedimento = false"
+        @salvo="handleProcedimentoSalvo"
+    />
 </template>
 
 <script>
+import { schedulingService } from '@/services/schedulingService'; 
+import { schedulingTypeService } from '@/services/schedulingTypeService'; 
+import SchedulingTypeFormModal from '@/components/SchedulingTypeFormModal.vue'; 
+import Swal from 'sweetalert2';
+
 export default {
     name: 'AgendamentoFormModal',
+    components: {
+        SchedulingTypeFormModal
+    },
+    props: {
+        enterpriseId: { 
+            type: Number,
+            required: true
+        }
+    },
     data() {
         return {
+            isLoading: false,
+            apiErrors: [],
             form: {
                 paciente: '',
-                data: '',
-                hora: '',
-                procedimento: '',
-                status: 'Pendente'
-            }
+                professionalId: null,
+                enterpriseId: this.enterpriseId, 
+                schedulingTypeId: null, 
+                scheduledDate: '',
+                status: 1, 
+            },
+            procedimentos: [],
+            mostrarModalCadastroProcedimento: false,
+        }
+    },
+    mounted() {
+        this.carregarProcedimentos();
+    },
+    watch: {
+        enterpriseId(newId) {
+            this.form.enterpriseId = newId;
         }
     },
     methods: {
-       emitirSalvar() {
-            this.$emit('salvar', { ...this.form })
+        async carregarProcedimentos() {
+            try {
+                const data = await schedulingTypeService.listarTipoAgendamento(1, 100, ''); 
+                this.procedimentos = data.items || data; 
+            } catch (error) {
+                console.error("Erro ao carregar procedimentos:", error);
+            }
+        },
 
-            this.resetarForm()
+        handleProcedimentoSalvo() {
+            this.carregarProcedimentos(); 
+            
+            Swal.fire({
+                title: '✅ Procedimento Salvo!',
+                text: 'O novo procedimento já está disponível na lista.',
+                icon: 'success',
+                confirmButtonColor: '#7021D8'
+            });
+        },
+        
+        async salvarAgendamento() {
+            this.apiErrors = [];
+            this.isLoading = true;
+
+            if (!this.form.schedulingTypeId) {
+                this.apiErrors.push({ field: 'Procedimento', message: 'Selecione um procedimento.' });
+                this.isLoading = false;
+                return;
+            }
+            
+            const [date, time] = this.form.scheduledDate.split('T');
+            const scheduledDateISO = `${date}T${time}:00Z`;
+
+            const payload = {
+                paciente: this.form.paciente,
+                professionalId: this.form.professionalId,
+                enterpriseId: this.form.enterpriseId,
+                schedulingTypeId: this.form.schedulingTypeId,
+                scheduledDate: scheduledDateISO,
+                status: this.form.status,
+            };
+
+            try {
+                await schedulingService.criarAgendamento(payload);
+                this.$emit('salvo');
+                this.$emit('fechar');
+                this.resetarForm();
+
+            } catch (error) {
+                if (Array.isArray(error) && error.every(e => e.message)) {
+                    this.apiErrors = error;
+                } else {
+                    this.apiErrors = [{ message: 'Erro inesperado ao salvar o agendamento.', field: 'Sistema' }];
+                    console.error('Erro de API:', error);
+                }
+            } finally {
+                this.isLoading = false;
+            }
         },
         resetarForm() {
             this.form = {
                 paciente: '',
-                data: '',
-                hora: '',
-                procedimento: '',
-                status: 'Pendente'
+                professionalId: null,
+                enterpriseId: this.enterpriseId,
+                schedulingTypeId: null,
+                scheduledDate: '',
+                status: 1,
             }
         }
     }
