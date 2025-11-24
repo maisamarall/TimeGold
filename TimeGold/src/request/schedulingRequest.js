@@ -43,3 +43,14 @@ export function updateSchedulingRequest(schedulingData) {
 export function deleteSchedulingRequest(id) {
     return api.delete(`/Scheduling/${id}`);
 }
+
+export function scheduleRequest(data) {
+    return {
+        id: data.id,
+        clientId: data.clientId,
+        professionalId: data.professionalId,
+        schedulingTypeId: data.schedulingTypeId,
+        scheduledDate: data.scheduledDate,
+        status: data.status
+    };
+}

@@ -39,7 +39,7 @@
               @click.stop="dropdownOpen = !dropdownOpen"
               class="user-dropdown flex items-center font-bold text-lg hover:text-purple-300 transition duration-150"
             >
-              Jênie Danielle
+              {{ profile.professional.name }}
             </button>
 
             <transition name="fade">
@@ -48,7 +48,7 @@
                 class="absolute right-0 mt-2 w-60 bg-white text-center text-gray-800 rounded-md shadow-xl z-50"
               >
                 <div class="px-4 py-3 text-md text-gray-900">
-                  <div class="font-semibold truncate">jenie@gmail.com</div>
+                  <div class="font-semibold truncate">{{profile.professional.email}}</div>
                 </div>
                 <hr />
                 <ul class="py-2 text-md text-gray-800 font-medium">
@@ -229,52 +229,52 @@ import FooterComponent from "../components/FooterComponent.vue";
 import DashboardComponent from "../components/DashboardComponent.vue";
 import PerfilProfissionalComponent from "../components/PerfilProfissionalComponent.vue";
 import AgendamentosComponent from "../components/AgendamentosComponent.vue";
+import { carregarDadosDoProfissional } from "@/services/professionalService";
 
-// Estados
+// STATES
 const sidebarOpen = ref(false);
 const dropdownOpen = ref(false);
-const currentModal = ref(DashboardComponent); 
+const currentModal = ref(DashboardComponent);
+
+const profile = ref({
+  professional: {
+    name: "",
+    cpf: "",
+    email: "",
+    phone: "",
+    function: "",
+    about: "",
+    actuationTime: 0,
+    cro: ""
+  }
+});
+
+// Carregar dados
+onMounted(async () => {
+  try {
+    const dadosProfessional = await carregarDadosDoProfissional();
+    profile.value.professional = dadosProfessional;
+  } catch (error) {
+    console.error("Erro ao carregar profissional:", error);
+  }
+});
 
 // Fecha dropdown ao clicar fora
 const closeDropdownOutside = (e) => {
   if (!e.target.closest(".user-dropdown")) dropdownOpen.value = false;
 };
-onMounted(() => document.addEventListener("click", closeDropdownOutside));
-onBeforeUnmount(() =>
-  document.removeEventListener("click", closeDropdownOutside)
-);
 
+onMounted(() => document.addEventListener("click", closeDropdownOutside));
+
+onBeforeUnmount(() => {
+  document.removeEventListener("click", closeDropdownOutside);
+});
+
+// Modal navigation
 function openModal(name) {
-  if (name === "dashboard") {
-    currentModal.value = DashboardComponent;
-  } else if (name === "agendamentos") {
-    currentModal.value = AgendamentosComponent;
-  } else if (name === "perfil") {
-    currentModal.value = PerfilProfissionalComponent;
-  } else {
-    currentModal.value = null; 
-  }
+  if (name === "dashboard") currentModal.value = DashboardComponent;
+  else if (name === "agendamentos") currentModal.value = AgendamentosComponent;
+  else if (name === "perfil") currentModal.value = PerfilProfissionalComponent;
+  else currentModal.value = null;
 }
 </script>
-
-
-<style scoped>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.2s;
-}
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-.slide-enter-active,
-.slide-leave-active {
-  transition: transform 0.3s ease;
-}
-.slide-enter-from {
-  transform: translateX(-100%);
-}
-.slide-leave-to {
-  transform: translateX(-100%);
-}
-</style>

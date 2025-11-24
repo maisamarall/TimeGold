@@ -11,7 +11,7 @@
 
             <div class="text-center border-b border-purple-100 pb-6">
                 <div class="flex justify-center items-center gap-2">
-                    <h2 class="text-3xl font-bold text-purple-800">{{ profile.name }}</h2>
+                    <h2 class="text-3xl font-bold text-purple-800">{{ profile.professional.name }}</h2>
                     <!-- Ícone de lápis para editar -->
                     <button @click="editar = !editar" class="text-purple-600 hover:text-purple-800">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
@@ -21,8 +21,8 @@
                         </svg>
                     </button>
                 </div>
-                <p class="text-lg text-purple-600 font-medium">{{ profile.role }}</p>
-                <p class="text-gray-500 mt-1">{{ profile.cro }}</p>
+                <p class="text-lg text-purple-600 font-medium">{{ profile.professional.role }}</p>
+                <p class="text-gray-500 mt-1">{{ profile.professional.cro }}</p>
             </div>
 
             <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -33,34 +33,77 @@
                         <li>
                             <span class="font-semibold">E-mail: </span>
                             <template v-if="editar">
-                                <input v-model="profile.email"
+                                <input v-model="profile.professional.email"
                                     class="w-full bg-transparent border border-gray-300 rounded px-2 py-1 text-gray-800 focus:outline-none focus:ring-1 focus:ring-purple-500" />
+
+                                <p v-if="fieldErrors.email" class="text-red-600 text-sm">
+                                    {{ fieldErrors.email }}
+                                </p>
                             </template>
-                            <template v-else>{{ profile.email }}</template>
+                            <template v-else>{{ profile.professional.email }}</template>
                         </li>
                         <li>
                             <span class="font-semibold">Telefone: </span>
                             <template v-if="editar">
-                                <input v-model="profile.phone"
+                                <input v-model="profile.professional.phone"
                                     class="w-full bg-transparent border border-gray-300 rounded px-2 py-1 text-gray-800 focus:outline-none focus:ring-1 focus:ring-purple-500" />
+
+                                <p v-if="fieldErrors.phone" class="text-red-600 text-sm">
+                                    {{ fieldErrors.phone }}
+                                </p>
                             </template>
-                            <template v-else>{{ profile.phone }}</template>
+                            <template v-else>{{ profile.professional.phone }}</template>
                         </li>
+
+                        <li>
+                            <span class="font-semibold">Senha: </span>
+                            <template v-if="editar">
+                                <input 
+                                    type="password" v-model="profile.professional.password" class="w-full bg-transparent border border-gray-300 rounded px-2 py-1 text-gray-800 focus:outline-none focus:ring-1 focus:ring-purple-500"/>
+
+                                <p v-if="fieldErrors.password" class="text-red-600 text-sm">
+                                    {{ fieldErrors.password }}
+                                </p>
+                            </template>
+                            <template v-else>
+                                ********
+                            </template>
+                        </li>
+
                         <li>
                             <span class="font-semibold">Clínica: </span>
+                            <span>{{ profile.enterprise.name }}</span>
+                            <!-- <span class="font-semibold">Clínica: </span>
                             <template v-if="editar">
-                                <input v-model="profile.clinic"
+                                <input v-model="profile.enterprise.clinic"
                                     class="w-full bg-transparent border border-gray-300 rounded px-2 py-1 text-gray-800 focus:outline-none focus:ring-1 focus:ring-purple-500" />
                             </template>
-                            <template v-else>{{ profile.clinic }}</template>
+                            <template v-else>{{ profile.enterprise.name }}</template> -->
                         </li>
                         <li>
                             <span class="font-semibold">Endereço: </span>
                             <template v-if="editar">
-                                <input v-model="profile.address"
-                                    class="w-full bg-transparent border border-gray-300 rounded px-2 py-1 text-gray-800 focus:outline-none focus:ring-1 focus:ring-purple-500" />
+                                <span class="font"><br>Rua: </span>
+                                <input v-model="profile.enterprise.address.street"
+                                    class="w-full bg-transparent border border-gray-300 rounded px-2 py-1" />
+
+                                <span class="font"><br>N°: </span>
+                                <input v-model="profile.enterprise.address.number"
+                                    class="w-full mt-2 bg-transparent border border-gray-300 rounded px-2 py-1" />
+
+                                <span class="font"><br>Cidade: </span>
+                                <input v-model="profile.enterprise.address.city"
+                                    class="w-full mt-2 bg-transparent border border-gray-300 rounded px-2 py-1" />
+
+                                <span class="font"><br>Estado: </span>
+                                <input v-model="profile.enterprise.address.state"
+                                    class="w-full mt-2 bg-transparent border border-gray-300 rounded px-2 py-1" />
+
+                                <span class="font"><br>País: </span>
+                                <input v-model="profile.enterprise.address.country"
+                                    class="w-full mt-2 bg-transparent border border-gray-300 rounded px-2 py-1" />
                             </template>
-                            <template v-else>{{ profile.address }}</template>
+                            <template v-else>{{ profile.enterprise.address.street }} - {{ profile.enterprise.address.number }}, {{ profile.enterprise.address.city }} - {{ profile.enterprise.address.state }}</template>
                         </li>
                     </ul>
                 </div>
@@ -71,18 +114,19 @@
                         <li>
                             <span class="font-semibold">Especialidade: </span>
                             <template v-if="editar">
-                                <input v-model="profile.role"
+                                <input v-model="profile.professional.function"
                                     class="w-full bg-transparent border border-gray-300 rounded px-2 py-1 text-gray-800 focus:outline-none focus:ring-1 focus:ring-purple-500" />
+                                <p v-if="fieldErrors.Email" class="text-red-600 text-sm">{{ fieldErrors.Email }}</p>
                             </template>
-                            <template v-else>{{ profile.role }}</template>
+                            <template v-else>{{ profile.professional.function }}</template>
                         </li>
                         <li>
                             <span class="font-semibold">Tempo de atuação: </span>
                             <template v-if="editar">
-                                <input v-model="profile.yearsExperience"
+                                <input v-model="profile.professional.actuationTime"
                                     class="w-full bg-transparent border border-gray-300 rounded px-2 py-1 text-gray-800 focus:outline-none focus:ring-1 focus:ring-purple-500" />
                             </template>
-                            <template v-else>{{ profile.yearsExperience }} anos</template>
+                            <template v-else>{{ profile.professional.actuationTime }}</template>
                         </li>
                     </ul>
                 </div>
@@ -91,11 +135,11 @@
             <div class="mt-10 bg-purple-50 border border-purple-100 rounded-xl p-6">
                 <h3 class="text-xl font-semibold text-purple-800 mb-3">Sobre</h3>
                 <template v-if="editar">
-                    <textarea v-model="profile.about" rows="4"
+                    <textarea v-model="profile.professional.about" rows="4"
                         class="w-full bg-transparent border border-gray-300 rounded px-2 py-2 text-gray-800 focus:outline-none focus:ring-1 focus:ring-purple-500 resize-none"></textarea>
                 </template>
                 <template v-else>
-                    <p class="text-gray-700 leading-relaxed">{{ profile.about }}</p>
+                    <p class="text-gray-700 leading-relaxed">{{ profile.professional.about }}</p>
                 </template>
             </div>
 
@@ -111,28 +155,77 @@
 </template>
 
 <script>
+import { carregarDadosDoProfissional, salvarPerfil } from "@/services/professionalService";
+import { carregarDadosDaEmpresa, salvarEmpresaPerfil } from "@/services/enterpriseService";
+
 export default {
     data() {
         return {
             editar: false,
             profile: {
-                name: "Jênie Danielle",
-                role: "Dentista Geral",
-                cro: "CRO-SP 12456",
-                email: "jenie@gmail.com",
-                phone: "(14) 99788-3117",
-                clinic: "TimeGold",
-                address: "Rua das Flores, 245 - São Paulo, SP",
-                about: "Jênie Danielle é a dentista geral da clínica TimeGold, responsável por fazer boa parte dos procedimentos odontológicos da clínica...",
-                yearsExperience: 8
-            }
+                professional: {
+                    name: "",
+                    cpf: "",
+                    email: "",
+                    phone: "",
+                    function: "",
+                    about: "",
+                    actuationTime: 0,
+                    cro: "",
+                },
+
+                enterprise: {
+                    name: "",
+                    cnpj: "",
+                    address: "",
+                    schedulingType: [],
+                    professionals: [] 
+                }
+            },
+            fieldErrors: {}
         }
     },
+
+    async mounted() {
+        try {
+            const dadosProfessional = await carregarDadosDoProfissional();
+            this.profile.professional = dadosProfessional;
+        } catch (error) {
+            console.error("Erro ao carregar profissional:", error);
+        }    
+        try {
+            const dadosEmpresa = await carregarDadosDaEmpresa();
+            this.profile.enterprise = dadosEmpresa;
+        } catch (error) {
+            console.error("Erro ao carregar empresa:", error);
+        }
+    },
+
     methods: {
-        salvarPerfil() {
-            console.log("Perfil salvo:", this.profile);
-            this.editar = false;
+        async salvarPerfil() {
+            this.fieldErrors = {};
+
+            try {
+                await salvarPerfil(this.profile.professional);
+                await salvarEmpresaPerfil(this.profile.enterprise);
+
+                alert("Perfil atualizado com sucesso!");
+                this.editar = false;
+            } catch (error) {
+                console.log(error.response.data);
+
+                if (Array.isArray(error.response?.data)) {
+                    error.response.data.forEach(err => {this.fieldErrors[err.property.toLowerCase()] = err.message;});
+                }
+
+                else if (error.response?.data?.errors) {
+                    for (const field in error.response.data.errors) {
+                        this.fieldErrors[field] = error.response.data.errors[field][0];
+                    }
+                }
+            }
         }
     }
-}
+};
+
 </script>
