@@ -7,7 +7,7 @@
         <h2 class="text-xl font-semibold mb-4 text-purple-900">Detalhes do Agendamento</h2>
         <hr class="mb-4">
 
-        <div v-if="agendamento" class="space-y-2">
+        <div v-if="agendamento" class="space-y-2 text-gray-700">
           <p><strong>Paciente:</strong> {{ agendamento.paciente }}</p>
           <p><strong>Procedimento:</strong> {{ agendamento.procedimento }}</p>
           <p><strong>Data:</strong> {{ formattedDate }}</p> 

@@ -83,8 +83,8 @@
               :class="getStatusClasses(agendamento.status)"
               @click="abrirDetalhes(agendamento)"
               >
-              <h3 class="font-semibold truncate">{{ agendamento.paciente }}</h3>
-              <h3 class="font-semibold truncate">{{ agendamento.procedimento }}</h3>
+              <h3 class="font-bold text-sm text-gray-700 truncate">{{ agendamento.paciente }}</h3>
+              <h3 class="font-semibold text-sm text-gray-700 truncate">{{ agendamento.procedimento }}</h3>
               <p class="text-xs font-medium text-gray-700">{{ agendamento.hora }}</p> </div>
           </div>
             </div>
@@ -92,7 +92,7 @@
 
           <div v-else-if="viewMode === 'day'" class="p-4">
             <div class="border border-gray-200 rounded-lg p-4">
-              <h2 class="text-lg font-semibold mb-4">Agendamentos para {{ formattedSelectedDate }}</h2>
+              <h2 class="text-lg font-semibold text-gray-700 mb-4">Agendamentos para {{ formattedSelectedDate }}</h2>
               <div v-if="dailyAgendamentos.length > 0" class="space-y-4">
                 <div v-for="agendamento in dailyAgendamentos" :key="agendamento.id" class="p-3 border border-gray-300 rounded-lg cursor-pointer" :class="getStatusClasses(agendamento.status)" @click="abrirDetalhes(agendamento)">
                   <h3 class="font-semibold text-gray-900">{{ agendamento.paciente }} - {{ agendamento.procedimento }}</h3>

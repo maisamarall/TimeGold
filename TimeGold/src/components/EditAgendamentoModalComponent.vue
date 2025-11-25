@@ -20,7 +20,7 @@
                         </ul>
                     </div>
                     
-                    <div class="grid grid-cols-1 gap-4">
+                    <div class="grid grid-cols-1 gap-4 mb-4">
                         <div>
                             <label class="label">Paciente:</label>
                             <input v-model="form.paciente" type="text" class="input" required />
@@ -28,15 +28,17 @@
                     </div>
                     
                     <div>
-                        <label class="label mb-2 flex justify-between items-center">
-                            Procedimento:
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="label">Procedimento:</label>
                             <button type="button" 
-                                @click="mostrarModalCadastroProcedimento = true"
-                                class="text-xs text-purple-600 hover:text-purple-800 font-semibold flex items-center gap-1 p-1 rounded-md transition duration-150 border border-purple-200 hover:bg-purple-50">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                                Novo Cadastro
+                            @click="mostrarModalCadastroProcedimento = true"
+                            class="text-xs text-purple-600 hover:text-purple-800 font-semibold flex items-center gap-1 p-1 rounded-md transition duration-150 border border-purple-200 hover:bg-purple-50">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                            </svg>
+                            Novo Cadastro
                             </button>
-                        </label>
+                        </div>
                         
                         <select 
                             v-model.number="form.schedulingTypeId" 
