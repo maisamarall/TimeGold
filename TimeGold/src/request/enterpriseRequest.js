@@ -4,6 +4,18 @@ export async function cadastroEmpresaRequest(empresaDTO) {
     return api.post("/Enterprise", empresaDTO);
 }
 
+export async function carregarDadosDaEmpresa() {
+
+    const { data: profissional } = await api.get("/Professional/me");
+
+    const response = await api.get(`/Enterprise/${profissional.enterpriseId}`);
+    return response.data;
+}
+
+export async function salvarEmpresaPerfil(empresa) {
+    return api.put(`/Enterprise/${empresa.id}`, empresa);
+}
+
 export function enterpriseRequest(data) {
   return {
     id: data.id,

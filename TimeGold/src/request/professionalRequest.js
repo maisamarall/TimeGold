@@ -4,6 +4,15 @@ export function createProfessionalRequest(data) {
     return api.post('/Professional', data);
 }
 
+export async function carregarDadosDoProfissional() {
+    const response = await api.get("/Professional/me");
+    return response.data;
+}
+
+export async function salvarPerfil(profissional) {
+    return api.put(`/Professional/${profissional.id}`, profissional);
+}
+
 export function professionalRequest(data) {
     const request = {
         id: data.id,

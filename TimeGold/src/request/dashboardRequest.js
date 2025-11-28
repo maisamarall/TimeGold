@@ -1,13 +1,13 @@
 import api from '@/services/api';
 
-export function getAtendimentosHojeRequest() {
-    return api.get('/Dashboard/atendimentos-hoje');
+export function getAtendimentosHojeRequest(enterpriseId) {
+    return api.get(`/Scheduling/GetTodaySchedulings/${enterpriseId}`);
 }
 
-export function getUsuariosAtivosRequest() {
-    return api.get('/Dashboard/usuarios-ativos');
+export function getUsuariosAtivosRequest(professionalId) {
+    return api.get(`/Scheduling/GetTodaySchedulingsStatusProfessional/${professionalId}`);
 }
 
-export function getAgendamentosPendentesRequest() {
-    return api.get('/Dashboard/agendamentos-pendentes');
+export function getAgendamentosPendentesRequest(enterpriseId) {
+    return api.get(`/Scheduling/GetPendentsSchedulings/${enterpriseId}`);
 }

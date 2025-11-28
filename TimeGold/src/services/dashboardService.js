@@ -1,20 +1,20 @@
-    import {
-        getAtendimentosHojeRequest,
-        getUsuariosAtivosRequest,
-        getAgendamentosPendentesRequest
-    } from '../request/dashboardRequest';
+import {
+    getAtendimentosHojeRequest,
+    getUsuariosAtivosRequest,
+    getAgendamentosPendentesRequest
+} from '../request/dashboardRequest';
 
-    export const dashboardService = {
+export const dashboardService = {
 
-        getAtendimentosHoje() {
-            return getAtendimentosHojeRequest();
-        },
+    getAtendimentosHoje(enterpriseId) {
+        return getAtendimentosHojeRequest(enterpriseId);
+    },
 
-        getUsuariosAtivos() {
-            return getUsuariosAtivosRequest();
-        },
+    getUsuariosAtivos(professionalId) {
+        return getUsuariosAtivosRequest(professionalId);
+    },
 
-        getAgendamentosPendentes() {
-            return getAgendamentosPendentesRequest();
-        }
-    };
+    getAgendamentosPendentes(enterpriseId) {
+        return getAgendamentosPendentesRequest(enterpriseId);
+    }
+};

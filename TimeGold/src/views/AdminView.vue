@@ -27,7 +27,7 @@
                             <a href="Perfil" class="block px-4 py-2 hover:bg-gray-100">Perfil</a>
                             <a href="#" class="block px-4 py-2 hover:bg-gray-100">Configurações</a>
                             <div class="border-t border-gray-200"></div>
-                            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Sair</a>
+                            <button @click="logout" class="w-full text-left px-4 py-2 hover:bg-gray-100"> Sair</button>
                         </div>
                     </div>
                 </nav>
@@ -42,7 +42,7 @@
                         <div class="mb-10 lg:mb-0">
                             <p class="text-xl mb-4">Olá, {{ adminName }}!</p>
                             <div class="flex items-start space-x-8">
-                                <span class="text-9xl font-light leading-none">12</span>
+                                <span class="text-9xl font-light leading-none">{{ atendimentosHoje }}</span>
                                 <div class="text-3xl font-light pt-3 leading-snug">
                                     atendimentos<br>confirmados para hoje!
                                 </div>
@@ -72,7 +72,7 @@
                                 d="M19 4h-2V3a1 1 0 00-2 0v1H9V3a1 1 0 00-2 0v1H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V6a2 2 0 00-2-2zm-2 16H7V10h12zM9 8h6V6H9z" />
                         </svg>
                     </div>
-                    <p class="text-4xl font-extrabold text-gray-800 mb-2">12</p>
+                    <p class="text-4xl font-extrabold text-gray-800 mb-2">{{ atendimentosHoje }}</p>
                     <h4 class="text-lg font-medium text-gray-600"> Atendimentos confirmados hoje </h4>
                 </div>
 
@@ -84,7 +84,7 @@
                                 d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
                         </svg>
                     </div>
-                    <p class="text-4xl font-extrabold text-gray-800 mb-2">8</p>
+                    <p class="text-4xl font-extrabold text-gray-800 mb-2">{{ usuariosAtivos }}</p>
                     <h4 class="text-lg font-medium text-gray-600">Usuários Ativos</h4>
                 </div>
 
@@ -96,7 +96,7 @@
                                 d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z" />
                         </svg>
                     </div>
-                    <p class="text-4xl font-extrabold text-gray-800">3</p>
+                    <p class="text-4xl font-extrabold text-gray-800">{{ agendamentosPendentes }}</p>
                     <!-- <span class="ml-2 text-xl text-gray-500">novos</span> -->
                     <h4 class="text-lg font-medium text-gray-600 mt-2">Agendamentos pendentes</h4>
                 </div>
@@ -199,6 +199,9 @@ import PlanoComponent from '../components/PlanoComponent.vue'
 import UserFormModal from '../components/UserFormModal.vue'
 import EditUserModalComponent from '../components/EditUserModalComponent.vue'
 import { equipeService } from '../services/equipeService';
+import authService from '@/services/authServices.js';
+import {dashboardService} from "@/services/dashboardService";
+
 import Swal from 'sweetalert2'
 
 export default {
@@ -212,8 +215,13 @@ export default {
 
     data() {
         return {
-            adminName: 'Admin',
+            adminName: '',
+
             isDropdownOpen: false,
+
+            atendimentosHoje: 0,
+            agendamentosPendentes: 0,
+            usuariosAtivos: 0,
 
             modalCadastroAberto: false,
             modalEditarAberto: false,
@@ -236,9 +244,43 @@ export default {
 
     async mounted() {
         this.carregarEquipe()
+
+        const storedUser = localStorage.getItem('user');
+        
+        if (storedUser) {
+            const user = JSON.parse(storedUser);
+            this.adminName = user.name;
+        }
+
+        //Carregar dados do dashboard
+        const user = authService.getUser();
+        const enterpriseId = user.enterpriseId;
+        const professionalId = user.id;
+
+        try {
+            const atendHoje = await dashboardService.getAtendimentosHoje(enterpriseId);
+            this.atendimentosHoje = atendHoje.data.length;
+
+            const usuariosAtivos = await dashboardService.getUsuariosAtivos(professionalId);
+            this.usuariosAtivos = usuariosAtivos.data.length;
+
+            const pendentes = await dashboardService.getAgendamentosPendentes(enterpriseId);
+            this.agendamentosPendentes = pendentes.data.length;
+        
+        } catch (error) {
+            console.error("Erro ao carregar widgets:", error);
+        }
     },
 
     methods: {
+
+        logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+
+            window.location.href = '/';  
+        },
+
         toggleDropdown() {
             this.isDropdownOpen = !this.isDropdownOpen
         },

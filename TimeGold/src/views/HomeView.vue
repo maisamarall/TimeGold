@@ -147,9 +147,6 @@ export default {
         console.log("Planos recebidos na home", this.planos);
     },
 
-    created() {
-        this.router = this.$router;
-    },
 
     methods: {
         limparErro() {
@@ -182,6 +179,8 @@ export default {
                 this.mensagemError = message;
                 return
             }
+
+            localStorage.setItem('user', JSON.stringify(user));
 
             if (user.type === 1) {
                 this.$router.push('/admin');

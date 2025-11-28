@@ -22,7 +22,7 @@
                     </button>
                 </div>
                 <p class="text-lg text-purple-600 font-medium">{{ profile.professional.role }}</p>
-                <p class="text-gray-500 mt-1">{{ profile.professional.cro }}</p>
+                <p class="text-gray-500 mt-1 text-[18px]">Administrador</p>
             </div>
 
             <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -65,14 +65,12 @@
                                     {{ fieldErrors.password }}
                                 </p>
                             </template>
-                            <template v-else>
-                                ********
-                            </template>
+                            <template v-else> ********</template>
                         </li>
 
                         <li>
                             <span class="font-semibold">Clínica: </span>
-                            <span>{{ profile.enterprise.name }}</span>
+                            <span>{{ profile.enterprise.name || "Nome da empresa não disponível" }}</span>
                             <!-- <span class="font-semibold">Clínica: </span>
                             <template v-if="editar">
                                 <input v-model="profile.enterprise.clinic"
@@ -103,7 +101,12 @@
                                 <input v-model="profile.enterprise.address.country"
                                     class="w-full mt-2 bg-transparent border border-gray-300 rounded px-2 py-1" />
                             </template>
-                            <template v-else>{{ profile.enterprise.address.street }} - {{ profile.enterprise.address.number }}, {{ profile.enterprise.address.city }} - {{ profile.enterprise.address.state }}</template>
+                            <template v-else>
+                                {{ profile.enterprise.address.street }} - 
+                                {{ profile.enterprise.address.number }}, 
+                                {{ profile.enterprise.address.city }} - 
+                                {{ profile.enterprise.address.state }}
+                            </template>
                         </li>
                     </ul>
                 </div>
@@ -118,7 +121,7 @@
                                     class="w-full bg-transparent border border-gray-300 rounded px-2 py-1 text-gray-800 focus:outline-none focus:ring-1 focus:ring-purple-500" />
                                 <p v-if="fieldErrors.Email" class="text-red-600 text-sm">{{ fieldErrors.Email }}</p>
                             </template>
-                            <template v-else>{{ profile.professional.function }}</template>
+                            <template v-else>{{ profile.professional.function || "Função não informada" }}</template>
                         </li>
                         <li>
                             <span class="font-semibold">Tempo de atuação: </span>
@@ -126,7 +129,7 @@
                                 <input v-model="profile.professional.actuationTime"
                                     class="w-full bg-transparent border border-gray-300 rounded px-2 py-1 text-gray-800 focus:outline-none focus:ring-1 focus:ring-purple-500" />
                             </template>
-                            <template v-else>{{ profile.professional.actuationTime }}</template>
+                            <template v-else>{{ profile.professional.actuationTime || "Tempo de atuação não informado"}}</template>
                         </li>
                     </ul>
                 </div>
@@ -164,22 +167,28 @@ export default {
             editar: false,
             profile: {
                 professional: {
+                    id: null,
                     name: "",
                     cpf: "",
                     email: "",
                     phone: "",
                     function: "",
+                    type:"",
+                    enterpriseId: null,
                     about: "",
-                    actuationTime: 0,
+                    actuationTime: "",
                     cro: "",
                 },
-
                 enterprise: {
                     name: "",
                     cnpj: "",
-                    address: "",
-                    schedulingType: [],
-                    professionals: [] 
+                    address: {
+                        street: "",
+                        number: "",
+                        city: "",
+                        state: "",
+                        country: ""
+                    }
                 }
             },
             fieldErrors: {}
@@ -189,16 +198,13 @@ export default {
     async mounted() {
         try {
             const dadosProfessional = await carregarDadosDoProfissional();
-            this.profile.professional = dadosProfessional;
-        } catch (error) {
-            console.error("Erro ao carregar profissional:", error);
-        }    
-        try {
-            const dadosEmpresa = await carregarDadosDaEmpresa();
+            this.profile.professional = dadosProfessional.professional ?? dadosProfessional;
+
+            const dadosEmpresa = await carregarDadosDaEmpresa(this.profile.professional.enterpriseId);
             this.profile.enterprise = dadosEmpresa;
         } catch (error) {
-            console.error("Erro ao carregar empresa:", error);
-        }
+            console.error("Erro ao carregar informações", error);
+        } 
     },
 
     methods: {
@@ -211,11 +217,13 @@ export default {
 
                 alert("Perfil atualizado com sucesso!");
                 this.editar = false;
+
             } catch (error) {
                 console.log(error.response.data);
 
                 if (Array.isArray(error.response?.data)) {
-                    error.response.data.forEach(err => {this.fieldErrors[err.property.toLowerCase()] = err.message;});
+                    error.response.data.forEach(err => 
+                    {this.fieldErrors[err.property.toLowerCase()] = err.message;});
                 }
 
                 else if (error.response?.data?.errors) {
