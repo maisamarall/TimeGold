@@ -200,7 +200,7 @@ import UserFormModal from '../components/UserFormModal.vue'
 import EditUserModalComponent from '../components/EditUserModalComponent.vue'
 import { equipeService } from '../services/equipeService';
 import authService from '@/services/authServices.js';
-import {dashboardService} from "@/services/dashboardService";
+import dashboardService from '../services/dashboardService';
 
 import Swal from 'sweetalert2'
 
@@ -222,6 +222,8 @@ export default {
             atendimentosHoje: 0,
             agendamentosPendentes: 0,
             usuariosAtivos: 0,
+            loading: true,
+            error: "",
 
             modalCadastroAberto: false,
             modalEditarAberto: false,
@@ -255,21 +257,18 @@ export default {
         //Carregar dados do dashboard
         const user = authService.getUser();
         const enterpriseId = user.enterpriseId;
-        const professionalId = user.id;
 
-        try {
-            const atendHoje = await dashboardService.getAtendimentosHoje(enterpriseId);
-            this.atendimentosHoje = atendHoje.data.length;
+        const result = await dashboardService.getWidgetsData(enterpriseId);
 
-            const usuariosAtivos = await dashboardService.getUsuariosAtivos(professionalId);
-            this.usuariosAtivos = usuariosAtivos.data.length;
-
-            const pendentes = await dashboardService.getAgendamentosPendentes(enterpriseId);
-            this.agendamentosPendentes = pendentes.data.length;
-        
-        } catch (error) {
-            console.error("Erro ao carregar widgets:", error);
+        if (result.success) {
+            this.atendimentosHoje = result.hoje;
+            this.agendamentosPendentes = result.pendentes;
+            this.usuariosAtivos = result.ativos;
+        } else {
+            this.error = result.message;
         }
+        console.log(result);
+        this.loading = false;
     },
 
     methods: {

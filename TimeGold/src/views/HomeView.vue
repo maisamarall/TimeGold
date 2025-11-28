@@ -182,9 +182,9 @@ export default {
 
             localStorage.setItem('user', JSON.stringify(user));
 
-            if (user.type === 1) {
+            if (user.type === 2) {
                 this.$router.push('/admin');
-            } else if (user.type === 2) {
+            } else if (user.type === 1) {
                 this.$router.push('/profissional');
             } else {
                 this.$router.push('/cliente')

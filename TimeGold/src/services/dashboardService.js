@@ -1,20 +1,36 @@
 import {
     getAtendimentosHojeRequest,
-    getUsuariosAtivosRequest,
+    getProfissionaisRequest,
     getAgendamentosPendentesRequest
 } from '../request/dashboardRequest';
 
-export const dashboardService = {
+class dashboardService {
 
-    getAtendimentosHoje(enterpriseId) {
-        return getAtendimentosHojeRequest(enterpriseId);
-    },
+    async getWidgetsData(enterpriseId) {
+        try {
+            const [hoje, pendentes, profissionais] = await Promise.all([
+                getAtendimentosHojeRequest(enterpriseId),
+                getAgendamentosPendentesRequest(enterpriseId),
+                getProfissionaisRequest(enterpriseId)
+            ]);
 
-    getUsuariosAtivos(professionalId) {
-        return getUsuariosAtivosRequest(professionalId);
-    },
+            const ativos = profissionais.data.filter(p => p.status === true).length;
 
-    getAgendamentosPendentes(enterpriseId) {
-        return getAgendamentosPendentesRequest(enterpriseId);
+            return {
+                success: true,
+                hoje: hoje.data,
+                pendentes: pendentes.data,
+                ativos: ativos
+            };
+
+        } catch (error) {
+            console.error("Erro ao buscar widgets:", error);
+            return {
+                success: false,
+                message: "Erro ao buscar informações dos agendamentos."
+            };
+        }
     }
-};
+}
+
+export default new dashboardService();
