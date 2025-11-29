@@ -15,8 +15,12 @@ export function criarEquipeRequest(data) {
 }
 
 export function atualizarEquipeRequest(data) {
-    return api.put(`/Professional/${data.id}`, data);
+    return api.put("/Professional", data);
 }
+
+// export function atualizarEquipeRequest(data) {
+//     return api.put(`/Professional/${data.id}`, data);
+// }
 
 export function deletarEquipeRequest(id) {
     return api.delete(`/Professional/${id}`);

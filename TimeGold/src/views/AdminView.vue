@@ -141,8 +141,8 @@
                                 <tr v-for="usuario in usuariosFiltrados" :key="usuario.id">
                                     <td class="px-6 py-4 text-sm text-gray-900">{{ usuario.name }}</td>
                                     <td class="px-6 py-4 text-sm text-gray-500">{{ usuario.email }}</td>
-                                    <td class="px-6 py-4 text-sm text-gray-500">{{ usuario.type === 1 ? 'Admin'
-                                        : usuario.type === 2 ? 'Profissional' : 'Desconhecido' }}
+                                    <td class="px-6 py-4 text-sm text-gray-500">{{ usuario.type === 1 ? 'Profissional'
+                                        : usuario.type === 2 ? 'Admin' : 'Desconhecido' }}
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500">{{ usuario.function }}</td>
                                     <td class="px-6 py-4 text-sm text-gray-500">
@@ -152,7 +152,7 @@
                                                 ? 'bg-purple-200 text-purple-800'
                                                 : 'bg-gray-200 text-gray-600'
                                         ]">
-                                            {{ usuario.active ? 'Ativo' : 'Inativo' }}
+                                            {{ !usuario.active ? 'Ativo' : 'Inativo' }}
                                         </span>
                                     </td>
 
@@ -229,7 +229,6 @@ export default {
             modalEditarAberto: false,
 
             usuarioSelecionado: null,
-            modalEditarAberto: false,
             termoBusca: '',
 
             usuarios: []
@@ -319,7 +318,7 @@ export default {
 
         async atualizarUsuario(usuarioEditado) {
             try {
-                await equipeService.atualzar(usuarioEditado)
+                await equipeService.atualizar(usuarioEditado)
 
                 Swal.fire('Sucesso!', 'Profissional atualizado!', 'success')
 

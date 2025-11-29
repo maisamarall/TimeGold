@@ -2,32 +2,33 @@
     <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 px-4 sm:px-6">
         <transition name="fade-scale">
             <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl p-8 relative animate-fade-in">
+
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="text-2xl font-semibold text-gray-700">
                         🧾 Editar Profissional
                     </h2>
-                    <button @click="$emit('fechar')" class="text-gray-400 hover:text-gray-600 text-2xl leading-none"
-                        aria-label="Fechar">
+                    <button @click="$emit('fechar')" class="text-gray-400 hover:text-gray-600 text-2xl leading-none">
                         &times;
                     </button>
                 </div>
 
                 <form @submit.prevent="handleSubmit" class="space-y-4">
+
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="label">Nome <span class="text-red-500">*</span></label>
+                            <label class="label">Nome *</label>
                             <input v-model="form.nome" type="text" required class="input" />
                         </div>
 
                         <div>
-                            <label class="label">Email <span class="text-red-500">*</span></label>
+                            <label class="label">Email *</label>
                             <input v-model="form.email" type="email" required class="input" />
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="label">Telefone <span class="text-red-500">*</span></label>
+                            <label class="label">Telefone *</label>
                             <input v-model="form.telefone" type="text" required class="input" />
                         </div>
 
@@ -55,6 +56,24 @@
                         </div>
                     </div>
 
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="label">CPF *</label>
+                            <input v-model="form.cpf" type="text" required class="input" />
+                        </div>
+
+                        <div>
+                            <label class="label">Senha *</label>
+                            <input v-model="form.senha" type="password" required class="input" />
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="label">Tempo de atuação *</label>
+                        <input v-model="form.actuationTime" class="input" type="text" required />
+                    </div>
+
+                    <!-- BOTÕES -->
                     <div class="flex justify-end gap-4 pt-4">
                         <button type="button" @click="$emit('fechar')"
                             class="px-5 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 border border-gray-300">
@@ -67,6 +86,7 @@
                         </button>
                     </div>
                 </form>
+
             </div>
         </transition>
     </div>
@@ -85,13 +105,39 @@ export default {
     data() {
         return {
             form: {
-                id: this.usuario.id,
-                nome: this.usuario.name || '',
-                email: this.usuario.email || '',
-                telefone: this.usuario.phone || '',
-                perfil: this.usuario.type || 2,
-                especialidade: this.usuario.function || '',
-                status: this.usuario.active ? 'Ativo' : 'Inativo'
+                id: '',
+                nome: '',
+                email: '',
+                telefone: '',
+                perfil: 2,
+                especialidade: '',
+                status: 'Ativo',
+                cpf: '',
+                senha: '',
+                actuationTime: ''
+            }
+        }
+    },
+
+    watch: {
+        usuario: {
+            immediate: true,
+            handler(novo) {
+                if (!novo) return
+
+                this.form = {
+                    id: novo.id,
+                    nome: novo.name || '',
+                    email: novo.email || '',
+                    telefone: novo.phone || '',
+                    perfil: novo.type || 2,
+                    especialidade: novo.function || '',
+                    status: novo.active ? 'Ativo' : 'Inativo',
+
+                    cpf: novo.cpf || '',
+                    senha: novo.password || "",
+                    actuationTime: novo.actuationTime || ''
+                }
             }
         }
     },
@@ -105,16 +151,20 @@ export default {
                 phone: this.form.telefone,
                 type: Number(this.form.perfil),
                 function: this.form.especialidade,
-                active: this.form.status === 'Ativo'
-            }
+                cpf: this.form.cpf,
+                status: this.form.status === 'Ativo',
+
+                password: this.form.senha,
+                actuationTime: this.form.actuationTime
+            };
+
+
 
             this.$emit('salvar', payload)
         }
-
     }
 }
 </script>
-
 
 <style scoped>
 .input {
@@ -140,16 +190,5 @@ export default {
     font-size: 0.875rem;
     color: #4b5563;
     margin-bottom: 0.25rem;
-}
-
-.fade-scale-enter-active,
-.fade-scale-leave-active {
-    transition: all 0.2s ease-out;
-}
-
-.fade-scale-enter-from,
-.fade-scale-leave-to {
-    opacity: 0;
-    transform: scale(0.95);
 }
 </style>
