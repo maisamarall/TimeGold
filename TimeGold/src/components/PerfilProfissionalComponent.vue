@@ -12,7 +12,6 @@
             <div class="text-center border-b border-purple-100 pb-6">
                 <div class="flex justify-center items-center gap-2">
                     <h2 class="text-3xl font-bold text-purple-800">{{ profile.professional.name }}</h2>
-                    <!-- Ícone de lápis para editar -->
                     <button @click="editar = !editar" class="text-purple-600 hover:text-purple-800">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
@@ -26,7 +25,7 @@
             </div>
 
             <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-8">
-
+                <!-- Informações de Contato -->
                 <div class="bg-purple-50 p-6 rounded-xl border border-purple-100">
                     <h3 class="text-xl font-semibold text-purple-800 mb-4">Informações de Contato</h3>
                     <ul class="space-y-2 text-gray-700">
@@ -35,22 +34,17 @@
                             <template v-if="editar">
                                 <input v-model="profile.professional.email"
                                     class="w-full bg-transparent border border-gray-300 rounded px-2 py-1 text-gray-800 focus:outline-none focus:ring-1 focus:ring-purple-500" />
-
-                                <p v-if="fieldErrors.email" class="text-red-600 text-sm">
-                                    {{ fieldErrors.email }}
-                                </p>
+                                <p v-if="fieldErrors.email" class="text-red-600 text-sm">{{ fieldErrors.email }}</p>
                             </template>
                             <template v-else>{{ profile.professional.email }}</template>
                         </li>
+
                         <li>
                             <span class="font-semibold">Telefone: </span>
                             <template v-if="editar">
                                 <input v-model="profile.professional.phone"
                                     class="w-full bg-transparent border border-gray-300 rounded px-2 py-1 text-gray-800 focus:outline-none focus:ring-1 focus:ring-purple-500" />
-
-                                <p v-if="fieldErrors.phone" class="text-red-600 text-sm">
-                                    {{ fieldErrors.phone }}
-                                </p>
+                                <p v-if="fieldErrors.phone" class="text-red-600 text-sm">{{ fieldErrors.phone }}</p>
                             </template>
                             <template v-else>{{ profile.professional.phone }}</template>
                         </li>
@@ -58,47 +52,33 @@
                         <li>
                             <span class="font-semibold">Senha: </span>
                             <template v-if="editar">
-                                <input 
-                                    type="password" v-model="profile.professional.password" class="w-full bg-transparent border border-gray-300 rounded px-2 py-1 text-gray-800 focus:outline-none focus:ring-1 focus:ring-purple-500"/>
-
-                                <p v-if="fieldErrors.password" class="text-red-600 text-sm">
-                                    {{ fieldErrors.password }}
-                                </p>
+                                <input type="password" v-model="profile.professional.password"
+                                    class="w-full bg-transparent border border-gray-300 rounded px-2 py-1 text-gray-800 focus:outline-none focus:ring-1 focus:ring-purple-500"/>
+                                <p v-if="fieldErrors.password" class="text-red-600 text-sm">{{ fieldErrors.password }}</p>
                             </template>
-                            <template v-else>
-                                ********
-                            </template>
+                            <template v-else>********</template>
                         </li>
 
                         <li>
                             <span class="font-semibold">Clínica: </span>
                             <span>{{ profile.enterprise.name }}</span>
-                            <!-- <span class="font-semibold">Clínica: </span>
-                            <template v-if="editar">
-                                <input v-model="profile.enterprise.clinic"
-                                    class="w-full bg-transparent border border-gray-300 rounded px-2 py-1 text-gray-800 focus:outline-none focus:ring-1 focus:ring-purple-500" />
-                            </template>
-                            <template v-else>{{ profile.enterprise.name }}</template> -->
                         </li>
+
                         <li>
                             <span class="font-semibold">Endereço: </span>
                             <template v-if="editar">
                                 <span class="font"><br>Rua: </span>
                                 <input v-model="profile.enterprise.address.street"
                                     class="w-full bg-transparent border border-gray-300 rounded px-2 py-1" />
-
                                 <span class="font"><br>N°: </span>
                                 <input v-model="profile.enterprise.address.number"
                                     class="w-full mt-2 bg-transparent border border-gray-300 rounded px-2 py-1" />
-
                                 <span class="font"><br>Cidade: </span>
                                 <input v-model="profile.enterprise.address.city"
                                     class="w-full mt-2 bg-transparent border border-gray-300 rounded px-2 py-1" />
-
                                 <span class="font"><br>Estado: </span>
                                 <input v-model="profile.enterprise.address.state"
                                     class="w-full mt-2 bg-transparent border border-gray-300 rounded px-2 py-1" />
-
                                 <span class="font"><br>País: </span>
                                 <input v-model="profile.enterprise.address.country"
                                     class="w-full mt-2 bg-transparent border border-gray-300 rounded px-2 py-1" />
@@ -108,6 +88,7 @@
                     </ul>
                 </div>
 
+                <!-- Informações Profissionais -->
                 <div class="bg-purple-50 p-6 rounded-xl border border-purple-100">
                     <h3 class="text-xl font-semibold text-purple-800 mb-4">Informações Profissionais</h3>
                     <ul class="space-y-2 text-gray-700">
@@ -116,10 +97,11 @@
                             <template v-if="editar">
                                 <input v-model="profile.professional.function"
                                     class="w-full bg-transparent border border-gray-300 rounded px-2 py-1 text-gray-800 focus:outline-none focus:ring-1 focus:ring-purple-500" />
-                                <p v-if="fieldErrors.Email" class="text-red-600 text-sm">{{ fieldErrors.Email }}</p>
+                                <p v-if="fieldErrors.function" class="text-red-600 text-sm">{{ fieldErrors.function }}</p>
                             </template>
                             <template v-else>{{ profile.professional.function }}</template>
                         </li>
+
                         <li>
                             <span class="font-semibold">Tempo de atuação: </span>
                             <template v-if="editar">
@@ -155,6 +137,7 @@
 </template>
 
 <script>
+import Swal from "sweetalert2";
 import { carregarDadosDoProfissional, salvarPerfil } from "@/services/professionalService";
 import { carregarDadosDaEmpresa, salvarEmpresaPerfil } from "@/services/enterpriseService";
 
@@ -172,12 +155,19 @@ export default {
                     about: "",
                     actuationTime: 0,
                     cro: "",
+                    password: ""
                 },
 
                 enterprise: {
                     name: "",
                     cnpj: "",
-                    address: "",
+                    address: {
+                        street: "",
+                        number: "",
+                        city: "",
+                        state: "",
+                        country: ""
+                    },
                     schedulingType: [],
                     professionals: [] 
                 }
@@ -209,23 +199,42 @@ export default {
                 await salvarPerfil(this.profile.professional);
                 await salvarEmpresaPerfil(this.profile.enterprise);
 
-                alert("Perfil atualizado com sucesso!");
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Perfil atualizado!',
+                    text: 'As informações foram salvas com sucesso.',
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+
                 this.editar = false;
             } catch (error) {
-                console.log(error.response.data);
+                console.error(error.response?.data);
 
                 if (Array.isArray(error.response?.data)) {
-                    error.response.data.forEach(err => {this.fieldErrors[err.property.toLowerCase()] = err.message;});
-                }
-
-                else if (error.response?.data?.errors) {
+                    error.response.data.forEach(err => {
+                        this.fieldErrors[err.property.toLowerCase()] = err.message;
+                    });
+                } else if (error.response?.data?.errors) {
                     for (const field in error.response.data.errors) {
                         this.fieldErrors[field] = error.response.data.errors[field][0];
                     }
+                }
+
+                // Mostra os erros no SweetAlert
+                const errorsHtml = Object.entries(this.fieldErrors)
+                    .map(([field, message]) => `<strong>${field}:</strong> ${message}`)
+                    .join('<br/>');
+
+                if (errorsHtml) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Erro ao salvar perfil',
+                        html: errorsHtml
+                    });
                 }
             }
         }
     }
 };
-
 </script>
