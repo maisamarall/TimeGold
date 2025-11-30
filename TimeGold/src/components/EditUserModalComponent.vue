@@ -35,8 +35,8 @@
                         <div>
                             <label class="label">Perfil</label>
                             <select v-model="form.perfil" class="input">
-                                <option value="1">Admin</option>
-                                <option value="2">Profissional</option>
+                                <option value="2">Admin</option>
+                                <option value="1">Profissional</option>
                             </select>
                         </div>
                     </div>
@@ -64,7 +64,7 @@
 
                         <div>
                             <label class="label">Senha *</label>
-                            <input v-model="form.senha" type="password" required class="input" />
+                            <input v-model="form.senha" type="password" class="input" />
                         </div>
                     </div>
 
@@ -123,24 +123,26 @@ export default {
         usuario: {
             immediate: true,
             handler(novo) {
-                if (!novo) return
+                if (!novo) return;
 
                 this.form = {
                     id: novo.id,
                     nome: novo.name || '',
                     email: novo.email || '',
                     telefone: novo.phone || '',
-                    perfil: novo.type || 2,
+                    perfil: Number(novo.type) || 2,
                     especialidade: novo.function || '',
-                    status: novo.active ? 'Ativo' : 'Inativo',
-
+                    status: novo.status ? 'Ativo' : 'Inativo',
                     cpf: novo.cpf || '',
-                    senha: novo.password || "",
-                    actuationTime: novo.actuationTime || ''
-                }
+                    senha: '',
+                    actuationTime: novo.actuationTime || '',
+                    enterpriseId: novo.enterpriseId || 1,
+                    about: novo.about || ''
+                };
             }
         }
     },
+
 
     methods: {
         handleSubmit() {
@@ -153,15 +155,18 @@ export default {
                 function: this.form.especialidade,
                 cpf: this.form.cpf,
                 status: this.form.status === 'Ativo',
-
-                password: this.form.senha,
-                actuationTime: this.form.actuationTime
+                actuationTime: this.form.actuationTime,
+                enterpriseId: this.form.enterpriseId || 3,
+                about: this.form.about || null
             };
 
+            if (this.form.senha && this.form.senha.trim() !== "") {
+                payload.password = this.form.senha;
+            }
 
-
-            this.$emit('salvar', payload)
+            this.$emit('salvar', payload);
         }
+
     }
 }
 </script>

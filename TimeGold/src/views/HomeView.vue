@@ -2,7 +2,7 @@
     <nav class="select-none fundo scroll-smooth fixed z-50 top-0 w-full  flex justify-center gap-40 md:gap-0 2xl:gap-40 pt-10" id="inicio">
         <h1 class="font-semibold pb-5 text-[20px] 2xl:text-[23px] md:mr-64">TimeGold</h1>
         <ul class="flex gap-10 2xl:ml-80">
-            <li class="hidden sm:inline-block hover:border-b-2 hover:border-white 2xl:text-[20px] font-normal"><a href="#quem-somos">Quem somos</a></li>
+            <li class="hidden sm:inline-block hover:border-b-2 hover:border-white 2xl:text-[20px] font-normal"><a href="#sobre">Quem somos</a></li>
             <li class="hidden sm:inline-block hover:border-b-2 hover:border-white-50 2xl:text-[20px] font-normal"><a href="#planos">Planos</a></li>
             <li class="hidden sm:inline-block hover:border-b-2 hover:border-white 2xl:text-[20px] font-normal"><button @click="abrirCadastro">Para empresas</button></li>
             <li>

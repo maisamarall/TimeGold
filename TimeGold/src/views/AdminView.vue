@@ -148,12 +148,13 @@
                                     <td class="px-6 py-4 text-sm text-gray-500">
                                         <span :class="[
                                             'px-3 py-1 rounded-full text-xs font-semibold',
-                                            usuario.active
-                                                ? 'bg-purple-200 text-purple-800'
-                                                : 'bg-gray-200 text-gray-600'
+                                            usuario.status
+                                                ? 'bg-purple-200 text-purple-800' 
+                                                : 'bg-gray-200 text-gray-600'      
                                         ]">
-                                            {{ !usuario.active ? 'Ativo' : 'Inativo' }}
+                                            {{ usuario.status ? 'Ativo' : 'Inativo' }}
                                         </span>
+
                                     </td>
 
                                     <td class="px-6 py-4 text-sm flex gap-2">
@@ -247,7 +248,7 @@ export default {
         this.carregarEquipe()
 
         const storedUser = localStorage.getItem('user');
-        
+
         if (storedUser) {
             const user = JSON.parse(storedUser);
             this.adminName = user.name;
@@ -276,7 +277,7 @@ export default {
             localStorage.removeItem('token');
             localStorage.removeItem('user');
 
-            window.location.href = '/';  
+            window.location.href = '/';
         },
 
         toggleDropdown() {
@@ -323,7 +324,7 @@ export default {
                 Swal.fire('Sucesso!', 'Profissional atualizado!', 'success')
 
                 this.modalEditarAberto = false
-                
+
                 this.carregarEquipe()
 
             } catch (error) {

@@ -160,6 +160,7 @@
 <script>
 import { carregarDadosDoProfissional, salvarPerfil } from "@/services/professionalService";
 import { carregarDadosDaEmpresa, salvarEmpresaPerfil } from "@/services/enterpriseService";
+import Swal from 'sweetalert2'
 
 export default {
     data() {
@@ -215,7 +216,7 @@ export default {
                 await salvarPerfil(this.profile.professional);
                 await salvarEmpresaPerfil(this.profile.enterprise);
 
-                alert("Perfil atualizado com sucesso!");
+                Swal.fire('Sucesso!', 'Perfil atualizado com sucesso!', 'success')
                 this.editar = false;
 
             } catch (error) {

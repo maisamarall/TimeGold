@@ -30,8 +30,8 @@
                     <div>
                         <label class="label">Perfil *</label>
                         <select v-model="form.type" class="input">
-                            <option value="1">Admin</option>
-                            <option value="2">Profissional</option>
+                            <option value="2">Admin</option>
+                            <option value="1">Profissional</option>
                         </select>
                     </div>
                 </div>
@@ -61,7 +61,7 @@
 
                     <div>
                         <label class="label">Status *</label>
-                        <select v-model="form.active" class="input">
+                        <select v-model="form.status" class="input">
                             <option :value="true">Ativo</option>
                             <option :value="false">Inativo</option>
                         </select>
@@ -105,7 +105,7 @@ export default {
                 about: "",
                 password: "",
                 enterpriseId: 1,
-                active: true,
+                status: true,
             },
         };
     },
