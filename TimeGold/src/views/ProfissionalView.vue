@@ -252,12 +252,24 @@ const profile = ref({
 // Carregar dados
 onMounted(async () => {
   try {
+    const salvo = localStorage.getItem("dadosProfissional");
+
+    if (salvo) {
+      profile.value.professional = JSON.parse(salvo);
+    }
+
     const dadosProfessional = await carregarDadosDoProfissional();
     profile.value.professional = dadosProfessional;
+
+    localStorage.setItem(
+      "dadosProfissional",
+      JSON.stringify(dadosProfessional)
+    );
   } catch (error) {
     console.error("Erro ao carregar profissional:", error);
   }
 });
+
 
 // Fecha dropdown ao clicar fora
 const closeDropdownOutside = (e) => {

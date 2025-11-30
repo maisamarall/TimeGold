@@ -36,8 +36,26 @@ export function createSchedulingRequest(schedulingData) {
     return api.post('/Scheduling', schedulingData);
 }
 
-export function updateSchedulingRequest(schedulingData) {
-    return api.put('/Scheduling', schedulingData);
+export async function updateSchedulingRequest(payload) {
+    console.log("Payload enviado REAL:", payload);
+    
+    const id = payload.id; // Pega o ID do objeto payload
+    
+    try {
+        // Altera a rota para incluir o ID: '/Scheduling/{id}'
+        const response = await api.put(`/Scheduling/${id}`, payload); // <--- CORREÇÃO AQUI
+        
+        // ... (o resto do código permanece o mesmo)
+        
+        if (!response || response.status === 204) {
+            return null;
+        }
+
+        return response.data;
+    } catch (error) {
+        // ...
+        throw error;
+    }
 }
 
 export function deleteSchedulingRequest(id) {

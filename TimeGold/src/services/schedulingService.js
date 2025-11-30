@@ -20,7 +20,6 @@ export const schedulingService = {
             const response = await getAllSchedulingRequest(page, size, q);
             return response.data;
         } catch (error) {
-            // Lógica de tratamento de erro mantida: lança List<ErrorMessage> do backend C#
             throw error.response?.data ?? error;
         }
     },
@@ -99,7 +98,14 @@ export const schedulingService = {
     async atualizarAgendamento(data) {
         try {
             const response = await updateSchedulingRequest(data);
-            return response.data;
+
+            // Se 204 No Content → response = null
+            if (response === null) {
+                return; // não retorna data pois não existe
+            }
+
+            return response;
+
         } catch (error) {
             throw error.response?.data ?? error;
         }
@@ -117,3 +123,118 @@ export const schedulingService = {
 };
 
 export default schedulingService;
+
+// import {
+//     getAllSchedulingRequest,
+//     getSchedulingByIdRequest,
+//     getTodaySchedulingsRequest,
+//     getPendentsSchedulingsRequest,
+//     getTodaySchedulingsProfessional,
+//     getTodaySchedulingsStatusProfessionalRequest,
+//     getSchedulingsByPeriodRequest,
+//     createSchedulingRequest,
+//     updateSchedulingRequest,
+//     deleteSchedulingRequest
+// } from '../request/schedulingRequest';
+
+
+// // LISTAR todos (com paginação)
+// export async function listarAgendamentos(page = 1, size = 12, q = '') {
+//     try {
+//         const response = await getAllSchedulingRequest(page, size, q);
+//         return response.data;
+//     } catch (error) {
+//         throw error.response?.data ?? error;
+//     }
+// }
+
+// // GET por ID
+// export async function buscarAgendamentoPorId(id) {
+//     try {
+//         const response = await getSchedulingByIdRequest(id);
+//         return response.data;
+//     } catch (error) {
+//         throw error.response?.data ?? error;
+//     }
+// }
+
+// // GET Hoje – Empresa
+// export async function listarAgendamentosHoje(enterpriseId) {
+//     try {
+//         const response = await getTodaySchedulingsRequest(enterpriseId);
+//         return response.data;
+//     } catch (error) {
+//         throw error.response?.data ?? error;
+//     }
+// }
+
+// // GET Pendentes – Empresa
+// export async function listarPendentes(enterpriseId) {
+//     try {
+//         const response = await getPendentsSchedulingsRequest(enterpriseId);
+//         return response.data;
+//     } catch (error) {
+//         throw error.response?.data ?? error;
+//     }
+// }
+
+// // GET Hoje – Profissional
+// export async function listarHojePorProfissional(professionalId) {
+//     try {
+//         const response = await getTodaySchedulingsProfessional(professionalId);
+//         return response.data;
+//     } catch (error) {
+//         throw error.response?.data ?? error;
+//     }
+// }
+
+// // GET Status Hoje – Profissional
+// export async function listarStatusHojePorProfissional(professionalId) {
+//     try {
+//         const response = await getTodaySchedulingsStatusProfessionalRequest(professionalId);
+//         return response.data;
+//     } catch (error) {
+//         throw error.response?.data ?? error;
+//     }
+// }
+
+// // GET por período (DAY, WEEK, MONTH)
+// export async function listarPorPeriodo(professionalId, periodType) {
+//     try {
+//         const response = await getSchedulingsByPeriodRequest(professionalId, periodType);
+//         return response.data;
+//     } catch (error) {
+//         throw error.response?.data ?? error;
+//     }
+// }
+
+// // CREATE
+// export async function criarAgendamento(data) {
+//     try {
+//         const response = await createSchedulingRequest(data);
+//         return response.data;
+//     } catch (error) {
+//         throw error.response?.data ?? error;
+//     }
+// }
+
+// // UPDATE
+// export async function atualizarAgendamento(data) {
+//     try {
+//         const response = await updateSchedulingRequest(data);
+//         return response.data;
+//     } catch (error) {
+//         throw error.response?.data ?? error;
+//     }
+// }
+
+// // DELETE
+// export async function deletarAgendamento(id) {
+//     try {
+//         const response = await deleteSchedulingRequest(id);
+//         return response.data;
+//     } catch (error) {
+//         throw error.response?.data ?? error;
+//     }
+// }
+
