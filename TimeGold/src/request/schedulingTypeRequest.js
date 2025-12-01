@@ -1,23 +1,24 @@
-import api from "../services/api";
+import api from "../services/api"
 
-export function getAllSchedulingTypeRequest(page = 1, size = 12, q = '') {
-    return api.get('/SchedulingType', {
-        params: { page, size, q }
-    });
-} 
+export async function getAllSchedulingTypeRequest(page = 1, size = 12, q = "") {
+  const params = { page, size }
+  if (q) params.q = q
 
-export function getSchedulingTypeByIdRequest(id) {
-    return api.get(`/SchedulingType/${id}`);
+  return api.get("/SchedulingType", { params }) 
 }
 
-export function createSchedulingTypeRequest(schedulingTypeData) {
-    return api.post('/SchedulingType', schedulingTypeData);
+export async function getSchedulingTypeByIdRequest(id) {
+  return api.get(`/SchedulingType/${id}`) 
 }
 
-export function updateSchedulingTypeRequest(schedulingTypeData) {
-    return api.put('/SchedulingType', schedulingTypeData);
+export async function createSchedulingTypeRequest(data) {
+  return api.post("/SchedulingType", data)  
 }
 
-export function deleteSchedulingTypeRequest(id) {
-    return api.delete(`/SchedulingType/${id}`);
+export async function updateSchedulingTypeRequest(data) {
+  return api.put("/SchedulingType", data)  
+}
+
+export async function deleteSchedulingTypeRequest(id) {
+  return api.delete(`/SchedulingType/${id}`)  
 }

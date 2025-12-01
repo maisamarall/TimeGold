@@ -18,11 +18,11 @@ export function getPendentsSchedulingsRequest(enterpriseId) {
     return api.get(`/Scheduling/GetPendentsSchedulings/${enterpriseId}`);
 }
 
-export function getTodaySchedulingsProfessional(professionalId) {
+export function getTodayListByProfessionalRequest(professionalId) { 
     return api.get(`/Scheduling/GetTodaySchedulingsProfessional/${professionalId}`);
 }
 
-export function getTodaySchedulingsStatusProfessionalRequest(professionalId) {
+export function getTodayStatsByProfessionalRequest(professionalId) {
     return api.get(`/Scheduling/GetTodaySchedulingsStatusProfessional/${professionalId}`);
 }
 
@@ -67,7 +67,10 @@ export function scheduleRequest(data) {
         clientId: data.clientId,
         professionalId: data.professionalId,
         schedulingTypeId: data.schedulingTypeId,
+        schedulingTypeName: data.schedulingTypeName, 
+        schedulingTypeValue: data.schedulingTypeValue,
         scheduledDate: data.scheduledDate,
-        status: data.status
-    };
+        scheduledTime: data.scheduledTime,
+        status: data.status,
+    }
 }

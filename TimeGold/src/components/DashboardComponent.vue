@@ -94,9 +94,10 @@
 										<span
 											:class="{
 												'px-3 py-1 rounded-full text-sm font-semibold': true,
-												'bg-red-100 text-red-700': agendamento.status === 'Pendente',
-												'bg-yellow-100 text-yellow-700': agendamento.status === 'Em andamento',
-												'bg-green-100 text-green-700': agendamento.status === 'Concluído'
+												'bg-yellow-100 text-yellow-700': agendamento.status === 'Pendente',
+												'bg-blue-100 text-blue-700': agendamento.status === 'Em andamento',
+												'bg-green-100 text-green-700': agendamento.status === 'Concluído',
+												'bg-red-100 text-red-700': agendamento.status === 'Cancelado'
 											}"
 										>
 											{{ agendamento.status }}
@@ -289,10 +290,10 @@ async function loadSchedulings() {
 				minute: "2-digit",
 			}),
 			status: {
-				0: "Cancelado",
 				1: "Pendente",
 				2: "Em andamento",
 				3: "Concluído",
+				4: "Cancelado",
 			}[item.status] || "Desconhecido",
 		}))
 
