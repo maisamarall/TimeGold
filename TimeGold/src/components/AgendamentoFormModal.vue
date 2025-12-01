@@ -6,8 +6,15 @@
                     <h2 class="text-2xl font-semibold text-gray-700">
                         📆 Cadastrar Agendamento
                     </h2>
-                    <button @click="$emit('fechar')" class="text-gray-400 hover:text-gray-600 text-2xl leading-none justify-end absolute top-4 right-4"
+                    <button @click="$emit('fechar')"
+                        class="text-gray-400 hover:text-gray-600 text-2xl leading-none justify-end absolute top-4 right-4"
                         aria-label="Fechar"> &times; </button>
+                </div>
+
+                <div v-if="profissionalLogado" class="mb-4 p-3 bg-purple-50 border border-purple-200 rounded-lg">
+                    <p class="text-sm text-purple-700">
+                        <strong>👤 Profissional:</strong> {{ profissionalLogado.name }}
+                    </p>
                 </div>
 
                 <form @submit.prevent="salvarAgendamento" class="space-y-4">
@@ -15,90 +22,58 @@
                         <p class="font-bold">Erro(s) de Validação:</p>
                         <ul class="list-disc list-inside mt-1">
                             <li v-for="(error, index) in apiErrors" :key="index">
-                                **{{ error.field || 'Sistema' }}**: {{ error.message }}
+                                <strong>{{ error.field || 'Sistema' }}:</strong> {{ error.message }}
                             </li>
                         </ul>
                     </div>
-                    <div class="grid grid-cols-1 gap-4 mb-4">
-                        <div>
-                            <label class="label">Paciente:</label>
-                            <input v-model="form.paciente" type="text" class="input" required placeholder="Nome Completo do Paciente" />
-                        </div>
+
+                    <div>
+                        <label class="label">Nome do Paciente:</label>
+                        <input v-model="form.clientName" type="text" class="input" required
+                            placeholder="Digite o nome completo do paciente" :disabled="isLoading" />
                     </div>
 
-                    <div class="grid grid-cols-1 gap-4 mb-4">
-                        <div>
-                            <label class="label">Profissional:</label>
-                            <select 
-                            v-model.number="form.schedulingTypeId" 
-                            class="input" 
-                            required 
-                            :disabled="procedimentos.length === 0"
-                        >
-                            <option :value="null" disabled>
-                                {{ procedimentos.length === 0 ? 'Carregando ou nenhum profissional cadastrado...' : 'Selecione o Profissional' }}
-                            </option>
-                            <option 
-                                v-for="proc in procedimentos" 
-                                :key="proc.id" 
-                                :value="proc.id"
-                            >
-                                {{ proc.name }}
-                            </option>
-                        </select>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 gap-4 mb-4">
-                        <div>
-                            <div class="flex justify-between items-center mb-2">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
                             <label class="label">Procedimento:</label>
-                            <button type="button" 
-                            @click="mostrarModalCadastroProcedimento = true"
-                            class="text-xs text-purple-600 hover:text-purple-800 font-semibold flex items-center gap-1 p-1 rounded-md transition duration-150 border border-purple-200 hover:bg-purple-50">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                            </svg>
-                            Novo Cadastro
+                            <button type="button" @click="mostrarModalCadastroProcedimento = true"
+                                class="text-xs text-purple-600 hover:text-purple-800 font-semibold flex items-center gap-1 p-1 rounded-md transition duration-150 border border-purple-200 hover:bg-purple-50"
+                                :disabled="isLoading">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 4v16m8-8H4"></path>
+                                </svg>
+                                Novo Cadastro
                             </button>
-                            </div>
+                        </div>
 
-                            <select 
-                            v-model.number="form.schedulingTypeId" 
-                            class="input" 
-                            required 
-                            :disabled="procedimentos.length === 0"
-                        >
+                        <select v-model.number="form.schedulingTypeId" class="input" required
+                            :disabled="procedimentos.length === 0 || isLoading">
                             <option :value="null" disabled>
-                                {{ procedimentos.length === 0 ? 'Carregando ou nenhum procedimento cadastrado...' : 'Selecione o Procedimento' }}
+                                {{ carregandoProcedimentos ? 'Carregando procedimentos...' : 'Selecione o Procedimento'
+                                }}
                             </option>
-                            <option 
-                                v-for="proc in procedimentos" 
-                                :key="proc.id" 
-                                :value="proc.id"
-                            >
-                                {{ proc.name }} (R$ {{ proc.value.toFixed(2) }})
+                            <option v-for="proc in procedimentos" :key="proc.id" :value="proc.id">
+                                {{ proc.name }} (R$ {{ parseFloat(proc.value).toFixed(2) }})
                             </option>
                         </select>
-                        </div>
                     </div>
 
-                    <div class="grid grid-cols-1 gap-4">
-                        <div>
-                            <label class="label">Data e Horário:</label>
-                            <input v-model="form.scheduledDate" type="datetime-local" class="input" required />
-                        </div>
+                    <div>
+                        <label class="label">Data e Horário:</label>
+                        <input v-model="form.scheduledDate" type="datetime-local" class="input" required
+                            :disabled="isLoading" />
                     </div>
 
                     <div class="flex justify-end gap-4 pt-4">
-                        <button type="button" @click="$emit('fechar')"
-                            class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400 transition duration-150">
+                        <button type="button" @click="$emit('fechar')" :disabled="isLoading"
+                            class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition duration-150 disabled:opacity-50 disabled:cursor-not-allowed">
                             Cancelar
                         </button>
 
-                        <button type="submit"
-                            class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition duration-150"
-                            :disabled="isLoading">
+                        <button type="submit" :disabled="isLoading || !profissionalLogado"
+                            class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition duration-150 disabled:bg-purple-400 disabled:cursor-not-allowed">
                             {{ isLoading ? 'Salvando...' : 'Salvar' }}
                         </button>
                     </div>
@@ -107,19 +82,16 @@
         </transition>
     </div>
 
-    <SchedulingTypeFormModal
-        v-if="mostrarModalCadastroProcedimento"
-        :enterpriseId="enterpriseId"
-        @fechar="mostrarModalCadastroProcedimento = false"
-        @salvo="handleProcedimentoSalvo"
-    />
+    <SchedulingTypeFormModal v-if="mostrarModalCadastroProcedimento" :enterpriseId="enterpriseId"
+        @fechar="mostrarModalCadastroProcedimento = false" @salvo="handleProcedimentoSalvo" />
 </template>
 
 <script>
-import { schedulingService } from '@/services/schedulingService'; 
-import { schedulingTypeService } from '@/services/schedulingTypeService'; 
-import SchedulingTypeFormModal from '@/components/SchedulingTypeFormModal.vue'; 
-import Swal from 'sweetalert2';
+import { schedulingService } from '@/services/schedulingService'
+import { schedulingTypeService } from '@/services/schedulingTypeService'
+import SchedulingTypeFormModal from '@/components/SchedulingTypeFormModal.vue'
+import Swal from 'sweetalert2'
+import { parseISO, format } from 'date-fns'
 
 export default {
     name: 'AgendamentoFormModal',
@@ -127,101 +99,311 @@ export default {
         SchedulingTypeFormModal
     },
     props: {
-        enterpriseId: { 
+        enterpriseId: {
             type: Number,
             required: true
+        },
+        agendamento: {
+            type: Object,
+            default: null
         }
     },
     data() {
         return {
             isLoading: false,
+            carregandoProcedimentos: false,
             apiErrors: [],
             form: {
-                paciente: '',
+                id: null,
+                clientName: '',
                 professionalId: null,
-                enterpriseId: this.enterpriseId, 
-                schedulingTypeId: null, 
+                enterpriseId: this.enterpriseId,
+                schedulingTypeId: null,
+                schedulingTypeName: null,
                 scheduledDate: '',
-                status: 1, 
+                status: 1,
             },
             procedimentos: [],
+            profissionalLogado: null,
             mostrarModalCadastroProcedimento: false,
         }
     },
+    computed: {
+        isEditMode() {
+            return !!this.agendamento
+        },
+        selectedProcedureName() {
+            return this.form.schedulingTypeName || ''
+        }
+    },
     mounted() {
-        this.carregarProcedimentos();
+        this.carregarProfissionalLogado()
+        this.carregarProcedimentos()
+        if (this.agendamento) {
+            this.populateFromAgendamento(this.agendamento)
+        }
     },
     watch: {
         enterpriseId(newId) {
-            this.form.enterpriseId = newId;
+            this.form.enterpriseId = newId
+        },
+        agendamento(newVal) {
+            if (newVal) this.populateFromAgendamento(newVal)
+            else this.resetarForm()
+        },
+        'form.schedulingTypeId': function (newVal) {
+            if (!newVal) {
+                this.form.schedulingTypeName = null
+                return
+            }
+
+            const proc = this.procedimentos.find(p => p.id === newVal || p.id === Number(newVal))
+            if (proc) {
+                this.form.schedulingTypeName = proc.name || proc.description || null
+                return
+            }
+
+            // fallback: buscar pela API se não estiver na lista local
+            this.carregandoProcedimentos = true
+            schedulingTypeService.buscarTipoAgendamentoPorId(newVal)
+                .then(res => {
+                    const tipo = res?.data ?? res
+                    if (tipo) this.form.schedulingTypeName = tipo.name || tipo.description || null
+                })
+                .catch(err => {
+                    console.warn('[AgendamentoFormModal] não foi possível buscar procedimento:', err)
+                    this.form.schedulingTypeName = null
+                })
+                .finally(() => {
+                    this.carregandoProcedimentos = false
+                })
         }
     },
     methods: {
-        async carregarProcedimentos() {
+        // Carregar Profissional do Login
+        carregarProfissionalLogado() {
             try {
-                const data = await schedulingTypeService.listarTipoAgendamento(1, 100, ''); 
-                this.procedimentos = data.items || data; 
+                const userJSON = localStorage.getItem('user')
+                const sessionUserJSON = sessionStorage.getItem('user')
+                const user = userJSON ? JSON.parse(userJSON) : (sessionUserJSON ? JSON.parse(sessionUserJSON) : null);
+
+                if (user) {
+                    this.profissionalLogado = user
+                    if (!this.isEditMode) this.form.professionalId = user.id
+                } else {
+                    throw new Error('Nenhum profissional logado encontrado')
+                }
+
             } catch (error) {
-                console.error("Erro ao carregar procedimentos:", error);
+                console.error('[AgendamentoFormModal] Erro ao carregar profissional:', error)
+                Swal.fire({
+                    title: '❌ Erro!',
+                    text: 'Você precisa estar logado para agendar. Faça login novamente.',
+                    icon: 'error',
+                    confirmButtonColor: '#D33'
+                })
+                this.$emit('fechar')
             }
         },
 
+        // Carregar Procedimentos
+        async carregarProcedimentos() {
+            this.carregandoProcedimentos = true
+            try {
+                const data = await schedulingTypeService.listarTipoAgendamento(1, 100, '')
+                this.procedimentos = data.items || data || []
+                if (this.form.schedulingTypeId && !this.form.schedulingTypeName) {
+                    const proc = this.procedimentos.find(p => p.id === this.form.schedulingTypeId || p.id === Number(this.form.schedulingTypeId))
+                    if (proc) this.form.schedulingTypeName = proc.name || proc.description || null
+                }
+            } catch (error) {
+                console.error('[AgendamentoFormModal] Erro ao carregar procedimentos:', error)
+            } finally {
+                this.carregandoProcedimentos = false
+            }
+        },
+
+        // Preencher formulário
+        populateFromAgendamento(ag) {
+            try {
+                this.form.id = ag.id ?? null
+                this.form.clientName = ag.clientName || ag.paciente || ''
+                this.form.professionalId = ag.professionalId || this.profissionalLogado?.id || null
+                this.form.enterpriseId = ag.enterpriseId || this.enterpriseId
+                this.form.schedulingTypeId = ag.schedulingTypeId || null
+                this.form.schedulingTypeName = ag.schedulingTypeName || ag.procedimento || null
+
+                if (ag.scheduledDate) {
+                    try {
+                        const dt = parseISO(ag.scheduledDate)
+                        this.form.scheduledDate = format(dt, "yyyy-MM-dd'T'HH:mm")
+                    } catch (e) {
+                        this.form.scheduledDate = ag.scheduledDate
+                    }
+                } else {
+                    this.form.scheduledDate = ''
+                }
+                this.form.status = ag.status ?? 1
+            } catch (e) {
+                console.error('[AgendamentoFormModal] Erro ao popular form:', e)
+            }
+        },
+
+        // Ao salvar novo procedimento
         handleProcedimentoSalvo() {
-            this.carregarProcedimentos(); 
-            
+            this.carregarProcedimentos()
+            this.mostrarModalCadastroProcedimento = false
+
             Swal.fire({
                 title: '✅ Procedimento Salvo!',
                 text: 'O novo procedimento já está disponível na lista.',
                 icon: 'success',
-                confirmButtonColor: '#7021D8'
-            });
+                confirmButtonColor: '#7021D8',
+                timer: 2000
+            })
         },
-        
-        async salvarAgendamento() {
-            this.apiErrors = [];
-            this.isLoading = true;
 
-            if (!this.form.schedulingTypeId) {
-                this.apiErrors.push({ field: 'Procedimento', message: 'Selecione um procedimento.' });
-                this.isLoading = false;
-                return;
+        // Validar formulário
+        validarFormulario() {
+            this.apiErrors = []
+
+            if (!this.form.clientName || this.form.clientName.trim().length < 3) {
+                this.apiErrors.push({
+                    field: 'Cliente',
+                    message: 'Nome do cliente deve ter no mínimo 3 caracteres.'
+                })
             }
-            
-            const [date, time] = this.form.scheduledDate.split('T');
-            const scheduledDateISO = `${date}T${time}:00Z`;
 
-            const payload = {
-                paciente: this.form.paciente,
-                professionalId: this.form.professionalId,
-                enterpriseId: this.form.enterpriseId,
-                schedulingTypeId: this.form.schedulingTypeId,
-                scheduledDate: scheduledDateISO,
-                status: this.form.status,
-            };
+            if (/\d/.test(this.form.clientName)) {
+                this.apiErrors.push({
+                    field: 'Cliente',
+                    message: 'Nome do cliente não pode conter números.'
+                })
+            }
+
+            if (!this.form.professionalId || this.form.professionalId <= 0) {
+                this.apiErrors.push({
+                    field: 'Profissional',
+                    message: 'Profissional não identificado. Faça login novamente.'
+                })
+            }
+
+            if (!this.form.schedulingTypeId || this.form.schedulingTypeId <= 0) {
+                this.apiErrors.push({
+                    field: 'Procedimento',
+                    message: 'Selecione um procedimento'
+                })
+            }
+
+            if (!this.form.scheduledDate) {
+                this.apiErrors.push({
+                    field: 'Data/Horário',
+                    message: 'Informe a data e horário do agendamento'
+                })
+            }
+
+            return this.apiErrors.length === 0
+        },
+
+        localToISO(local) {
+            if (!local) return null
+            const [datePart, timePart] = String(local).split('T')
+            if (!datePart || !timePart) return local
+            const [year, month, day] = datePart.split('-').map(Number)
+            const [hour, minute] = timePart.split(':').map(Number)
+            const d = new Date(year, month - 1, day, hour, minute, 0, 0) 
+            return d.toISOString() 
+        },
+
+        // Salvar
+        async salvarAgendamento() {
+            if (!this.validarFormulario()) return
+
+            this.apiErrors = []
+            this.isLoading = true
 
             try {
-                await schedulingService.criarAgendamento(payload);
-                this.$emit('salvo');
-                this.$emit('fechar');
-                this.resetarForm();
+                const scheduledDateISO = this.localToISO(this.form.scheduledDate)
+
+                if (!this.form.schedulingTypeName && this.form.schedulingTypeId) {
+                    const proc = this.procedimentos.find(p => p.id === this.form.schedulingTypeId || p.id === Number(this.form.schedulingTypeId))
+                    if (proc) this.form.schedulingTypeName = proc.name || proc.description || null
+                    else {
+                        try {
+                            const res = await schedulingTypeService.buscarTipoAgendamentoPorId(this.form.schedulingTypeId)
+                            const tipo = res?.data ?? res
+                            if (tipo) this.form.schedulingTypeName = tipo.name || tipo.description || null
+                        } catch (e) {
+                            console.warn('[AgendamentoFormModal] não foi possível obter nome do procedimento antes de salvar:', e)
+                        }
+                    }
+                }
+
+                const payload = {
+                    id: this.form.id,
+                    clientName: this.form.clientName.trim(),
+                    clientId: this.form.clientId || 1,
+                    professionalId: this.form.professionalId,
+                    enterpriseId: this.form.enterpriseId,
+                    schedulingTypeId: this.form.schedulingTypeId,
+                    schedulingTypeName: this.form.schedulingTypeName,
+                    scheduledDate: scheduledDateISO,
+                    status: this.form.status,
+                }
+
+                console.log('[AgendamentoFormModal] Payload =>', payload)
+
+                let response
+                if (this.isEditMode) {
+                    response = await schedulingService.atualizarAgendamento(payload)
+                    console.log('[AgendamentoFormModal] Atualização resposta:', response)
+                } else {
+                    response = await schedulingService.criarAgendamento(payload)
+                    console.log('[AgendamentoFormModal] Criação resposta:', response)
+                }
+
+                this.$emit('salvo', response?.data ?? response)
+                this.$emit('fechar')
+                this.resetarForm()
+
+                Swal.fire({
+                    title: this.isEditMode ? '✅ Agendamento Atualizado!' : '✅ Agendamento Criado!',
+                    text: this.isEditMode ? `Agendamento atualizado para ${this.form.clientName}.` : `Agendamento para ${this.form.clientName} confirmado!`,
+                    icon: 'success',
+                    confirmButtonColor: '#7021D8',
+                    timer: 2000
+                })
 
             } catch (error) {
-                if (Array.isArray(error) && error.every(e => e.message)) {
-                    this.apiErrors = error;
+                console.error('[AgendamentoFormModal] Erro ao salvar:', error)
+                const apiErrorData = error.response?.data || error
+                if (Array.isArray(apiErrorData)) {
+                    this.apiErrors = apiErrorData
+                } else if (apiErrorData && typeof apiErrorData === 'object' && apiErrorData.message) {
+                    this.apiErrors = [{ message: apiErrorData.message, field: apiErrorData.field || 'Sistema' }]
                 } else {
-                    this.apiErrors = [{ message: 'Erro inesperado ao salvar o agendamento.', field: 'Sistema' }];
-                    console.error('Erro de API:', error);
+                    this.apiErrors = [{ message: 'Erro inesperado ao salvar o agendamento.', field: 'Sistema' }]
                 }
+
+                Swal.fire({
+                    title: '❌ Erro!',
+                    html: this.apiErrors.map(e => `<strong>${e.field || 'Sistema'}:</strong> ${e.message}`).join('<br>'),
+                    icon: 'error',
+                    confirmButtonColor: '#D33'
+                })
             } finally {
-                this.isLoading = false;
+                this.isLoading = false
             }
         },
+
         resetarForm() {
             this.form = {
-                paciente: '',
-                professionalId: null,
+                id: null,
+                clientName: '',
+                professionalId: this.profissionalLogado?.id || null,
                 enterpriseId: this.enterpriseId,
                 schedulingTypeId: null,
+                schedulingTypeName: null,
                 scheduledDate: '',
                 status: 1,
             }
@@ -248,23 +430,44 @@ export default {
     box-shadow: 0 0 0 2px rgba(112, 33, 216, 0.2);
 }
 
+.input:disabled {
+    background-color: #f3f4f6;
+    color: #9ca3af;
+    cursor: not-allowed;
+}
+
 .label {
     display: block;
     font-weight: 500;
-    font-size: 0.875rem;
     color: #4b5563;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
 }
 
-/* Animação */
+.animate-fade-in {
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
 .fade-scale-enter-active,
 .fade-scale-leave-active {
-    transition: all 0.2s ease-out;
+    transition: all 0.3s ease-out;
 }
 
 .fade-scale-enter-from,
 .fade-scale-leave-to {
     opacity: 0;
-    transform: scale(0.95);
+    transform: scale(0.9);
 }
 </style>

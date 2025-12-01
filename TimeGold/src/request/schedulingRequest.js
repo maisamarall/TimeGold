@@ -18,11 +18,11 @@ export function getPendentsSchedulingsRequest(enterpriseId) {
     return api.get(`/Scheduling/GetPendentsSchedulings/${enterpriseId}`);
 }
 
-export function getTodaySchedulingsProfessional(professionalId) {
+export function getTodayListByProfessionalRequest(professionalId) { 
     return api.get(`/Scheduling/GetTodaySchedulingsProfessional/${professionalId}`);
 }
 
-export function getTodaySchedulingsStatusProfessionalRequest(professionalId) {
+export function getTodayStatsByProfessionalRequest(professionalId) {
     return api.get(`/Scheduling/GetTodaySchedulingsStatusProfessional/${professionalId}`);
 }
 
@@ -37,15 +37,9 @@ export function createSchedulingRequest(schedulingData) {
 }
 
 export async function updateSchedulingRequest(payload) {
-    console.log("Payload enviado REAL:", payload);
-    
-    const id = payload.id; // Pega o ID do objeto payload
     
     try {
-        // Altera a rota para incluir o ID: '/Scheduling/{id}'
-        const response = await api.put(`/Scheduling/${id}`, payload); // <--- CORREÇÃO AQUI
-        
-        // ... (o resto do código permanece o mesmo)
+        const response = await api.put('/Scheduling', payload);
         
         if (!response || response.status === 204) {
             return null;
@@ -53,7 +47,6 @@ export async function updateSchedulingRequest(payload) {
 
         return response.data;
     } catch (error) {
-        // ...
         throw error;
     }
 }
@@ -68,7 +61,10 @@ export function scheduleRequest(data) {
         clientId: data.clientId,
         professionalId: data.professionalId,
         schedulingTypeId: data.schedulingTypeId,
+        schedulingTypeName: data.schedulingTypeName, 
+        schedulingTypeValue: data.schedulingTypeValue,
         scheduledDate: data.scheduledDate,
-        status: data.status
-    };
+        scheduledTime: data.scheduledTime,
+        status: data.status,
+    }
 }
