@@ -39,13 +39,13 @@ export function createSchedulingRequest(schedulingData) {
 export async function updateSchedulingRequest(payload) {
     console.log("Payload enviado REAL:", payload);
     
-    const id = payload.id; // Pega o ID do objeto payload
-    
     try {
-        // Altera a rota para incluir o ID: '/Scheduling/{id}'
-        const response = await api.put(`/Scheduling/${id}`, payload); // <--- CORREÇÃO AQUI
-        
-        // ... (o resto do código permanece o mesmo)
+        // Envia para '/Scheduling' sem o ID na URL (ID vai no body)
+        const response = await api.put('/Scheduling', JSON.stringify(payload), {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
         
         if (!response || response.status === 204) {
             return null;
@@ -53,7 +53,6 @@ export async function updateSchedulingRequest(payload) {
 
         return response.data;
     } catch (error) {
-        // ...
         throw error;
     }
 }

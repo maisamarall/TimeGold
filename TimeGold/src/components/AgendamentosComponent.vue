@@ -341,12 +341,11 @@ async function confirmarAgendamento() {
   const scheduledDateISO = agendamento.scheduledDate; 
   
   const payload = {
-    paciente: agendamento.paciente,
+    clientName: agendamento.clientName,
     professionalId: agendamento.professionalId,
     enterpriseId: agendamento.enterpriseId,
     schedulingTypeId: agendamento.schedulingTypeId,
-    scheduledDate: scheduledDateISO, 
-    status: 1
+    scheduledDate: scheduledDateISO,
   };
     
   try {

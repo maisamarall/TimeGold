@@ -130,7 +130,7 @@
 					:agendamento="agendamentoSelecionado"
 					:erros-back="erroDoBack"
 					@fechar="modalEditarAberto = false"
-					@salvo="saveSchedule"
+					@salvo="handleAgendamentoSalvo"
 				/>
 			</div>
 		</main>
@@ -186,12 +186,12 @@ async function openEditModal(agendamento) {
 
 	agendamentoSelecionado.value = {
 		id: agendamentoCompleto.id,
-		clientId: agendamentoCompleto.client?.id,
-		professionalId: agendamentoCompleto.professional?.id,
+		clientId: agendamentoCompleto.clientId,
+		professionalId: agendamentoCompleto.professionalId || agendamentoCompleto.professional?.id,
 		enterpriseId: agendamentoCompleto.enterpriseId,
-		schedulingTypeId: agendamentoCompleto.schedulingType?.id,
+		schedulingTypeId: agendamentoCompleto.schedulingTypeId || agendamentoCompleto.schedulingType?.id,
 		scheduledDate: agendamentoCompleto.scheduledDate,
-		paciente: agendamentoCompleto.client?.name,
+		paciente: agendamentoCompleto.clientName || agendamentoCompleto.client?.name,
 		procedimento: agendamentoCompleto.schedulingType?.name,
 		status: agendamentoCompleto.status,
 	}
@@ -222,6 +222,11 @@ async function saveSchedule(payload) {
 			text: err.response?.data?.map(e => e.message).join(', ') || 'Erro inesperado',
 		})
 	}
+}
+
+async function handleAgendamentoSalvo() {
+	modalEditarAberto.value = false
+	await loadSchedulings()
 }
 
 function confirmDelete(agendamento) {
@@ -270,8 +275,8 @@ async function loadSchedulings() {
 		agendamentoDoDia.value = lista.map((item) => ({
 			id: item.id,
 			clientId: item.clientId,
-			clientName: item.client?.name || "Não informado",
-			paciente: item.client?.name || "Não informado",
+			clientName: item.clientName || item.client?.name || "Não informado",
+			paciente: item.clientName || item.client?.name || "Não informado",
 			procedimento: item.schedulingType?.name || "Não informado",
 			professionalId: item.professionalId,
 			enterpriseId: profile.value.enterprise.id,

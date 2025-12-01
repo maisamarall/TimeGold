@@ -22,7 +22,7 @@
                     <div class="grid grid-cols-1 gap-4 mb-4">
                         <div>
                             <label class="label">Paciente:</label>
-                            <input v-model="form.paciente" type="text" class="input" required placeholder="Nome Completo do Paciente" />
+                            <input v-model="form.clientName" type="text" class="input" required placeholder="Nome Completo do Paciente" />
                         </div>
                     </div>
 
@@ -133,16 +133,16 @@ export default {
         }
     },
     data() {
+        const user = JSON.parse(localStorage.getItem("user")) || {};
         return {
             isLoading: false,
             apiErrors: [],
             form: {
-                paciente: '',
-                professionalId: null,
-                enterpriseId: this.enterpriseId, 
+                clientName: '',
+                professionalId: user.id || null,
+                enterpriseId: user.enterpriseId || this.enterpriseId, 
                 schedulingTypeId: null, 
                 scheduledDate: '',
-                status: 1, 
             },
             procedimentos: [],
             mostrarModalCadastroProcedimento: false,
@@ -153,7 +153,8 @@ export default {
     },
     watch: {
         enterpriseId(newId) {
-            this.form.enterpriseId = newId;
+            const user = JSON.parse(localStorage.getItem("user")) || {};
+            this.form.enterpriseId = user.enterpriseId || newId;
         }
     },
     methods: {
@@ -187,16 +188,19 @@ export default {
                 return;
             }
             
+            // Converte horário local para UTC (Brasil = UTC-3)
             const [date, time] = this.form.scheduledDate.split('T');
-            const scheduledDateISO = `${date}T${time}:00Z`;
+            const [year, month, day] = date.split('-').map(Number);
+            const [hour, minute] = time.split(':').map(Number);
+            const localDate = new Date(year, month - 1, day, hour, minute, 0);
+            const scheduledDateISO = localDate.toISOString();
 
             const payload = {
-                paciente: this.form.paciente,
+                clientName: this.form.clientName,
                 professionalId: this.form.professionalId,
                 enterpriseId: this.form.enterpriseId,
                 schedulingTypeId: this.form.schedulingTypeId,
                 scheduledDate: scheduledDateISO,
-                status: this.form.status,
             };
 
             try {
@@ -217,13 +221,13 @@ export default {
             }
         },
         resetarForm() {
+            const user = JSON.parse(localStorage.getItem("user")) || {};
             this.form = {
-                paciente: '',
-                professionalId: null,
-                enterpriseId: this.enterpriseId,
+                clientName: '',
+                professionalId: user.id || null,
+                enterpriseId: user.enterpriseId || this.enterpriseId,
                 schedulingTypeId: null,
                 scheduledDate: '',
-                status: 1,
             }
         }
     }

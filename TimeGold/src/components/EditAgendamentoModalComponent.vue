@@ -195,7 +195,7 @@ export default {
       const payload = {
         id: this.form.id,
         professionalId: this.form.professionalId,
-        clientId: this.form.clientId,
+        clientName: this.form.paciente,
         enterpriseId: this.form.enterpriseId,
         schedulingTypeId: this.form.schedulingTypeId,
         scheduledDate: scheduledDateISO,
