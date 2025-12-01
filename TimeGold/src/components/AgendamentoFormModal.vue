@@ -33,29 +33,6 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 gap-4 mb-4">
-                        <div>
-                            <label class="label">Profissional:</label>
-                            <select 
-                            v-model.number="form.schedulingTypeId" 
-                            class="input" 
-                            required 
-                            :disabled="procedimentos.length === 0"
-                        >
-                            <option :value="null" disabled>
-                                {{ procedimentos.length === 0 ? 'Carregando ou nenhum profissional cadastrado...' : 'Selecione o Profissional' }}
-                            </option>
-                            <option 
-                                v-for="proc in procedimentos" 
-                                :key="proc.id" 
-                                :value="proc.id"
-                            >
-                                {{ proc.name }}
-                            </option>
-                        </select>
-                        </div>
-                    </div>
-
                     <div>
                         <div class="flex justify-between items-center mb-2">
                             <label class="label">Procedimento:</label>
